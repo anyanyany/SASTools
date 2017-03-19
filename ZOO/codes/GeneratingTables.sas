@@ -480,4 +480,41 @@ quit;
 
 
 
+/*tabela zawierajaca informacje o dostawcach*/
+data ZOO.SUPPLIERS;
+	length supplier_id 3 
+	name $50
+	phone $9
+	email $30
+	NIP $10;
+	INFILE DATALINES DLM=',';
+ 	INPUT supplier_id name $ phone $ email $ NIP $;
+	DATALINES;
+	1, Delikatesy dla zwierzat, 597179643, kontakt@ddz.pl, 9246404449
+	2, Mamba, 697989269, zamowienia@mamba.com, 6470933144
+	3, WildFood, 795070486, orders@wildfood.net, 7902453360
+	4, Animal foods, 585478816, kontakt@animalfoods.pl, 7166955080
+	5, ZooCenter, 677460840, zoocenter@zoocenter.com, 4277477753
+	6, Bird Food, 726381703, birds@birdfood.com.pl, 0261119677
+	7, Sklep dla dzikich zwierzat, 559506794, kontakt@dzikisklep.pl, 5707356114
+	8, TURDUS, 693801988, turdus@turdus.com, 9395561094
+	9, ZOO express, 783756201, kontakt@zooexpress.pl, 5501542104
+	10, Tigers, 579195276, tigers@tigers.com, 9502396615
+	11, Tucan, 642092542, tucan@tucan.pl, 6182757972
+	12, Pelican, 788658398, contact@pelican.com, 3524864533
+	13, ZooArt, 547367805, zoo@zooart.pl, 8656720464
+	14, KrakVet, 607820730, kontakt@krakvet.com, 2735815439
+	15, Telekarma, 752040264, tele@telekarma@pl, 2623710063
+	16, Animalia, 508986029, animals@animalia.pl, 2359617172
+	17, Batiba, 659753876, kontakt@batiba.com, 9946310324
+	18, AnimalWorld, 794668176, contact@animalworls.pl, 6371410111
+	19, Kampol, 554800528, karma@kampol.pl, 2887803649
+	20, Dziki trop, 615577181, dzikitrop@dzikitrop.pl, 3281121954
+	21, Emusklep, 739583221, sklep@emusklep.pl, 0296298077
+	22, LamaShop, 553012014, shop@lamashop.pl, 2095457814
+	23, ORIJEN, 672446789, kontakt@orijen.com, 6693265997
+	24, ZOO expert, 702887219, zoo@zooexpert.com.pl, 3224006689
+	;
+RUN; 
+/*********************/
 
