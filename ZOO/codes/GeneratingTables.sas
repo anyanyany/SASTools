@@ -518,3 +518,371 @@ data ZOO.SUPPLIERS;
 RUN; 
 /*********************/
 
+
+
+/*tabela zawierajaca gatunki zwierzat*/
+data ZOO.SPECIES;
+	length species_id 3 
+	polish_name $50
+	name $50
+	order_id 3;
+	INFILE DATALINES DLM=',';
+ 	INPUT species_id polish_name $ name $ order_id;
+	DATALINES;
+	1, Kazuar helmiasty, Casuarius casuarius, 1
+	2, Emu, Dromaius novaehollandiae, 1
+	3, Strus czerwonoskóry, Struthio camelus, 1
+	4, Pingwin przyladkowy, Spheniscus demersus, 2
+	5, Labedz niemy, Cygnus olor, 3
+	6, Labedz czarny, Cygnus atratus, 3
+	7, Sniezyca duza, Anser caerulescens, 3
+	8, Bernikla kanadyjska, Branta canadensis, 3
+	9, Bernikla pólnocna, Branta hutchinsii minima, 3
+	10, Bernikla bialolica, Branta leucopsis, 3
+	11, Kazarka rdzawa, Tadorna ferruginea, 3
+	12, Kazarka obrozna, Tadorna tadornoides, 3
+	13, Kazarka rajska, Tadorna variegata, 3
+	14, Ohar, Tadorna tadorna, 3
+	15, Pizmówka malajska, Asarcornis scutulata, 3
+	16, Mandarynka, Aix galericulata, 3
+	17, Karolinka, Aix sponsa, 3
+	18, Cyraneczka madagaskarska, Anas bernieri, 3
+	19, Cyraneczka europejska, Anas crecca, 3
+	20, Cyranka, Anas querquedula, 3
+	21, Srebrzanka hotentocka, Anas hottentota, 3
+	22, Swistun europejski, Anas penelope, 3
+	23, Krzyzówka, Anas platyrhynchos, 3
+	24, Podgorzalka zielonoglowa, Aythya baeri, 3
+	25, Glowienka, Aythya ferina, 3
+	26, Czernica, Aythya fuligula, 3
+	27, Podgorzalka, Aythya nyroca, 3
+	28, Helmiatka, Netta rufina, 3
+	29, Skrzydloszpon obrozny, Chauna torquata, 3
+	30, Czapla zlotawa, Bubulcus ibis/Ardeola ibis, 4
+	31, Ibis szkarlatny, Eudocimus ruber, 4
+	32, Warzecha czerwonolica, Platalea alba, 4
+	33, Pelikan rózowy, Pelecanus onocrotalus, 4
+	34, Bocian bialy, Ciconia ciconia, 5
+	35, Bocian czarny, Ciconia nigra, 5
+	36, Flaming chilijski, Phoenicopterus chilensis, 6
+	37, Modrzyk, Porphyrio porphyrio, 7
+	38, Koronnik szary, Balearica regulorum, 7
+	39, Zuraw zwyczajny, Grus grus, 7
+	40, Zuraw mandzurski, Grus japonensis, 7
+	41, Dlugoszpon krasnoczelny, Jacana jacana, 8
+	42, Kulon, Burhinus oedicnemus, 8
+	43, Kulik wielki, Numenius arquata, 8
+	44, Batalion, Philomachus pugnax, 8
+	45, Czajka, Vanellus vanellus, 8
+	46, Siewka zlota, Pluvialis apricaria, 8
+	47, Kondor wielki, Vultur gryphus, 9
+	48, Kondor królewski, Sarcoramphus papa, 9
+	49, Bielik olbrzymi, Haliaeetus pelagicus, 9
+	50, Orzel stepowy, Aquila nipalensis orientalis, 9
+	51, Trzmielojad, Pernis apivorus, 9
+	52, Myszolów zwyczajny, Buteo buteo, 9
+	53, Myszolowiec, Parabuteo unicinctus, 9
+	54, Rybolów, Pandion haliaetus haliaetus, 9
+	55, Czubacz zmienny, Crax rubra, 10
+	56, Czubacz gololicy, Crax fasciolata, 10
+	57, Paw indyjski, Pavo cristatus, 10
+	58, Uszak siwy, Crossoptilon auritum, 10
+	59, Uszak bialy, Crossoptilon crossoptilon drouynii, 10
+	60, Bazant himalajski, Catreus wallichi, 10
+	61, Bazant Elliota, Syrmaticus ellioti, 10
+	62, Bazant królewski, Syrmaticus reevesii, 10
+	63, Bazant diamentowy, Chrysolophus amherstiae, 10
+	64, Olsniak himalajski, Lophophorus impejanus, 10
+	65, Kisciec annamski, Lophura edwardsi, 10
+	66, Kisciec nepalski, Lophura leucomelanos, 10
+	67, Kisciec srebrzysty, Lophura nycthemera, 10
+	68, Kisciec tajwanski, Lophura swinhoii, 10
+	69, Kisciec syjamski, Lophura diardi, 10
+	70, Kura domowa, Gallus gallus domesticus, 10
+	71, Paw kongijski, Afropavo congensis, 10
+	72, Puchoczub, Rollulus rouloul, 10
+	73, Przepiórka polna, Coturnix coturnix, 10
+	74, Perlica domowa, Numida meleagris, 10
+	75, Perlica sepia, Acryllium vulturinum, 10
+	76, Cieciornik kanadyjski, Bonasa umbellus, 10
+	77, Gluszec, Tetrao urogallus, 10
+	78, Cietrzew, Tetrao tetrix, 10
+	79, Góropatwa skalna, Alectoris graeca, 10
+	80, Kuropatwa, Perdix perdix, 10
+	81, Wieloszpon szary, Polyplectron bicalcaratum, 10
+	82, Koroniec plamoczuby, Goura victoria, 11
+	83, Nikobarczyk, Caloenas nicobarica, 11
+	84, Wyspiarek zbroczony, Gallicolumba luzonica, 11
+	85, Owocozer wspanialy, Ptilinopus superbus superbus, 11
+	86, Golab gwinejski, Columba guinea, 11
+	87, Golab domowy, Columba livia domestica, 11
+	88, Golab grzywacz, Columba palumbus, 11
+	89, Golabek diamentowy, Geopelia cuneata, 11
+	90, Sierpówka, Streptopelia decaocto, 11
+	91, Synogarlica brunatna, Streptopelia picturata, 11
+	92, Cukrówka, Streptopelia roseogrisea, 11
+	93, Synogarlica senegalska, Streptopelia senegalensis, 11
+	94, Turkawka zwyczajna, Streptopelia turtur, 11
+	95, Golebiak bialoskrzydly, Zenaida asiatica, 11
+	96, Golebiak kasztanowaty, Zenaida graysoni, 11
+	97, Zalobnica palmowa, Probosciger aterrimus, 12
+	98, Kakadu biala, Cacatua alba, 12
+	99, Kakadu rózowa, Eolophus roseicapilla/Cacatua roseicapilla, 12
+	100, Kea, Nestor notabilis, 12
+	101, Barwnica, Eclectus roratus polychloros, 12
+	102, Ara hiacyntowa, Anodorhynchus hyacinthinus, 12
+	103, Ara ararauna, Ara ararauna, 12
+	104, Ara zielonoskrzydla, Ara chloroptera, 12
+	105, Ara zielona, Ara militaris, 12
+	106, Ara zóltoszyja, Propyrrhura auricollis, 12
+	107, Amazonka modrobrewa, Amazona amazonica, 12
+	108, Amazonka zóltoszyja, Amazona auropalliata, 12
+	109, Amazonka zóltoglowa, Amazona ochrocephala, 12
+	110, Patagonka, Cyanoliseus patagonus, 12
+	111, Zako liberyjskie, Psittacus timneh, 12
+	112, Zako kongijskie, Psittacus erithacus, 12
+	113, Afrykanka ognistobrzucha, Poicephalus senegalus, 12
+	114, Nierozlaczka czarnolica, Agapornis nigrigenis, 12
+	115, Aleksandretta wieksza, Psittacula eupatria, 12
+	116, Sowa uszata, Asio otus, 13
+	117, Pójdzka, Athene noctua*, 13
+	118, Wlochatka, Aegolius funereus, 13
+	119, Puchacz, Bubo bubo, 13
+	120, Syczek, Otus scops, 13
+	121, Puszczyk, Strix aluco, 13
+	122, Puszczyk bialy, Strix aluco alba, 13
+	123, Puszczyk mszarny, Strix nebulosa, 13
+	124, Puszczyk uralski, Strix uralensis, 13
+	125, Sowa jarzebata, Surnia ulula, 13
+	126, Plomykówka, Tyto alba, 13
+	127, Kraska zwyczajna, Coracias garrulus, 14
+	128, Kukabura chichotliwa, Dacelo novaeguineae, 14
+	129, Slonecznica, Eurypyga helias, 15
+	130, Wasal zóltooki, Lybius dubius, 16
+	131, Tukan wielki, Ramphastos toco, 16
+	132, Turak fioletowy, Musophaga violacea, 17
+	133, Dzioborozec srebrnolicy, Bycanistes brevis, 18
+	134, Dzioborozec karbodzioby, Rhyticeros plicatus, 18
+	135, Dudek zwyczajny, Upupa epops, 18
+	136, Czepiga rudawa, Colius striatus, 19
+	137, Szpak balijski, Leucopsar rothschild, 20
+	138, Szpak, Sturnus vulgaris, 20
+	139, Blyszczak stalowy, Lamprotornis chalybaeus, 20
+	140, Wilga, Oriolus oriolus, 20
+	141, Kitta czerwonodzioba, Urocissa erythrorhyncha, 20
+	142, Turkusnik indyjski, Irena puella, 20
+	143, Bilbil krwawnik, Pycnonotus jocosus, 20
+	144, Bilbil arabski, Pycnonotus xanthopygos, 20
+	145, Slowik chinski, Leiothrix lutea, 20
+	146, Slodnik bialoskrzydly	, Entomyzon cyanotis, 20
+	147, Ryzowiec siwy, Padda oryzivora, 20
+	148, Amadyna ostrosterna	, Poephila acuticauda hecki, 20
+	149, Amadyna wspaniala, Chloebia gouldiae, 20
+	150, Amadyna obrozna, Amadina fasciata, 20
+	151, Wiklacz czerwonodzioby, Quelea quelea, 20
+	152, Wiklacz sloneczny, Euplectes afer, 20
+	153, Wiklacz ognisty	, Euplectes orix franciscanus, 20
+	154, Wiklacz czerwony, Foudia madagascariensis, 20
+	155, Wróbel zloty, Passer luteus, 20
+	156, Kulczyk mozambijski	, Serinus mozambicus, 20
+	157, Czyzyk, Carduelis spinus, 20
+	158, Szczygiel, Carduelis carduelis, 20
+	159, Grubodziób, Coccothraustes coccothraustes, 20
+	160, Jemioluszka, Bombycilla garrulus, 20
+	161, Pliszka siwa, Motacilla alba, 20
+	162, Lerka, Lullula arborea, 20
+	163, Kubanik, Tiaris canora, 20
+	164, Slon afrykanski	, Loxodonta africana africana, 21
+	165, Góralek abisynski	, Procavia capensis, 22
+	166, Nosorozec indyjski	, Rhinoceros unicornis, 23
+	167, Zebra równikowa	, Equus quagga boehmi, 23
+	168, Kon Przewalskiego	, Equus przewalskii, 23
+	169, Kuc szetlandzki	, Equus caballus setland, 23
+	170, Osiol domowy	, Equus asinus, 23
+	171, Osiol somalijski, Equus asinus somalicus, 23
+	172, Hipopotam nilowy	, Hippopotamus amphibius, 24
+	173, Lama	, Lama glama, 24
+	174, Wikunia, Vicugna vicugna, 24
+	175, Wielblad dwugarbny	, Camelus bactrianus, 24
+	176, Zyrafa rothschilda, Giraffa camelopardalis rothschild, 24
+	177, Pudu chilijski	, Pudu pudu, 24
+	178, Daniel	, Dama dama, 24
+	179, Bizon	, Bison bison, 24
+	180, Zubr	, Bison bonasus, 24
+	181, Jak	, Bos grunniens, 24
+	182, Sitatunga	, Tragelaphus spekii gratus, 24
+	183, Bongo	, Tragelaphus eurycerus isaaci, 24
+	184, Oryks szablorogi	, Oryx dammah, 24
+	185, Goral dlugoogoniasty	, Naemorhedus caudatus, 24
+	186, Takin syczuanski, Budorcas taxicolor tibetana, 24
+	187, Nachur, Pseudois nayaur, 24
+	188, Koza holenderska	, Capra hircus, 24
+	189, Owca somali, Ovis aries, 24
+	190, Wrzosówka	, Ovis aries, 24
+	191, Wól pizmowy, Ovibos moschatus, 24
+	192, Foka szara	, Halichoerus grypus, 25
+	193, Niedzwiedz brunatny	, Ursus arctos, 25
+	194, Niedzwiedz polarny, Thalarctos maritimus, 25
+	195, Panda mala	, Ailurus fulgens fulgens, 25
+	196, Likaon, Lycaon pictus, 25
+	197, Wilk grzywiasty	, Chrysocyon brachyurus, 25
+	198, Wydra europejska	, Lutra lutra, 25
+	199, Surykatka, Suricata suricatta, 25
+	200, Manul, Otocolobus manul, 25
+	201, Kot argentynski	, Oncifelis geoffroyi, 25
+	202, Serwal, Leptailurus serval, 25
+	203, Gepard, Acinonyx jubatus, 25
+	204, Pantera sniezna	, Panthera uncia, 25
+	205, Jaguar, Panthera onca, 25
+	206, Lew, Panthera leo, 25
+	207, Tygrys sumatrzanski	, Panthera tigris sumatrae, 25
+	208, Lemur katta, Lemur catta, 26
+	209, Wari czarno-bialy, Varecia variegata, 26
+	210, Pigmejka, Callithrix pygmaea, 26
+	211, Uistiti bialoucha, Callithrix jacchus, 26
+	212, Tamaryna bialoczuba, Saguinus oedipus, 26
+	213, Tamaryna czewonobrzucha	, Saguinus labiatus, 26
+	214, Sajmiri wiewiórcza, Saimiri sciureus, 26
+	215, Kapucynka zóltopiersna	, Sapajus xanthosternos, 26
+	216, Koczkodan blotny, Allenopithecus nigroviridis, 26
+	217, Koczkodan diana, Cercopithecus diana diana, 26
+	218, Makak czubaty, Macaca nigra nigra, 26
+	219, Pawian plaszczowy, Papio hamadryas, 26
+	220, Gibbon czubaty, Nomascus gabriellae, 26
+	221, Szympans, Pan troglodytes, 26
+	222, Goryl nizinny, Gorilla gorilla gorilla, 26
+	223, Królik domowy, Oryctolagus cuniculus f. domesticus, 27
+	224, Swinka morska	, Cavia porcellus, 28
+	225, Rudawka nilowa	, Rousettus aegyptiacus, 29
+	226, Bolita poludniowa, Tolypeutes matacus, 30
+	227, Leniwiec dwupalczasty, Choloepus didactylus, 30
+	228, Mrówkojad wielki	, Myrmecophaga tridactyla, 30
+	229, Kangur rudy	, Macropus rufus, 31
+	230, Walabia Benetta	, Macropus rufogriseus, 31
+	231, Ptasznik z Hondurasu, Brachypelma vagans, 32
+	232, Tarantula chilijska, Grammostola rosea, 32
+	233, Skolopendra, Scolopendra sp., 33
+	234, Ptasznik, Theraphosa blondi, 32
+	235, Ptasznik czerwonokolanowy, Brachypelma smithi, 32
+	236, Skorpion cesarski, Pandinus imperator, 34
+	237, Ptasznik brazylijski, Lasidora parahybana, 32
+	238, Ptasznik, Brachypelma boehmei, 32
+	239, Ptasznik, Lasiorora cristata, 32
+	240, Pluskwiak afrykanski, Platymeris biguttatus, 35
+	241, Ptasznik bialokolanowy, Acantoscurra geniculata, 32
+	242, Ptasznik, Aphonopelma seemani, 32
+	243, Szaranczak, Tropidacris Violaceus, 36
+	244, Osa szmaragdowa, Ampulex Compressa, 37
+	245, Slimak Achatina, Achatina reticulata, 38
+	246, Rohatyniec, Dynastes hercules, 39
+	247, Szaranczak patyczakowaty, Proscopia sp., 40
+	248, Zuk z Konga, Pachnoda peregrina, 39
+	249, Zuk, Pachnoda sinuata flaviventris, 39
+	250, Patyczak Rogaty, Baculum extradentatum, 41
+	251, Karaczan, Eublaberus posticus, 42
+	252, Karaczan madagaskarski, Gromphadorrhina portentosa, 42
+	253, Karaczan brazylijski, Blaberus cranifer, 42
+	254, Karaczan zlotoglowy, Eublaberus distanti, 42
+	255, Spieszek cieplarniany, Tachycines asynamorus, 36
+	256, Krab pustelnik, Paguroidea sp., 43
+	257, Motylowiec, Pantodon buchholzi, 44
+	258, Barwniak szmaragdowy, Pelvicachromis taeniatus, 45
+	259, Iglicznia slodkowodna, Doryichthys boaia, 46
+	260, Krewetka filtrujaca, Atyopsis moluccensis, 43
+	261, Krewetka, Caridina sp., 43
+	262, Krewetka, Caridina simmoni simmoni, 43
+	263, Sumik szklisty, Kryptopterus bicirrhis, 47
+	264, Blyszczek teczowy, Notropis chrosomus, 48
+	265, Sczupak, Esox lucius, 49
+	266, Ciernik, Gasterosterus aculeatus, 50
+	267, Kielb, Gobio gobio, 51
+	268, Ploc, Rutilus rutilus, 51
+	269, Strzebla blotna, Phoxinus perenurus, 51
+	270, S?lepiec jaskiniowy, Astyanax mexicanus, 48
+	271, Nozowiec indyjski, Chitala ornata, 44
+	272, Zbrojnik, Hypostomus plecostomus, 47
+	273, Zbrojnik lamparci, Glyptopterichthys gibbiceps, 47
+	274, Murena, Echidna nebulosa, 52
+	275, Arabski rekin dywanowy, Chiloscyllium arabicum, 55
+	276, Nadymka, Arothron molinerisis, 54
+	277, Arowana dwuwasa, Osteoglossum bicirrhosum, 44
+	278, Arowana azjatycka, Scleropages formosus, 44
+	279, Ziemiojad, Geophagus altifrons, 45
+	280, Zbrojnik lamparci, Glyptopterichthys gibbiceps, 47
+	281, Zbrojnik, Hypostomus plecostomus, 47
+	282, Pirania czerwona, Pygocentrus nattereri, 48
+	283, Pensetnik czarnoglowy, Forcipiger flavissimus, 45
+	284, Pokolec krolewski, Paracanthrus hepatus, 45
+	287, Zebrasoma zólta, Zebrasoma flavescens, 45
+	288, Zebrasoma bialolica, Zebrasoma scopas, 45
+	289, Zebrasoma zaglopletwa, Zebrasoma veliferum, 45
+	291, Amfiprion okoniowy, Ampifrion ocellaris, 45
+	292, Mieczyk hellera, Xiphophorus helleri, 53
+	293, Limka czarnoprega, Limia nigrofasciata, 53
+	294, Zmienniak wielobarwny, Xiphophorus variatus, 53
+	295, Zbrojnik niebieski, Ancistrus dolichopterus, 47
+	296, Gupik, Poecilia reticulata, 53
+	298, Pokolec turkusowy, Acanthurus coeruleus, 56
+	299, Pielegnica cytrynowa, Amphilophus citrinellus, 56
+	300, Amfiprion okoniowy, Amphiprion ocellaris, 56
+	301, Zbrojnik niebieski, Ancistrus dolichopterus/Hemiancistrus dolichopterus, 56
+	302, Duch brazylijski, Apteronotus albifrons, 56
+	303, Arapaima, Arapaima gigas, 56
+	304, Pielegnica pawiooka, Astronotus ocellatus, 56
+	305, Lustrzen meksykanski, Astyanax mexicanus, 56
+	306, Rogatnica kolczasta, Balistapus undulatus, 56
+	307, Bedocja madagaskarska, Bedotia geayi, 56
+	308, Kara? zlocisty, Carassius auratus auratus, 56
+	309, Nozowiec, Chitala ornata, 56
+	310, Bocja wspaniala, Chromobotia macracanthus/Botia macracanthus, 56
+	311, Stadnik zóltoogonowy, Chrysiptera parasema, 56
+	312, Dlugowšs zabi, Clarias batrachus, 56
+	313, Grubowarg syjamski, Crossocheilus oblongus, 56
+	314, Dascylus trójplamy, Dascyllus trimaculatus, 56
+	315, Skrzydlica mala, Dendrochirus zebra, 56
+	316, Zerardynka metaliczna, Girardinus metallicus, 56
+	317, Mruk Petersa (trabonos), Gnathonemus petersii, 56
+	318, Gurami calujacy, Helostoma temminkii, 56
+	319, Drobniczka jednodniówka, Heterandria formosa, 56
+	320, Plawikonik zólty, Hippocampus kuda, 56
+	321, Bystrzyk pieknopletwy, Hyphessobrycon pulchripinnis, 56
+	322, Glonojad sp., Hypostomus sp., 56
+	323, Sumek szklisty, Kryptopterus bicirrhis, 56
+	324, Niszczuka plamista, Lepisosteus oculatus, 56
+	325, Brzanka jednoprega, Leptobarbus hoevenii, 56
+	326, Limka czarnoprega, Limia nigrofasciata, 56
+	327, Teczanka sp., Melanotaenia sp., 56
+	328, Teczanka Boesemana, Melanotaenia boesemani, 56
+	329, Rozec skrobacz, Naso lituratus, 56
+	330, Ksiezniczka z Burundi, Neolamprologus brichardi, 56
+	331, Muszlowiec duzy, Neolamprologus meeli, 56
+	332, Arowana srebrna, Osteoglossum bicirrhosum, 56
+	333, Motylowiec, Pantodon buchholzi, 56
+	334, Pokolec królewski, Paracanthurus hepatus, 56
+	335, Gupik, Poecilia reticulata, 56
+	336, Molinezja ostrousta, Poecilia sphenops, 56
+	337, Ustniczek królewski, Pomacanthus semicirculatus, 56
+	338, Zaglowiec wysoki, Pterophyllum altum, 56
+	339, Brzanka pregowana, Puntius fasciatus, 56
+	340, Brzanka zielona, Puntius semifasciolatus, 56
+	341, Brzanka birmanska, Puntius ticto, 56
+	342, Pirania czerwona, Pygocentrus nattereri, 56
+	343, Lisoglów, Siganus vulpinus, 56
+	344, Paletka, Symphysodon aequifasciatus, 56
+	345, Dyskowiec, Symphysodon discus, 56
+	346, Mandaryn, Synchiropus ocellatus, 56
+	347, Gurami drobnoluski, Trichogaster microlepis, 56
+	348, Ksenotoka, Xenotoca eiseni, 56
+	349, Mieczyk Hellera, Xiphophorus hellerii, 56
+	350, Zebrasoma zólta, Zebrasoma flavescens, 56
+	351, Zebrasoma zaglopletwa, Zebrasoma veliferum, 56
+	352, Zarlacz czarnopletwy, Carcharhinus melanopterus, 57
+	353, Arabski rekin dywanowy, Chiloscyllium arabicum, 57
+	354, Plaszczka plamista, Potamotrygon motoro, 57
+	355, Tawrosz piaskowy, Carcharias taurus, 57
+	;
+RUN; 
+/*********************/
+
+
+
