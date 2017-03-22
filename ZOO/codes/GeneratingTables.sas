@@ -645,7 +645,7 @@ data ZOO.SPECIES;
 	114, Nierozlaczka czarnolica, Agapornis nigrigenis, 12
 	115, Aleksandretta wieksza, Psittacula eupatria, 12
 	116, Sowa uszata, Asio otus, 13
-	117, Pójdzka, Athene noctua*, 13
+	117, Pójdzka, Athene noctua, 13
 	118, Wlochatka, Aegolius funereus, 13
 	119, Puchacz, Bubo bubo, 13
 	120, Syczek, Otus scops, 13
@@ -974,4 +974,154 @@ data ZOO.DIVISIONS;
 	8,	Pancerzowce
 ;
 RUN; 
+/*********************/
+
+
+
+/*zbior z imionami dla zwierzakow*/
+DATA ZOO.original;
+ INPUT name $ @@;
+DATALINES;
+Agri Ajman Akima Akir Akon Akse Akte Alamo Albert Aleks Alex Alf Alfik Ali Alidor Alidoro Alpik Alvin Algan Amar Amaro Amaru Amazy Ambak Amber Amik Amor Amorek Ampirek Anabol Andersen 
+Aneks Anex Antek Anton Antoniusz Anton Anonim Anu Anzo Apacz Apel Apollo Apser Ares Argos Arial Ariel Armani Arma Armi Arnold Aron Arti Artu As Asik Asior Askan Asper Asos Asti Astor 
+Astro Atlas Atos Atticus Audrey Ax Axel Azis Azor Azorek Babu Baby Baca Badi Bady Badzi Badzio Badziu Bafi Baffi Baflo Bajan Bajer Bajron Baki Bakir Baks Bakster Bakugan Baku Balko 
+Balon Baltazar Baltic Balto Bambi Bambo Bandi Bandziorek Bango Barabol Barney Bartok Bary Barry Basik Basil Baster Bati Batman Baton Bazyl Beethoven Bejbi Beka Beks Bem Bemek Ben Benek 
+Beni Benio Benito Benji Berek Berni Bery Bibi Biedul Biegun Big Bigi Bija Bika Bila Bilbo Bill Billi Billy Bilu Bim Bimbo Bistro Blacky Blair Blejk Bleki Blink Blondyn BlueJay Blues 
+Bo Bob Bobbie Bobby Bobek Bobi Bobik Bobo Bobus Bodzio Boerboel Bogi Bolek Bolo Bolt Bombon Bond Boni Bono Bonus Bonzo Boo BooBoo Bord Borys Boria Borka Borys Bosman Boston Bounty Bozo 
+Brandi Breek Brek Brok Broki Bruiser Brump Bruno Brunon Brutek Brutus Brytan Buba Bubu Budda Buddy Buffy Bugs Buka Bula Bulba Bunio Burek Buro Bursztyn Cacao Caesar Campari Capitan 
+Carlo Cash Casio Celta Cezar Chaps Charli Charlie Chaser Cheester Chewy Chico Chief Chip Chojrak Chowder Chrupek Chromo Ciapek Cleo Clifford Cliper Clipper Clown Cmok Coco Cody Cola 
+Colargol Colo Como Connie Cookie Cooper Cujo Cygan Cykor Cyprian Cytrus Cywil Czaki Czako Czarek Czarny Cziczi Cziko Czoka Czoko Czort Czujny Czwartek DJ Dafik Dale Dali Damazy Dancer 
+Daniele Darel Daster Dasti Dawidz Daz Debi Debian Debiut Dejl Dejler Dejzul Delgado Demon Deryl Dexter Diablo Dick Dido Diego Dino Dodo Dog Dokis Dolar Domingo Donald Dong Dookie Doolar 
+Doudou Doug Doyle Draco Drab Drago Dragon Drako Droopy Dropek Drops Dropsik Dual Duck Ducky Dudek Dui Duke Duki Dusty Dylan Dynamit Dyzio Easy Ed Eddie Edek Edi Edward Efi Egor Elfi Eliot 
+Elmo Elvis Emil Emir Emo Envy Erni Eston Ewan Fabi Fabio Fado Fafik Faith Falco Falko Falkon Famik Farah Fazi Felek Feliks Felix Fender Feniks Fenix Ferbi Ferdek Ferdynand Fero Fidel Fido 
+Fiend Fifi Figiel Figlarz Figaro Fikus Filip Fila Filo Filomen Find Fiodor Fisk Fitek Fix Fliper Flipper Flossie Fofek Foks Fokus Forest Forga Forta Foster Fox Fradzio Franek Franik Francik 
+Franz Fred Freddie Fredek Frederick Fredi Fredzio Frodo Frykas Fugo Fuka Fuks Funfel Funy Futrzak Gacek Gacenty Gander Gapa Garfield Gary George Gibson Giff Ginger Gini Gino Gizmo Gobson 
+Gonzo Goofy Gorm Graffi Grafi Grand Gremlin Grik Gromit Grubson Gryffindor Grymas Grzmot Guapo Gucio Gufi Gumi Gunter Gustaw Gustawo Gustek Gusto Gutek Gwido Hachi Hachiko Hades Hakelbery 
+Hans Happy Harbor Hari Haribo Haris Hary Harry Harvey Hasacz Hasim Hasiu Heban Hektor Herbi Herkules Hermes Heros Hipolit Homer Hooch Hrabia Huck Huckleberry Hugo Humberto Hung Hurbis Idol 
+Idriss Imbir Indigo Irys Iwan Iwo Izi Jacek Jacenty Jackie Jag Jake Jakon Jakub Jambo Janek Janosik Jantar Japa Jasper Jerry Jimpa Jogi Johnny Joker Jorga Jorgu Joszko Judy Juki Jumba 
+Junior Justin Kabang Kabi Kabir Kacper Kai Kajetan Kajtek Kamik Kamil Kami Kano Kapitan Kaps Kapsel Karmel Karo Karot Karusek Kaspar Kasper Kastor Kazan Keks Kejsi Kelt Kessy Kesy Kevin 
+Kibic Kiki Kiler Killer Killian Kim Kimi Kimbo King Kioko Kira Kiri Kissie Kleks Kleksio Klusek Kodi Kofi Koko Kokos Kola Kolik Kolox Koksu Konfi Koni Koral Koralik Korek Kosa Kosmo Kovu 
+Krecik Kropek Kruczek Kruszek Krzysiu Kuba Kuki Kusy Kulfon Kundi Kurt Labek Label Labik Lador Laki Lalu Lamba Lamer Lampari Lampo Lapek Laptop Lary Larry Lars Lecik Lego Lejek Leks Leksiu 
+Leo Leon Lepek Lesik Leszek Lex Lio Lizak Lizus Loczek Loku Lolik Lord Lorenzo Lucek Luckey Lucky Lucyfer Luger Lui Luka Luki Lulu Lumpek Lutek Luzak Maciek Madison Madziar Maf Mafik Mafin 
+Magic Magus Mailo Mailoo Majki Majko Majlo Major Maks Maksik Maksio Maksiu Malin Malloy Mamba Mango Maniek Mapet Maras Marco Mari Marian Markus Marley Marocho Mars Marszand Maruda Max 
+Maxim Maxiu Maxuel Maxymilian Mefi Mello Messi Messy Metin Micah Mick Mietek Mikado Mike Miki Mikrus Milo Milus Miras Mirek Misiaczek Misiek Misio Misiu Miszka Mizio Mleczko Moko Monti 
+Monty Mops Mopsik Morgan Moric Moris Morisek Morus Morusek Mozart Muchomorek Mufi Muffin Mugly Mundi Murek Murzyn Murzynek Musiek Mussi Nagaj Najki Naki Naomi Napi Narcyz Natan Nawi Nazir 
+Nefryt Negro Nelson Nemo Nemrod Nergo Nero Neron Nesi Nessi Nesta Nesti Nesty Net Newil Nex Niki Nikita Nikki Niko Nitro Nixon Nokia Norek Noric Noris Normi Nugat Nuka Obi Obie Oddie Odi 
+Odie Okruszek Olen Olive Olek Opal Orbis Orkisz Orlando Orkisz Oscar Oskar Oskarek Otello Othello Otis Otto OwiAxel Ozor Ozzi Ozzy Paka Pajk Paco Pako Paliw Pandur Pankracy Papik Papin 
+Patrick Patyk Parys Paxi Pedro Pello Pepe Percy Persi Phillip Piegus Pikador Pietro Piko Piksi Piksel Pilot Pimpek Pinio Pirat Pixel Plamik Platon Pluto Poldek Pongo Porter Portos Potter 
+Psikus Puc Pucek Pudsey Puggy Pui Pus Puszek Puzon Raban Rabik Raby Rafcio Rafi Rafik Rainbow Rambo Ramzes Rapi Raptor Raptus Raven Regan Reks Reksio Remi Remik Resco Resko Rex Rexxx Rico Riko Ringo River Rob Robi Robik Rocky Rodos Rodzyn Roki Roky Rolmops Rover Romeo Rony Roy Roys Ruben Ruber 
+ Rubi Rubin Rubinek Ruby Rudi Rudolf Rufi Rufus Rulon Rush Ruten Rysiek Rywal Sabaku Sagan Saha Sajmon Sam Sambor Sando Sasha Scooby Scrapi Shadow Shaggy Shanti Shorty Sid Sidney Sienik 
+ Sierra Silver Simba Simon Sitek Skiper Skoti Skrapi Skrobek Skoczek Skubi Sliver Smokie Smookie Smutek Smyk Smrodek Snooby Snookie Snapi Snuffls Snupi Snuppy Sonik Soofy Sookie Spajk 
+ Spajki Speed Springer Star Stefan Stich Sticz Stig Stubby Sulej Suliko Suzuki Sweet Sybil Szajba Szaman Szarik Szczudlik Szejk Szilok Szkrab Szon Szyszek Tabi Tabun Tachfiku Tadeusz 
+ Tadzik Tajga Tako Tajson Tamtam Taner Tarol Tarzan Tasman Ted Teddy Tedi Tibo Tichtiku Tiger Tigger Timon Timur Tito Tobi Tobias Tobiasz Tobik Toffee Toffi Toffik Toffin Tofi Tofi-fi 
+ Tofik Tokaj Tolek Tom Tomy Tonik Topek Toro Torro Tory Tosiek Toto Toudi Trajpod Tramp Trampek Trymer Tupet Turbo Tutu Twix Tygrysek Tymi Tymon Tysek Tyson Tytus Uggi Uggie Uno Urwisek 
+ Venturi Vero Verus Viggo Vigo Vip  Wacek Walen Wang Wasyl Wedel Weteran Wicher Wigdeon Whiskers Whisky Whusky Wiercioch Wulcan Wulkan Xander Xavi Xavier Xiao Yaris Yogi Zajon Zak Zaki 
+ Zamas Zanjeer Zano Zefir Zeus Zibi Ziomal Ziutek Zordon Zorus Zuzu
+;
+run;
+
+
+DATA ZOO.augmented;
+  SET ZOO.original;
+  sortval = ranuni(0);
+RUN;
+
+PROC SORT DATA=ZOO.augmented OUT=ZOO.names(DROP=sortval) ;
+  BY sortval;
+RUN;
+
+proc sql;
+	drop table ZOO.augmented;
+	drop table ZOO.original;
+quit;
+/*********************/
+
+
+
+/*tabela zawierajaca spis zwierzat w ZOO*/
+data ZOO.ANIMALS;
+	length 
+	animal_id 7
+	name $20
+	sex $1
+	birth_date 6
+	birth_place $50
+	deceased_date 6
+	species_id 3
+	object_id 4;
+
+	retain animal_id 1 female 'F' male 'M' start_date '09mar08'd;
+	format start_date birth_date deceased_date ddmmyy10.;
+	set ZOO.SPECIES;
+		
+		if order_id<=20 then do; *ptaki;
+			do i=1 to ceil(20*ranuni(0))+6;				
+				birth_date=start_date+round(365*9*ranuni(0));
+				if ranuni(0)<=0.5 then sex=female; else sex=male;
+
+				if ranuni(0)<=0.7 then do;
+					if year(birth_date)<2013 then deceased_date=birth_date+round(365*2*ranuni(0)+365);
+				end; 
+
+				output;
+				animal_id=animal_id+1;
+				deceased_date=.;
+			end;
+		end;
+		if order_id>20 and order_id<=31 then do; *ssaki;
+			do i=1 to ceil(20*ranuni(0))+5;				
+				birth_date=start_date+round(365*9*ranuni(0));
+				if ranuni(0)<=0.5 then sex=female; else sex=male;
+
+				if ranuni(0)<=0.5 then do;
+					if year(birth_date)<2013 then deceased_date=birth_date+round(365*2*ranuni(0)+365);
+				end; 
+
+				output;
+				animal_id=animal_id+1;
+				deceased_date=.;
+			end;
+		end;
+		if order_id>31 and order_id<=43 then do; *bezkregowce;
+			do i=1 to ceil(30*ranuni(0))+7;				
+				birth_date=start_date+round(365*9*ranuni(0));
+				if ranuni(0)<=0.5 then sex=female; else sex=male;
+
+				if ranuni(0)<=0.8 then do;
+					if year(birth_date)<2014 then deceased_date=birth_date+round(365*3*ranuni(0));
+				end; 
+
+				output;
+				animal_id=animal_id+1;
+				deceased_date=.;
+			end;
+		end;
+		if order_id>43 then do; *ryby;
+			do i=1 to ceil(25*ranuni(0))+6;				
+				birth_date=start_date+round(365*9*ranuni(0));
+				if ranuni(0)<=0.5 then sex=female; else sex=male;
+
+				if ranuni(0)<=0.5 then do;
+					if year(birth_date)<2013 then deceased_date=birth_date+round(365*2*ranuni(0)+365);
+				end; 
+
+				output;
+				animal_id=animal_id+1;
+				deceased_date=.;
+			end;
+		end;
+	keep animal_id name sex birth_date birth_place deceased_date species_id object_id;
+RUN; 
+
+*SORT BY BIRTH_DATE!!!!;
+
+proc sql;
+	drop table ZOO.names;
+quit;
+
+proc sql;
+	create table zoo.temp as
+	select * from ZOO.animals
+	where deceased_date eq .;
+quit;
 /*********************/
