@@ -886,3 +886,92 @@ RUN;
 
 
 
+/*tabela zawierajaca informacje o rzedach (klasyfikacja semantyczna zwierzat)*/
+data ZOO.ORDERS;
+	length order_id 3 
+	order_name $50
+	division_id 3;
+	INFILE DATALINES DLM=',';
+ 	INPUT order_id order_name $ division_id;
+	DATALINES;
+	1, Bezgrzebieniowce, 1
+	2, Pingwiny, 1
+	3, Blaszkodziobe, 1   
+	4, Pelnopletwe, 1
+	5, Bocianowe, 1
+	6, Flamingi, 1
+	7, Zurawiowe , 1
+	8, Siewkowe, 1
+	9, Szponiaste, 1
+	10, Grzebiace , 1
+	11, Golebiowate, 1
+	12, Papugowate, 1
+	13, Sowy, 1
+	14, Kraskowe, 1
+	15, Slonecznicowe, 1
+	16, Dzieciolowe, 1
+	17, Turakowate, 1
+	18, Dzioborozce i dudki, 1
+	19, Czepigi, 1
+	20, Wróblowate, 1
+	21, Trabowce, 2
+	22, Góralki, 2
+	23, Nieparzystokopytne , 2
+	24, Parzystokopytne, 2
+	25, Drapiezne, 2
+	26, Naczelne, 2
+	27, Zajeczaki, 2
+	28, Gryzonie, 2
+	29, Nietoperze, 2
+	30, Szczerbaki, 2
+	31, Torbacze, 2
+	32, Pajaki, 3
+	33, Skolopendroksztaltne, 5
+	34, Skorpiony, 3
+	35, Pluskwiaki, 6
+	36, Prostoskrzydle, 6
+	37, Blonkoskrzydle, 6
+	38, Systellommatophora, 7
+	39, Chrzaszcze, 6
+	40, Proscopiidae, 6
+	41, Straszyki, 6
+	42, Karaczany, 6
+	43, Dziesiecionogi, 8
+	44, Kostnojezykoksztaltne, 4
+	45, Okonioksztaltne, 4
+	46, Iglicznioksztaltne, 4
+	47, Sumoksztaltne, 4
+	48, Kasaczoksztaltne, 4
+	49, Szczupakoksztaltne, 4
+	50, Ciernikoksztaltne, 4
+	51, Karpioksztaltne, 4
+	52, Wegorzoksztaltne, 4
+	53, Karpiencoksztaltne, 4
+	54, Rozdymkoksztaltne, 4
+	55, Dywanoksztaltne, 4
+	56, Kostnoszkieletowe, 4
+	57, Chrzestnoszkieletowe, 4
+;
+RUN; 
+/*********************/
+
+
+
+/*tabela zawierajaca informacje o gromadach (klasyfikacja semantyczna zwierzat)*/
+data ZOO.DIVISIONS;
+	length division_id 3 
+	division_name $50;
+	INFILE DATALINES DLM=',';
+ 	INPUT division_id division_name $;
+	DATALINES;
+	1,	Ptaki
+	2,	Ssaki
+	3,	Pajeczaki
+	4,	Ryby
+	5,	Wije
+	6,	Owady
+	7,	Slimaki
+	8,	Pancerzowce
+;
+RUN; 
+/*********************/
