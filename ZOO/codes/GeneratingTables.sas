@@ -1045,33 +1045,43 @@ data ZOO.ANIMALS;
 	name $20
 	sex $1
 	birth_date 6
-	birth_place $50
+	birth_place $20
 	deceased_date 6
 	species_id 3
-	object_id 4;
+	object_id $5;
 
 	retain animal_id 1 female 'F' male 'M' start_date '09mar08'd;
+	retain countrycounter 41 countrylist 'Andora Angola Argentyna Australia Barbados Brazylia Chile Chiny Cypr Dominikana Ekwador Filipiny Finlandia Gabon Gambia Ghana Grenada Haiti Honduras Indie Indonezja Jemen Jordania Kambodza Kanada Kolumbia Kongo Kuba Laos Madagaskar Malezja Maroko 
+ 	Meksyk Mozambik Nepal Suazi Sudan Tanzania Togo Tuvalu Uganda';
+	retain pta 0 ter 0 wyb 0 akw 0;
 	format start_date birth_date deceased_date ddmmyy10.;
-	set ZOO.SPECIES;
-		
+	set ZOO.SPECIES end=last;		
+		birth_country=scan(countrylist,round(ranuni(0)*40)+1); *dla calego gatunku jeden kraj;
+
 		if order_id<=20 then do; *ptaki;
+			if pta eq 0 then pta=1; else do; if ranuni(0)<=0.5 then pta=pta+1; end;
+			object_id=cats("PTA",pta);
 			do i=1 to ceil(20*ranuni(0))+6;				
 				birth_date=start_date+round(365*9*ranuni(0));
 				if ranuni(0)<=0.5 then sex=female; else sex=male;
+				if year(birth_date)>=2010 then birth_place="ZOO"; else birth_place=birth_country; 
 
 				if ranuni(0)<=0.7 then do;
 					if year(birth_date)<2013 then deceased_date=birth_date+round(365*2*ranuni(0)+365);
 				end; 
-
+					
 				output;
 				animal_id=animal_id+1;
-				deceased_date=.;
+				deceased_date=.;				
 			end;
 		end;
 		if order_id>20 and order_id<=31 then do; *ssaki;
+			if wyb eq 0 then wyb=1; else do; if ranuni(0)<=0.5 then wyb=wyb+1; end;
+			object_id=cats("WYB",wyb);
 			do i=1 to ceil(20*ranuni(0))+5;				
 				birth_date=start_date+round(365*9*ranuni(0));
 				if ranuni(0)<=0.5 then sex=female; else sex=male;
+				if year(birth_date)>=2010 then birth_place="ZOO"; else birth_place=birth_country; 
 
 				if ranuni(0)<=0.5 then do;
 					if year(birth_date)<2013 then deceased_date=birth_date+round(365*2*ranuni(0)+365);
@@ -1083,9 +1093,12 @@ data ZOO.ANIMALS;
 			end;
 		end;
 		if order_id>31 and order_id<=43 then do; *bezkregowce;
+			if ter eq 0 then ter=1; else do; if ranuni(0)<=0.5 then ter=ter+1; end;
+			object_id=cats("TER",ter);
 			do i=1 to ceil(30*ranuni(0))+7;				
 				birth_date=start_date+round(365*9*ranuni(0));
 				if ranuni(0)<=0.5 then sex=female; else sex=male;
+				if year(birth_date)>=2010 then birth_place="ZOO"; else birth_place=birth_country; 
 
 				if ranuni(0)<=0.8 then do;
 					if year(birth_date)<2014 then deceased_date=birth_date+round(365*3*ranuni(0));
@@ -1097,9 +1110,12 @@ data ZOO.ANIMALS;
 			end;
 		end;
 		if order_id>43 then do; *ryby;
+			if akw eq 0 then akw=1; else do; if ranuni(0)<=0.5 then akw=akw+1; end;
+			object_id=cats("AKW",akw);
 			do i=1 to ceil(25*ranuni(0))+6;				
 				birth_date=start_date+round(365*9*ranuni(0));
 				if ranuni(0)<=0.5 then sex=female; else sex=male;
+				if year(birth_date)>=2010 then birth_place="ZOO"; else birth_place=birth_country; 
 
 				if ranuni(0)<=0.5 then do;
 					if year(birth_date)<2013 then deceased_date=birth_date+round(365*2*ranuni(0)+365);
@@ -1110,18 +1126,49 @@ data ZOO.ANIMALS;
 				deceased_date=.;
 			end;
 		end;
+
+	if last then do;
+		call symputx('pta',pta);
+		call symputx('wyb',wyb);
+		call symputx('ter',ter);
+		call symputx('akw',akw);
+		call symputx('animals',animal_id-1);
+	end;
 	keep animal_id name sex birth_date birth_place deceased_date species_id object_id;
 RUN; 
 
-*SORT BY BIRTH_DATE!!!!;
-
-proc sql;
-	drop table ZOO.names;
+proc sql noprint;
+	select count(*) into: names_count
+	from ZOO.names;
 quit;
 
-proc sql;
-	create table zoo.temp as
-	select * from ZOO.animals
-	where deceased_date eq .;
-quit;
+%macro multipleNames();
+	%let loop=%sysevalf(&animals./&names_count.,ceil);
+
+	data ZOO.NAMES;
+	set %do i=1 %to &loop.;
+		ZOO.NAMES 
+	%end;
+	;
+	run;
+	%put &=loop.;
+%mend;
+
+%multipleNames();
+
+data ZOO.ANIMALS;
+	set ZOO.ANIMALS;
+	set ZOO.NAMES;
+run;
+
+proc sort data=ZOO.ANIMALS;
+	by BIRTH_DATE;
+run;
+
+/*proc sql;*/
+/*	drop table ZOO.names;*/
+/*quit;*/
 /*********************/
+
+
+%put &=pta &=wyb &=ter &=akw &=animals &=names_count;
