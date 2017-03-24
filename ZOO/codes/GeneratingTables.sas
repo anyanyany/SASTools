@@ -1165,10 +1165,94 @@ proc sort data=ZOO.ANIMALS;
 	by BIRTH_DATE;
 run;
 
-/*proc sql;*/
-/*	drop table ZOO.names;*/
-/*quit;*/
+proc sql;
+	drop table ZOO.names;
+quit;
 /*********************/
 
 
-%put &=pta &=wyb &=ter &=akw &=animals &=names_count;
+
+/*tabela zawierajaca spis obiektów*/
+data ZOO.OBJECTS;
+	length object_id $5
+	object_type $15;
+	
+	do i=1 to &wyb.;
+		object_id=cats("WYB",i);
+		object_type="Wybieg";
+		output;
+	end;
+
+	do i=1 to &ter.;
+		object_id=cats("TER",i);
+		object_type="Terrarium";
+		output;
+	end;
+
+	do i=1 to &pta.;
+		object_id=cats("PTA",i);
+		object_type="Ptaszarnia";
+		output;
+	end;
+
+	do i=1 to &akw.;
+		object_id=cats("AKW",i);
+		object_type="Akwarium";
+		output;
+	end;
+	keep object_id object_type;
+run;
+/*********************/
+
+
+
+/*tabela zawierajaca zestawienie pracowników odpowiedzialnych za poszczególne obiekty*/
+proc sql noprint;
+	select count(*) into: staffcounter from ZOO.EMPLOYEES where position_code=5 and layoff_date=.;
+quit;
+
+proc sql noprint;
+	select employee_id into: staff1- from ZOO.EMPLOYEES where position_code=5 and layoff_date=.;
+quit;
+
+data ZOO.RESPONSIBLE_STAFF;
+	set ZOO.OBJECTS;
+		do i=1 to round(4*ranuni(0)+3);
+			index=ceil(&staffcounter.*ranuni(0));
+			varname=cats("staff",index);
+			employee_id=symget(varname);
+			output;
+		end;
+	keep employee_id object_id;
+run;
+/*********************/
+
+
+
+/*tabela zawierajaca spis zywnosci*/
+
+/*********************/
+
+
+
+/*tabela zawierajaca wymagania dietetyczne dla poszczególnych gatunków*/
+
+/*********************/
+
+
+
+/*tabela zawierajaca specjalne wymagania dietetyczne zwierzat*/
+
+/*********************/
+
+
+
+/*tabela zawierajaca liste wszystkich dostaw*/
+
+/*********************/
+
+
+
+/*tabela zawierajaca szczególy wszystkich dostaw*/
+
+/*********************/
