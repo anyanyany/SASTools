@@ -1230,7 +1230,19 @@ run;
 
 
 /*tabela zawierajaca spis zywnosci*/
+data ZOO.FOOD;
+	length food_id 4
+	name $30
+	quantity 6
+	unit $8;
+	
+	units="kg szt l ml g"
+	do food_id=1 to round(300+100*ranuni(0));
+		output;
+	end;
 
+	keep food_id name quantity unit;
+RUN; 
 /*********************/
 
 
@@ -1254,5 +1266,30 @@ run;
 
 
 /*tabela zawierajaca szczególy wszystkich dostaw*/
+proc sql noprint;
+	select count(*) into: suppliers from ZOO.SUPPLIERS;
+quit;
 
+data ZOO.SUPPLIES;
+	length supply_id 8 date 6 supplier_id 3 other_details $50;
+	format date ddmmyy10.;
+	date='01jan10'd;
+	supply_id=0;
+	array days[&suppliers.];
+
+	do supplier=1 to &suppliers.;
+		days[supplier]=ceil(7*ranuni(0));
+	end;
+
+	do i=1 to 8*365-212;
+		do supplier_id=1 to &suppliers.;
+			if mod(date,days(supplier_id)) eq 0 then do;
+				supply_id=supply_id+1;
+				output;
+			end;
+		end;
+		date=date+1;
+	end;
+	keep supply_id date supplier_id other_details;
+run;
 /*********************/
