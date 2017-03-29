@@ -1,9 +1,3 @@
-data x;
-x=1;
-output;
-x=2;
-output;
-run_2;
 /* end of lecture 4 */ /*1702*/
 
 
@@ -47,7 +41,7 @@ options SASAUTOS = (sasautos 'C:\SAS_WORK\MAKRA');
 
 
 
-LIBNAME makra BASE "C:\SASTools";
+LIBNAME makra BASE "C:\SAS_WORK\MAKRA";
 
 options 
 MSTORED             /* opcja aktywuje szukanie skompilowanych makr uzytkownika */
@@ -421,6 +415,7 @@ x= 4+napis;
 %put NOTE:[!] Nie widzisz jak sie nazywam?! "Never_execute"!! To po co uruchamiasz?!;
 %mend never_execute;
 
+
 run;
 
 /*
@@ -429,6 +424,8 @@ run;
 %put NOTE:[!] Nie widzisz jak sie nazywam?! "Never_execute"!! To po co uruchamiasz?!;
 %mend never_execute;
 */
+
+
 
 
 
@@ -530,7 +527,7 @@ run;
 
 
 
-         
+
 
 
 data _null_;
@@ -748,8 +745,8 @@ run;
 
  
 proc printto 
-print = "C:\Users\p.gburczyk\AppData\Local\Temp\SAS Temporary Files\_TD11196_ITDP-KOMPUTER_\PRINTTO_OUTPUT.TXT"
-log = "C:\Users\p.gburczyk\AppData\Local\Temp\SAS Temporary Files\_TD11196_ITDP-KOMPUTER_\PRINTTO_LOG.TXT"
+print = "C:\SAS_WORK\PRINTTO_OUTPUT.TXT"
+log = "C:\SAS_WORK\PRINTTO_LOG.TXT"
 NEW
 ;
 run;
