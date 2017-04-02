@@ -2,6 +2,8 @@
 /*********************/
 
 libname ZOO BASE "D:\SASTools\ZOO";
+dm log 'clear';
+
 
 /*tabela zawierajaca rodzaje biletow*/
 data ZOO.TICKET_TYPES;
@@ -157,7 +159,7 @@ data ZOO.EMPLOYEES;
 	2, Karolina, Julia, Kowalska, 01/01/1965, 65010117406, Warszawa, 29 Listopada, 2, 10, 01-740, 596401794, karolina.kowalska@op.pl, 65010117406596401794650101, 01/01/2010, ., 1, 2, 100, 10000
 	3, Piotr, , Nowak, 02/02/1966, 66020228517, Warszawa, Adama Idzkowskiego, 22, 21, 02-851, 617512815, piotr.nowak@vp.pl, 66020228517617512815660202, 02/02/2011, ., 1, 2, 100, 10000
 	4, Michal, Marcin, Kowalski, 03/03/1967, 67030339628, Pruszków, Adolfa Suligowskiego, 123, 72, 03-962, 728623926, michal.kowalski@gmail.com, 67030339628728623926670303, 03/03/2010, ., 1, 2, 80, 12000
-	5, Jakub, Jan, Wi?niewski, 04/04/1968, 68040440739, Warszawa, Agrykola, 234, 103, 04-073, 539734037, jakub.wi?niewski@op.pl, 68040440739539734037680404, 04/04/2010, ., 3, 3, 100, 8000
+	5, Jakub, Jan, Wisniewski, 04/04/1968, 68040440739, Warszawa, Agrykola, 234, 103, 04-073, 539734037, jakub.wisniewski@op.pl, 68040440739539734037680404, 04/04/2010, ., 3, 3, 100, 8000
 	6, Agnieszka, Maria, Dabrowska, 05/05/1969, 69050551840, Warszawa, Bagatela, 46, 45, 05-184, 640845148, agnieszka.dabrowska@vp.pl, 69050551840640845148690505, 05/05/2010, ., 2, 3, 100, 9000
 	7, Maria, Anna, Lewandowska, 06/05/1970, 70050662954, Siedlce, Bagno, 66, 65, 06-295, 754956259, maria.lewandowska@gmail.com, 70050662954754956259700506, 06/05/2011, 03/03/2015, 1, 3, 100, 8500
 	8, Marcin, , Wójcik, 07/06/1971, 71060773065, Piastów, Barokowa, 167, 116, 07-306, 565067360, marcin.wojcik@vp.pl, 71060773065565067360710607, 07/06/2011, ., 1, 4, 100, 4000
@@ -165,7 +167,7 @@ data ZOO.EMPLOYEES;
 	10, Bartosz, Daniel, Kowalczyk, 09/08/1973, 73080995587, Siedlce, Belwederska, 90, 89, 09-558, 787589585, bartosz.kowalczyk@o2.pl, 73080995587787589585730809, 09/08/2010, ., 1, 4, 100, 6000
 	11, Zuzanna, Anna, Zielinska, 10/09/1974, 74091006698, Warszawa, Bialoskórnicza, 101, 109, 00-669, 598690696, zuzanna.zielinska@aol.com, 74091006698598690696740910, 10/09/2012, ., 1, 4, 100, 7000
 	12, Monika, Julia, Szymanska, 11/10/1975, 75101117709, Warszawa, Bielanska, 102, 51, 01-770, 619701717, monika.szymanska@op.pl, 75101117709619701717751011, 11/10/2013, ., 3, 4, 100, 4000
-	13, Iga, , Wo?niak, 12/11/1976, 76111221810, Warszawa, Blonska, 213, 82, 02-181, 720812128, iga.wo?niak@wp.pl, 76111221810720812128761112, 12/11/2014, ., 1, 4, 100, 5000
+	13, Iga, , Wozniak, 12/11/1976, 76111221810, Warszawa, Blonska, 213, 82, 02-181, 720812128, iga.wozniak@wp.pl, 76111221810720812128761112, 12/11/2014, ., 1, 4, 100, 5000
 	14, Artur, , Kozlowski, 13/12/1977, 77121332924, Warszawa, Boczna, 25, 24, 03-292, 534923239, artur.kozlowski@gmail.com, 77121332924534923239771213, 13/12/2015, ., 2, 4, 80, 4000
 	15, Pawel, Mateusz, Jankowski, 14/01/1978, 78011443035, Warszawa, Bohaterów Getta, 45, 44, 04-303, 645034340, pawel.jankowski@op.pl, 78011443035645034340780114, 14/01/2016, ., 1, 4, 100, 6000
 	16, Daniel, Adam, Wojciechowski, 15/02/1979, 79021554146, Warszawa, Boleslawa Prusa, 146, 95, 05-414, 756145451, daniel.wojciechowski@vp.pl, 79021554146756145451790215, 15/02/2010, ., 3, 4, 100, 7000
@@ -229,12 +231,12 @@ data ZOO.EMPLOYEES;
 	74, Antonina, , Mazurek, 28/08/1979, 79082804247, Siedlce, Jaworzynska, 22, 23, 00-424, 527240422, antonina.mazurek@o2.pl, 79082804247527240422790828, 28/08/2010, ., 1, 5, 100, 8000
 	75, Nadia, Zuzanna, Wysocka, 09/09/1980, 80090945358, Warszawa, Jazdów, 42, 43, 04-535, 638354533, nadia.wysocka@aol.com, 80090945358638354533800909, 09/09/2011, ., 1, 5, 50, 3500
 	76, Michal, , Adamski, 10/10/1981, 81101056469, Pruszków, Jezuicka, 143, 94, 05-646, 749465644, michal.adamski@op.pl, 81101056469749465644811010, 10/10/2010, ., 1, 6, 100, 6000
-	77, Jakub, Krzysztof, Ka?mierczak, 11/11/1982, 82111167570, Warszawa, Johna Lennona, 254, 125, 06-757, 550576755, jakub.ka?mierczak@wp.pl, 82111167570550576755821111, 11/11/2010, ., 1, 5, 100, 7000
+	77, Jakub, Krzysztof, Kazmierczak, 11/11/1982, 82111167570, Warszawa, Johna Lennona, 254, 125, 06-757, 550576755, jakub.kazmierczak@wp.pl, 82111167570550576755821111, 11/11/2010, ., 1, 5, 100, 7000
 	78, Agnieszka, , Wasilewska, 12/12/1983, 83121278684, Warszawa, Józefa Hoene-Wronskiego, 66, 67, 07-868, 664687866, agnieszka.wasilewska@gmail.com, 83121278684664687866831212, 12/12/2010, 13/12/2015, 2, 5, 100, 8000
 	79, Maria, Wiktoria, Sobczak, 13/01/1984, 84011389795, Warszawa, Józefa Lewartowskiego, 86, 87, 08-979, 775798977, maria.sobczak@op.pl, 84011389795775798977840113, 13/01/2011, ., 1, 5, 100, 9000
 	80, Marcin, , Czerwinski, 14/02/1985, 85021490806, Warszawa, Juliana Bartoszewicza, 187, 139, 09-080, 596809098, marcin.czerwinski@vp.pl, 85021490806596809098850214, 14/02/2011, ., 1, 6, 100, 8000
 	81, Ryszard, , Andrzejewski, 15/03/1986, 86031504941, Warszawa, Juliana Przybosia, 298, 161, 00-494, 611940419, ryszard.andrzejewski@gmail.com, 86031504941611940419860315, 15/03/2010, ., 1, 5, 100, 7500
-	82, Roman, , Cie?lak, 16/04/1987, 87041615052, Piastów, Juliana Smulikowskiego, 10, 3, 01-505, 722051520, roman.cie?lak@o2.pl, 87041615052722051520870416, 16/04/2010, ., 1, 5, 100, 7000
+	82, Roman, , Cieslak, 16/04/1987, 87041615052, Piastów, Juliana Smulikowskiego, 10, 3, 01-505, 722051520, roman.cieslak@o2.pl, 87041615052722051520870416, 16/04/2010, ., 1, 5, 100, 7000
 	83, Dariusz, , Glowacki, 17/05/1988, 88051726163, Warszawa, Juliana Tuwima, 21, 23, 02-616, 533162631, dariusz.glowacki@gmail.com, 88051726163533162631880517, 17/05/2012, ., 1, 5, 100, 6500
 	84, Dawid, Alan, Zakrzewski, 18/05/1989, 89051837274, Warszawa, Jurija Gagarina, 122, 74, 03-727, 644273742, dawid.zakrzewski@op.pl, 89051837274644273742890518, 18/05/2013, ., 1, 5, 100, 6000
 	85, Bartosz, , Kolodziej, 19/06/1990, 90061948385, Warszawa, Kamienne Schodki, 233, 105, 04-838, 755384853, bartosz.kolodziej@wp.pl, 90061948385755384853900619, 19/06/2014, ., 3, 5, 100, 7000
@@ -294,7 +296,7 @@ data ZOO.EMPLOYEES;
 	139, Monika, , Stasiak, 28/05/1986, 86052851733, Piastów, Mila, 83, 87, 05-173, 773735177, monika.stasiak@aol.com, 86052851733773735177860528, 28/05/2010, ., 1, 5, 100, 7000
 	140, Iga, Malgorzata, Stankiewicz, 09/05/1987, 87050962844, Warszawa, Miodowa, 184, 138, 06-284, 584846288, iga.stankiewicz@op.pl, 87050962844584846288870509, 09/05/2011, ., 1, 9, 100, 4000
 	141, Artur, , Piatek, 28/06/1988, 88062873955, Warszawa, Mokotowska, 295, 169, 07-395, 695957399, artur.piatek@wp.pl, 88062873955695957399880628, 28/06/2011, ., 1, 5, 80, 4500
-	142, Alan, , Jó?wiak, 29/07/1989, 89072914006, Warszawa, Moliera, 7, 2, 01-400, 716001410, alan.jo?wiak@gmail.com, 89072914006716001410890729, 29/07/2010, ., 1, 6, 100, 6000
+	142, Alan, , Józwiak, 29/07/1989, 89072914006, Warszawa, Moliera, 7, 2, 01-400, 716001410, alan.jozwiak@gmail.com, 89072914006716001410890729, 29/07/2010, ., 1, 6, 100, 6000
 	143, Stanislaw, , Urban, 30/08/1990, 90083025417, Warszawa, Mordechaja Anielewicza, 27, 22, 02-541, 527412524, stanislaw.urban@op.pl, 90083025417527412524900830, 30/08/2010, 21/07/2015, 1, 5, 100, 7000
 	144, Zuzanna, Iwona, Dobrowolska, 01/09/1991, 91090136528, Warszawa, Stara, 128, 73, 03-652, 638523635, zuzanna.dobrowolska@vp.pl, 91090136528638523635910901, 01/09/2012, ., 1, 5, 100, 8000
 	145, Lena, , Pawlik, 02/10/1992, 92100247639, Pruszków, Stawki, 239, 104, 04-763, 749634746, lena.pawlik@gmail.com, 92100247639749634746921002, 02/10/2013, ., 3, 5, 100, 9000
@@ -323,7 +325,7 @@ data ZOO.EMPLOYEES;
 	168, Zofia, , Ratajczak, 03/08/1986, 86080300700, Warszawa, Okólnik, 165, 111, 00-070, 610700017, zofia.ratajczak@vp.pl, 86080300700610700017860803, 03/08/2010, ., 1, 6, 100, 8000
 	169, Anna, , Romanowska, 26/09/1987, 87092614814, Piastów, Okrag, 276, 142, 01-481, 724811428, anna.romanowska@gmail.com, 87092614814724811428870926, 26/09/2012, ., 3, 5, 100, 7000
 	170, Danuta, Zofia, Matuszewska, 27/10/1988, 88102725925, Warszawa, Oleandrów, 88, 84, 02-592, 535922539, danuta.matuszewska@o2.pl, 88102725925535922539881027, 27/10/2013, ., 1, 6, 100, 8000
-	171, Ewa, , ?Liwinska, 28/11/1989, 89112836036, Warszawa, Ordynacka, 108, 104, 03-603, 646033640, ewa.?liwinska@aol.com, 89112836036646033640891128, 28/11/2010, 24/10/2016, 2, 5, 100, 8500
+	171, Ewa, , Liwinska, 28/11/1989, 89112836036, Warszawa, Ordynacka, 108, 104, 03-603, 646033640, ewa.liwinska@aol.com, 89112836036646033640891128, 28/11/2010, 24/10/2016, 2, 5, 100, 8500
 	172, Amelia, , Madej, 29/12/1990, 90122947148, Warszawa, Orla, 109, 55, 04-714, 758144751, amelia.madej@op.pl, 90122947148758144751901229, 29/12/2011, ., 1, 5, 100, 6500
 	173, Aleksandra, Malgorzata, Kasprzak, 30/01/1991, 91013058259, Warszawa, Ossolinskich, 211, 86, 05-825, 569255862, aleksandra.kasprzak@wp.pl, 91013058259569255862910130, 30/01/2010, ., 1, 5, 100, 5500
 	174, Monika, , Wilczynska, 16/02/1992, 92021669360, Warszawa, Pamietajcie o Ogrodach, 23, 28, 06-936, 670366973, monika.wilczynska@gmail.com, 92021669360670366973920216, 16/02/2010, ., 1, 6, 60, 4000
@@ -355,19 +357,33 @@ data ZOO.EMPLOYEES;
 	200, Lukasz, Andrzej, Chrzanowski, 04/06/1989, 89060468667, Warszawa, Zygmunta Slominskiego, 181, 136, 06-866, 567666866, lukasz.chrzanowski@gmail.com, 89060468667567666866890604, 04/06/2010, 29/03/2016, 1, 5, 100, 8500
 	;
 run;
+
+
+PROC SORT DATA=ZOO.employees;
+  BY hire_date;
+RUN;
+
+data ZOO.employees;
+	set ZOO.employees;
+	employee_id=_n_;
+run;
 /*********************/
 
 
 
 /*tabela zawierajaca wszystkie transakcje*/
 /*tymczasowo bez obliczonej lacznej kwoty transakcji*/
+proc sql noprint;
+	select employee_id into:employees SEPARATED BY ", "  from ZOO.EMPLOYEES where position_code=9 and layoff_date=.;
+quit;
+
 data ZOO.TRANSACTIONS;
 	length transaction_id 8 date 6 employee_id 6 amount 4;
 	format date ddmmyy10.;
 	date='01jan10'd;
 	transaction_id=0;
 	amount=0;
-	array emp[11]  (18, 50, 67, 112, 116, 127, 140, 146, 166, 186, 195); 
+	array emp[11]  (&employees.);  ****TO CHANGE!!!!!!!!***********;
 	do i=1 to 8*365-212;
 		m=month(date);
 		n=0;
@@ -798,7 +814,7 @@ data ZOO.SPECIES;
 	267, Kielb, Gobio gobio, 51
 	268, Ploc, Rutilus rutilus, 51
 	269, Strzebla blotna, Phoxinus perenurus, 51
-	270, S?lepiec jaskiniowy, Astyanax mexicanus, 48
+	270, Slepiec jaskiniowy, Astyanax mexicanus, 48
 	271, Nozowiec indyjski, Chitala ornata, 44
 	272, Zbrojnik, Hypostomus plecostomus, 47
 	273, Zbrojnik lamparci, Glyptopterichthys gibbiceps, 47
@@ -832,7 +848,7 @@ data ZOO.SPECIES;
 	305, Lustrzen meksykanski, Astyanax mexicanus, 56
 	306, Rogatnica kolczasta, Balistapus undulatus, 56
 	307, Bedocja madagaskarska, Bedotia geayi, 56
-	308, Kara? zlocisty, Carassius auratus auratus, 56
+	308, Karas zlocisty, Carassius auratus auratus, 56
 	309, Nozowiec, Chitala ornata, 56
 	310, Bocja wspaniala, Chromobotia macracanthus/Botia macracanthus, 56
 	311, Stadnik zóltoogonowy, Chrysiptera parasema, 56
@@ -1235,44 +1251,186 @@ data ZOO.FOOD;
 	name $30
 	quantity 6
 	unit $8;
-	
-	units="kg szt l ml g"
-	do food_id=1 to round(300+100*ranuni(0));
-		output;
-	end;
-
-	keep food_id name quantity unit;
+	INFILE DATALINES DLM=',';
+ 	INPUT food_id name $ quantity unit $;
+	DATALINES;
+	1, Ziarna slonecznika, 1200, g
+	2, Proso zólte, 2000, g
+	3, Rzepak ziarna, 3400, g
+	4, Mak, 1500, g
+	5, Orzechy mix, 2200, g
+	6, Sezam ziarna, 3200, g
+	7, Proso senegalskie, 1600, g
+	8, Kasza mix, 2000, g
+	9, Pszenica ziarna, 3000, g
+	10, Owies ziarna, 1300, g
+	11, Platki owsiane, 3100, g
+	12, Plankton, 1200, g
+	13, Slimaki, 3000, g
+	14, Muszki owocówki, 2000, g
+	15, Oczlik, 1500, g
+	16, Rozwielitka, 1800, g
+	17, Czarna larwa komara, 2300, g
+	18, Ochotka, 2500, g
+	19, Wodzien, 3200, g
+	20, Rurecznik, 2600, g
+	21, Doniczkowce, 1900, g
+	22, Granulat dla ryb, 5200, g
+	23, Pokarm w tabletkach dla ryb, 6500, g
+	24, Glony, 4500, g
+	25, Mieso ryb mix, 2500, g
+	26, Karma dla owadów mix, 3500, g
+	27, Swierszcze, 1800, g
+	28, Salata, 500, g
+	29, Kapusta, 900, g
+	30, Pedy traw Spinifex, 4500, g
+	31, Rosliny mix, 6500, g	
+	32, Owoce mix, 6500, g
+	33, Pedy bambusa, 3600, g
+	34, Mieso ssaków, 36, kg
+	35, Mieso ptaków, 28, kg
+	;
 RUN; 
 /*********************/
 
 
 
 /*tabela zawierajaca wymagania dietetyczne dla poszczególnych gatunków*/
+data ZOO.SPECIES_DIETARY_REQUIREMENTS;
+	length requirement_id 4 
+	species_id 3 
+	food_id 4 
+	daily_amount 4 
+	unit $3;
 
+	retain requirement_id 1;
+	set ZOO.SPECIES;
+		
+		if species_id<164 then do; *ptaki;
+			food_id=1+round(10*ranuni(0));
+			daily_amount = 10*ceil(10*ranuni(0));
+			unit="g";
+			
+			tmp=1+round(10*ranuni(0));
+			if tmp ne food_id then do;
+				output;		
+				requirement_id=requirement_id+1;
+				food_id=tmp;
+				daily_amount = 10*ceil(10*ranuni(0));
+				unit="g";		
+			end;	
+		end;
+		else if species_id>=164 and species_id<=230 then do; *ssaki;
+			if species_id<=191 or (species_id>=208 and species_id<=228) then do;
+				food_id=30;
+				daily_amount = 50+10*ceil(7*ranuni(0));
+				unit="g";
+				output;		
+				requirement_id=requirement_id+1;
+				food_id=31;
+				daily_amount = 100+100*ceil(6*ranuni(0));
+				unit="g";
+				output;		
+				requirement_id=requirement_id+1;
+				food_id=32;
+				daily_amount = 100+100*ceil(3*ranuni(0));
+				unit="g";
+			end;
+			if species_id>=192 and species_id<=195 then do;
+				food_id=25;
+				daily_amount = 200+100*ceil(9*ranuni(0));
+				unit="g";	
+				output;		
+				requirement_id=requirement_id+1;
+				if species_id=195 then do;
+					food_id=33;
+					daily_amount = 200+100*ceil(5*ranuni(0));
+					unit="g";
+				end;
+			end;
+
+			if species_id>=196 and species_id<=207 then do;
+				food_id=34;
+				daily_amount = 1+ceil(9*ranuni(0));
+				unit="kg";
+				output;		
+				requirement_id=requirement_id+1;
+				food_id=35;
+				daily_amount = 1+ceil(9*ranuni(0));
+				unit="kg";
+			end;
+			if species_id=229 or species_id=230  then do;
+				food_id=30;
+				daily_amount = 100+100*ceil(5*ranuni(0));
+				unit="g";
+			end;
+		end;
+		else if species_id>=231 and species_id<=242 then do; *pajaki;
+			food_id=14+round(7*ranuni(0));
+			if ranuni(0)<0.3 then food_id=27;
+			daily_amount = 10*ceil(7*ranuni(0));
+			unit="g";
+			
+			tmp=14+round(7*ranuni(0));
+			if tmp ne food_id then do;
+				output;		
+				requirement_id=requirement_id+1;
+				food_id=tmp;
+				daily_amount = 10*ceil(5*ranuni(0));
+				unit="g";
+			end;	
+		end;
+		else if species_id>=243 and species_id<=255 then do; *owady;
+			food_id=26;
+			if species_id=245 then food_id=28+round(ranuni(0));
+			daily_amount = 10*ceil(7*ranuni(0));
+			unit="g";
+		end;
+		else if species_id=256 or species_id=260 or species_id=261 or species_id=262 then do; *pancerzyki;
+			food_id=24;
+			daily_amount = 10*ceil(7*ranuni(0));
+			unit="g";
+			
+			if species_id=256 then do;
+				output;
+				requirement_id=requirement_id+1;
+				food_id=25;
+				daily_amount = 10*ceil(5*ranuni(0));
+				unit="g";
+			end;
+		end;
+		else if (species_id>=257 and species_id<=259) or species_id>=263 then do; *ryby;
+			food_id=12+round(11*ranuni(0));
+			daily_amount = 10*ceil(7*ranuni(0));
+			unit="g";
+			
+			tmp=12+round(11*ranuni(0));
+			if tmp ne food_id then do;
+				output;		
+				requirement_id=requirement_id+1;
+				food_id=tmp;
+				daily_amount = 10*ceil(5*ranuni(0));
+				unit="g";
+			end;	
+		end;
+
+		output;
+		requirement_id=requirement_id+1;
+
+	keep requirement_id species_id food_id daily_amount unit;
+run;
 /*********************/
 
 
 
-/*tabela zawierajaca specjalne wymagania dietetyczne zwierzat*/
-
-/*********************/
-
-
-
-/*tabela zawierajaca liste wszystkich dostaw*/
-
-/*********************/
-
-
-
-/*tabela zawierajaca szczególy wszystkich dostaw*/
+/*tabela zawierajaca spis wszystkich dostaw*/
 proc sql noprint;
 	select count(*) into: suppliers from ZOO.SUPPLIERS;
 quit;
 
 data ZOO.SUPPLIES;
-	length supply_id 8 date 6 supplier_id 3 other_details $50;
-	format date ddmmyy10.;
+	length supply_id 8 date 6 supplier_id 3 amount 7;
+	format date ddmmyy10. amount 5.2;
 	date='01jan10'd;
 	supply_id=0;
 	array days[&suppliers.];
@@ -1290,6 +1448,188 @@ data ZOO.SUPPLIES;
 		end;
 		date=date+1;
 	end;
-	keep supply_id date supplier_id other_details;
+	keep supply_id date supplier_id amount;
 run;
+/*********************/
+
+
+
+/*tabela zawierajaca szczegoly wszystkich dostaw*/
+
+data ZOO.SUPPLIES_DETAILS;
+	length supply_id 8 food_id 4 quantity 5 unit $3 price 4;
+
+	set ZOO.SUPPLIES;
+
+	if supplier_id=1 then do;
+		do i=28 to 29;
+			food_id=i;
+			quantity=200+100*ceil(5*ranuni(0));
+			unit='g';
+			price=(quantity/1000)*(20+ceil(20*ranuni(0)));
+			output;
+		end;
+	end;
+
+	if supplier_id=2 then do;
+		do i=12 to 13;
+			food_id=i;
+			quantity=200+100*ceil(5*ranuni(0));
+			unit='g';
+			price=(quantity/1000)*(60+ceil(20*ranuni(0)));
+			output;
+		end;
+	end;
+
+	if supplier_id=3 then do;
+		do i=22 to 24;
+			food_id=i;
+			quantity=200+100*ceil(5*ranuni(0));
+			unit='g';
+			price=(quantity/1000)*(45+ceil(20*ranuni(0)));
+			output;
+		end;
+	end;
+
+	if supplier_id=4 then do;
+		food_id=14; 
+		quantity=100+100*ceil(2*ranuni(0));
+		unit='g';
+		price=(quantity/1000)*(39+ceil(20*ranuni(0)));
+		output;	
+	end;
+
+	if supplier_id=5 then do;
+		food_id=15; 
+		quantity=100+100*ceil(2*ranuni(0));
+		unit='g';
+		price=(quantity/1000)*(35+ceil(20*ranuni(0)));
+		output;	
+	end;
+
+	if supplier_id=6 then do;
+		do i=1 to 3;
+			food_id=i;
+			quantity=200+100*ceil(5*ranuni(0));
+			unit='g';
+			price=(quantity/1000)*(40+ceil(20*ranuni(0)));
+			output;
+		end;
+	end;
+
+	if supplier_id=7 then do;
+		food_id=16; 
+		quantity=100+100*ceil(3*ranuni(0));
+		unit='g';
+		price=(quantity/1000)*(35+ceil(20*ranuni(0)));
+		output;	
+	end;
+
+	if supplier_id=8 then do;
+		food_id=17; 
+		quantity=100+100*ceil(2*ranuni(0));
+		unit='g';
+		price=(quantity/1000)*(40+ceil(20*ranuni(0)));
+		output;	
+	end;
+
+	if supplier_id=9 then do;
+		food_id=18; 
+		quantity=100+100*ceil(2*ranuni(0));
+		unit='g';
+		price=(quantity/1000)*(35+ceil(20*ranuni(0)));
+		output;	
+	end;
+
+	if supplier_id=10 then do;
+		food_id=19; 
+		quantity=100+100*ceil(2*ranuni(0));
+		unit='g';
+		price=(quantity/1000)*(35+ceil(20*ranuni(0)));
+		output;	
+	end;
+
+	if supplier_id=11 then do;
+		do i=4 to 6;
+			food_id=i;
+			quantity=200+100*ceil(5*ranuni(0));
+			unit='g';
+			price=(quantity/1000)*(40+ceil(20*ranuni(0)));
+			output;
+		end;
+	end;
+
+	if supplier_id=12 then do;
+		do i=7 to 9;
+			food_id=i;
+			quantity=200+100*ceil(5*ranuni(0));
+			unit='g';
+			price=(quantity/1000)*(40+ceil(20*ranuni(0)));
+			output;
+		end;
+	end;
+
+	if supplier_id>=13 and supplier_id<=19 then do;
+		food_id=supplier_id+7; 
+		quantity=100+100*ceil(2*ranuni(0));
+		unit='g';
+		price=(quantity/1000)*(35+ceil(20*ranuni(0)));
+		output;	
+	end;
+
+	if supplier_id=20 then do;
+		food_id=34;
+		quantity=2+ceil(5*ranuni(0));
+		unit='kg';
+		price=quantity*(60+ceil(20*ranuni(0)));
+		output;	
+	end;
+
+	if supplier_id=21 then do;
+		do i=10 to 11;
+			food_id=i;
+			quantity=200+100*ceil(5*ranuni(0));
+			unit='g';
+			price=(quantity/1000)*(40+ceil(20*ranuni(0)));
+			output;
+		end;
+	end;
+
+	if supplier_id>=22 and supplier_id<=23 then do;
+		food_id=supplier_id+10; 
+		quantity=100+100*ceil(4*ranuni(0));
+		unit='g';
+		price=(quantity/1000)*(35+ceil(10*ranuni(0)));
+		output;	
+	end;
+
+	if supplier_id=24 then do;
+		food_id=35;
+		quantity=2+ceil(5*ranuni(0));
+		unit='kg';
+		price=quantity*(60+ceil(20*ranuni(0)));
+		output;	
+	end;
+
+	keep supply_id food_id quantity unit price;
+
+run;
+
+/*uzupelnienie tabeli z dostawami */
+proc sql;
+	create table ZOO.supplies_amount as
+	select t.supply_id, sum(price) as amount
+	from ZOO.supplies t
+	join ZOO.supplies_details td on t.supply_id=td.supply_id
+	group by t.supply_id;
+quit;
+
+data ZOO.SUPPLIES; 
+  merge ZOO.supplies ZOO.supplies_amount; 
+  by supply_id; 
+run; 
+
+proc sql;
+	drop table ZOO.supplies_amount;
+quit;
 /*********************/
