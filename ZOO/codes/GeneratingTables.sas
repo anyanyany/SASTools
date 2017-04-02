@@ -383,7 +383,7 @@ data ZOO.TRANSACTIONS;
 	date='01jan10'd;
 	transaction_id=0;
 	amount=0;
-	array emp[11]  (&employees.);  ****TO CHANGE!!!!!!!!***********;
+	array emp[11]  (&employees.); 
 	do i=1 to 8*365-212;
 		m=month(date);
 		n=0;
@@ -1455,7 +1455,6 @@ run;
 
 
 /*tabela zawierajaca szczegoly wszystkich dostaw*/
-
 data ZOO.SUPPLIES_DETAILS;
 	length supply_id 8 food_id 4 quantity 5 unit $3 price 4;
 
@@ -1632,4 +1631,44 @@ run;
 proc sql;
 	drop table ZOO.supplies_amount;
 quit;
+/*********************/
+
+
+
+/*tabela przedstawiajaca inne wydatki*/
+data ZOO.OTHER_EXPENSES;
+	length expense_id 8 invoice_id $15 company_name $20 NIP $10 invoice_date 6 payment_date 6 amount_gross 5 paid $1 description $40;
+	format invoice_date payment_date ddmmyy10. amount_gross 7.2;
+	
+	companies=10;
+	array NIPS[10]  (2953643889, 7676147342, 4581456487, 5975906760, 4515484995, 6861299937, 4620109414, 1841576325, 3839642736, 9332786857);
+	array comp_names[10] $20 ("Wodociagi", "Urzad miasta", "LUXMED", "Serwis techniczny", "Biuro reklamowe", "Elektrownia", "PGNiG", "8", "9", "10");
+	array amounts[10]  (1500, 10000, 5000, 1000, 3000, 2000, 2000, 0, 0, 0);
+	array days[10];
+
+	do company=1 to companies;
+		days[company]=ceil(14*ranuni(0));
+	end;
+	expense_id = 0;
+	do year=2010 to 2017;
+		do month=1 to 12;
+			if year=2017 and month>=6 then leave;
+			do company=1 to companies;
+				if company=5 and ranuni(0)>0.7 then leave;
+				expense_id=expense_id+1;
+				invoice_id=cats("FV/",month,"/",year,"/",ceil(14*ranuni(0)));
+				company_name=comp_names(company);
+				NIP =NIPS(company);
+				invoice_date = mdy(month,days(company),year);
+				payment_date =invoice_date+ceil(14*ranuni(0));
+				amount_gross = amounts(company)+100*round(5*ranuni(0));
+				paid = "T";
+				if year=2017 and month=5 then paid = "N";
+				description="";
+				output;
+			end;	
+		end;
+	end;
+	keep expense_id  invoice_id  company_name  NIP invoice_date  payment_date  amount_gross  paid description;
+run;
 /*********************/
