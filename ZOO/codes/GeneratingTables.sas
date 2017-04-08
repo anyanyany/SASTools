@@ -3,6 +3,7 @@
 
 libname ZOO BASE "D:\SASTools\ZOO";
 dm log 'clear';
+%let today=%sysfunc(today());
 
 
 /*tabela zawierajaca rodzaje biletow*/
@@ -381,10 +382,11 @@ data ZOO.TRANSACTIONS;
 	length transaction_id 8 date 6 employee_id 6 amount 4;
 	format date ddmmyy10.;
 	date='01jan10'd;
+	days=&today.-date;
 	transaction_id=0;
 	amount=0;
 	array emp[11]  (&employees.); 
-	do i=1 to 8*365-212;
+	do i=1 to days;
 		m=month(date);
 		n=0;
 		if m eq 1 then n=30;
@@ -1438,6 +1440,7 @@ data ZOO.SUPPLIES;
 	length supply_id 8 date 6 supplier_id 3 amount 7;
 	format date ddmmyy10. amount 5.2;
 	date='01jan10'd;
+	days_cnt=&today.-date;
 	supply_id=0;
 	array days[&suppliers.];
 
@@ -1445,7 +1448,7 @@ data ZOO.SUPPLIES;
 		days[supplier]=ceil(7*ranuni(0));
 	end;
 
-	do i=1 to 8*365-212;
+	do i=1 to days_cnt;
 		do supplier_id=1 to &suppliers.;
 			if mod(date,days(supplier_id)) eq 0 then do;
 				supply_id=supply_id+1;
@@ -1658,7 +1661,8 @@ data ZOO.OTHER_EXPENSES;
 	expense_id = 0;
 	do year=2010 to 2017;
 		do month=1 to 12;
-			if year=2017 and month>=6 then leave;
+			*if year=2017 and month>=6 then leave;
+			if year=year(&today.) and month>=month(&today.) then leave;
 			do company=1 to companies;
 				if company=5 and ranuni(0)>0.7 then leave;
 				expense_id=expense_id+1;
@@ -1669,7 +1673,7 @@ data ZOO.OTHER_EXPENSES;
 				payment_date =invoice_date+ceil(14*ranuni(0));
 				amount_gross = amounts(company)+100*round(5*ranuni(0));
 				paid = "T";
-				if year=2017 and month=5 then paid = "N";
+				if year=2017 and month>=(month(&today.)-1) then paid = "N";
 				description="";
 				output;
 			end;	
@@ -1681,9 +1685,8 @@ run;
 
 
 
-/* tworzenie relacji */
+/* klucze glówne */
 /*********************/
-
 PROC SQL;
 ALTER TABLE ZOO.CONTRACT_TYPES ADD CONSTRAINT PK_CONTRACT_TYPES PRIMARY KEY (contract_type_id);
 ALTER TABLE ZOO.POSITIONS ADD CONSTRAINT PK_POSITIONS PRIMARY KEY (position_code);
@@ -1704,24 +1707,4 @@ ALTER TABLE ZOO.SUPPLIES_DETAILS ADD CONSTRAINT PK_SUPPLIES_DETAILS PRIMARY KEY 
 ALTER TABLE ZOO.SPECIES_DIETARY_REQUIREMENTS ADD CONSTRAINT PK_SPECIES_DIETARY_REQUIREMENTS PRIMARY KEY (requirement_id);
 ALTER TABLE ZOO.OTHER_EXPENSES ADD CONSTRAINT PK_OTHER_EXPENSES PRIMARY KEY (expense_id);
 QUIT;
-
-
-
-PROC SQL;
-ALTER TABLE ZOO.EMPLOYEES ADD CONSTRAINT PK_EMPLOYEES_CONTRACT_TYPES FOREIGN KEY(contract_type)
-REFERENCES ZOO.CONTRACT_TYPES ON DELETE RESTRICT ON UPDATE SET NULL;
-
-ALTER TABLE ZOO.EMPLOYEES ADD CONSTRAINT PK_EMPLOYEES_POSITIONS FOREIGN KEY(position_code)
-REFERENCES ZOO.POSITIONS ON DELETE RESTRICT ON UPDATE SET NULL;
-
-*TODO!;
-
-QUIT;
-
-
 /*********************/
-
-
-
-/*proc contents data=ZOO.EMPLOYEES;*/
-/*run;*/
