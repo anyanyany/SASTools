@@ -6,8 +6,8 @@ dm log 'clear';
 %let today=%sysfunc(today());
 
 
-/*tabela zawierajaca rodzaje biletow*/
-data ZOO.TICKET_TYPES;
+/*tabela zawierajaca rodzaje biletow - historyczna*/
+data ZOO.TICKET_TYPES_HIST;
 	length ticket_type_id 3 
 	type_name $30
 	price 3
@@ -71,15 +71,31 @@ data ZOO.TICKET_TYPES;
 	1, Jednorazowy normalny, 25, '01oct15'd, '31mar16'd
 	2, Jednorazowy ulgowy, 15, '01oct15'd, '31mar16'd
 	3, Jednorazowy rodzinny 2+1, 50, '01oct15'd, '31mar16'd
-	4, Roczny normalny, 80, '01jan16'd, .
-	5, Roczny ulgowy, 60, '01jan16'd, .
-	6, Roczny rodzinny 2+1, 180, '01jan16'd, .
 	1, Jednorazowy normalny, 30, '01apr16'd, '30sep16'd
 	2, Jednorazowy ulgowy, 20, '01apr16'd, '30sep16'd
 	3, Jednorazowy rodzinny 2+1, 65, '01apr16'd, '30sep16'd
 	1, Jednorazowy normalny, 27, '01oct16'd, '31mar17'd
 	2, Jednorazowy ulgowy, 17, '01oct16'd, '31mar17'd
 	3, Jednorazowy rodzinny 2+1, 55, '01oct16'd, '31mar17'd
+	;
+RUN; 
+/*********************/
+
+
+/*tabela zawierajaca rodzaje biletow*/
+data ZOO.TICKET_TYPES;
+	length ticket_type_id 3 
+	type_name $30
+	price 3
+	valid_from 6
+	valid_to 6;
+	INFILE DATALINES DLM=',';
+ 	INPUT ticket_type_id type_name $ price valid_from: date9. valid_to: date9.;
+	format valid_from valid_to DDMMYY10.;
+	DATALINES;
+	4, Roczny normalny, 80, '01jan16'd, .
+	5, Roczny ulgowy, 60, '01jan16'd, .
+	6, Roczny rodzinny 2+1, 180, '01jan16'd, .
 	1, Jednorazowy normalny, 30, '01apr17'd, .
 	2, Jednorazowy ulgowy, 20, '01apr17'd, .
 	3, Jednorazowy rodzinny 2+1, 65, '01apr17'd, .
@@ -1691,7 +1707,8 @@ run;
 PROC SQL;
 ALTER TABLE ZOO.CONTRACT_TYPES ADD CONSTRAINT PK_CONTRACT_TYPES PRIMARY KEY (contract_type_id);
 ALTER TABLE ZOO.POSITIONS ADD CONSTRAINT PK_POSITIONS PRIMARY KEY (position_code);
-ALTER TABLE ZOO.TICKET_TYPES ADD CONSTRAINT PK_TICKET_TYPES PRIMARY KEY (ticket_type_id, valid_from);
+ALTER TABLE ZOO.TICKET_TYPES ADD CONSTRAINT PK_TICKET_TYPES PRIMARY KEY (ticket_type_id);
+ALTER TABLE ZOO.TICKET_TYPES_HIST ADD CONSTRAINT PK_TICKET_TYPES_HIST PRIMARY KEY (ticket_type_id, valid_from);
 ALTER TABLE ZOO.EMPLOYEES ADD CONSTRAINT PK_EMPLOYEES PRIMARY KEY (employee_id);
 ALTER TABLE ZOO.TRANSACTIONS ADD CONSTRAINT PK_TRANSACTIONS PRIMARY KEY (transaction_id);
 ALTER TABLE ZOO.TRANSACTION_DETAILS  ADD CONSTRAINT PK_TRANSACTION_DETAILS PRIMARY KEY (transaction_id, ticket_type_id);
@@ -1729,4 +1746,6 @@ ALTER TABLE ZOO.SUPPLIES_DETAILS ADD CONSTRAINT FK_SUPPLIES_DET_SUPPLIES FOREIGN
 ALTER TABLE ZOO.SUPPLIES ADD CONSTRAINT FK_SUPPLIES_SUPPLIERS FOREIGN KEY(supplier_id) REFERENCES ZOO.SUPPLIERS;
 QUIT;
 /*********************/
+
+*TODO: foreign keys: ticket_types-tran_details and ticket-ticket_hist;
 
