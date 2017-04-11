@@ -87,18 +87,17 @@ data ZOO.TICKET_TYPES;
 	length ticket_type_id 3 
 	type_name $30
 	price 3
-	valid_from 6
-	valid_to 6;
+	valid_from 6;
 	INFILE DATALINES DLM=',';
- 	INPUT ticket_type_id type_name $ price valid_from: date9. valid_to: date9.;
-	format valid_from valid_to DDMMYY10.;
+ 	INPUT ticket_type_id type_name $ price valid_from: date9.;
+	format valid_from DDMMYY10.;
 	DATALINES;
-	4, Roczny normalny, 80, '01jan16'd, .
-	5, Roczny ulgowy, 60, '01jan16'd, .
-	6, Roczny rodzinny 2+1, 180, '01jan16'd, .
-	1, Jednorazowy normalny, 30, '01apr17'd, .
-	2, Jednorazowy ulgowy, 20, '01apr17'd, .
-	3, Jednorazowy rodzinny 2+1, 65, '01apr17'd, .
+	4, Roczny normalny, 80, '01jan16'd
+	5, Roczny ulgowy, 60, '01jan16'd
+	6, Roczny rodzinny 2+1, 180, '01jan16'd
+	1, Jednorazowy normalny, 30, '01apr17'd
+	2, Jednorazowy ulgowy, 20, '01apr17'd
+	3, Jednorazowy rodzinny 2+1, 65, '01apr17'd
 	;
 RUN; 
 /*********************/
@@ -441,6 +440,9 @@ proc sql noprint;
 quit;
 
 data ZOO.TRANSACTION_DETAILS;
+	length transaction_id 8
+	ticket_type_id 3 
+	quantity 3;
 	do transaction_id=1 to &tran_count;
 		t1=0; t2=0; t3=0; 
 		t4=0; t5=0; t6=0; 
@@ -498,7 +500,8 @@ proc sql;
 	from ZOO.transactions t
 	join ZOO.transaction_details td on t.transaction_id=td.transaction_id
 	join ZOO.TICKET_TYPES tt on tt.ticket_type_id=td.ticket_type_id
-	where (t.date>=tt.valid_from and t.date<=tt.valid_to) or (t.date>=tt.valid_from and tt.valid_to=. and t.amount=0)
+	join ZOO.TICKET_TYPES_HIST tth on tth.ticket_type_id=td.ticket_type_id
+	where (t.date>=tth.valid_from and t.date<=tth.valid_to) or (t.date>=tt.valid_from and t.amount=0)
 	group by t.transaction_id;
 quit;
 
@@ -1484,7 +1487,7 @@ run;
 /*tabela zawierajaca szczegoly wszystkich dostaw*/
 data ZOO.SUPPLIES_DETAILS;
 	length supply_id 8 food_id 4 quantity 5 unit $3 price 4;
-
+	format price 5.2;
 	set ZOO.SUPPLIES;
 
 	if supplier_id=1 then do;
@@ -1727,6 +1730,8 @@ ALTER TABLE ZOO.OTHER_EXPENSES ADD CONSTRAINT PK_OTHER_EXPENSES PRIMARY KEY (exp
 QUIT;
 /*********************/
 
+
+
 /* klucze obce */
 PROC SQL;
 ALTER TABLE ZOO.EMPLOYEES ADD CONSTRAINT FK_EMPLOYEES_CONTRACT_TYPES FOREIGN KEY(contract_type) REFERENCES ZOO.CONTRACT_TYPES;
@@ -1744,8 +1749,10 @@ ALTER TABLE ZOO.SPECIES_DIETARY_REQUIREMENTS ADD CONSTRAINT FK_DIETREQ_FOOD FORE
 ALTER TABLE ZOO.SUPPLIES_DETAILS ADD CONSTRAINT FK_SUPPLIES_DET_FOOD FOREIGN KEY(food_id) REFERENCES ZOO.FOOD;
 ALTER TABLE ZOO.SUPPLIES_DETAILS ADD CONSTRAINT FK_SUPPLIES_DET_SUPPLIES FOREIGN KEY(supply_id) REFERENCES ZOO.SUPPLIES;
 ALTER TABLE ZOO.SUPPLIES ADD CONSTRAINT FK_SUPPLIES_SUPPLIERS FOREIGN KEY(supplier_id) REFERENCES ZOO.SUPPLIERS;
+ALTER TABLE ZOO.TRANSACTION_DETAILS ADD CONSTRAINT FK_TRANDETAILS_TICKETTYPES FOREIGN KEY(ticket_type_id) REFERENCES ZOO.TICKET_TYPES;
+ALTER TABLE ZOO.TICKET_TYPES_HIST ADD CONSTRAINT FK_TICKETTYPESHIST_TICKETTYPES FOREIGN KEY(ticket_type_id) REFERENCES ZOO.TICKET_TYPES;
 QUIT;
 /*********************/
 
-*TODO: foreign keys: ticket_types-tran_details and ticket-ticket_hist;
+
 
