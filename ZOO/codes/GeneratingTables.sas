@@ -1205,6 +1205,11 @@ run;
 proc sql;
 	drop table ZOO.names;
 quit;
+
+data ZOO.ANIMALS;
+	set ZOO.ANIMALS;
+	animal_id=_n_;
+run;
 /*********************/
 
 
