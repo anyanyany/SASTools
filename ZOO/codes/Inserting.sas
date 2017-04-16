@@ -67,14 +67,16 @@ quit;
 
 	%if not(&contract_type. in &contract_types.) %then %do; %put WARNING: Niepoprawny typ kontraktu!; %let ok=0; %goto exit; %end;
 	%if not(&position_code. in &position_codes.) %then %do; %put WARNING: Niepoprawne stanowisko!; %let ok=0;  %goto exit; %end;
-	%if &fte_percentage gt 100 %then %do; %put WARNING: Nie moze byc wiecej niz 100 procent etatu!; %let ok=0; %goto exit; %end;	
-	proc sql noprint;
-		select max_salary into: maxsalary from ZOO.POSITIONS where position_code=&position_code.;
-		select min_salary into: minsalary from ZOO.POSITIONS where position_code=&position_code.;
-	quit;
-	%put &=maxsalary &=minsalary;
-	%if &salary<&minsalary. or &salary>&maxsalary. %then %do; %put WARNING: Nieodpowiednie wynagrodzenie dla tego stanowiska!; %let ok=0; %goto exit; %end;
-	%exit: &ok.
+	%if &fte_percentage gt 100 %then %do; %put WARNING: Nie moze byc wiecej niz 100 procent etatu!; %let ok=0; %goto exit; %end;
+	
+/*	proc sql noprint;*/
+/*		select max_salary into: maxsalary from ZOO.POSITIONS where position_code=&position_code.;*/
+/*		select min_salary into: minsalary from ZOO.POSITIONS where position_code=&position_code.;*/
+/*	quit;*/
+/*	%put &=maxsalary &=minsalary;*/
+/*	%if &salary<&minsalary. or &salary>&maxsalary. %then %do; %put WARNING: Nieodpowiednie wynagrodzenie dla tego stanowiska!; %let ok=0; %goto exit; %end;*/
+
+%exit: &ok.
 %mend;
 
 %macro check_food(food_name, quantity, unit);
@@ -97,6 +99,19 @@ quit;
 	%if %length(&name.)=0 %then %do; %put WARNING: Nazwa nie moze byc pusta!; %let ok=0; %goto exit; %end;	
 	%if %length(&division_id.)=0 %then %do; %put WARNING: Gromada nie moze byc pusta!; %let ok=0; %goto exit; %end;	
 	%if not(&division_id. in &divisions.) %then %do; %put WARNING: Niepoprawna gromada!; %let ok=0; %goto exit; %end;
+	%exit: &ok.
+%mend;
+
+%macro check_expense(invoice_id,  company_name,  NIP, invoice_date,  payment_date,  amount_gross);
+	%let ok=1;
+	%if %length(&invoice_id.)=0 %then %do; %put WARNING: Numer faktury nie moze byc pusty!; %let ok=0; %goto exit; %end;	
+	%if %length(&company_name.)=0 %then %do; %put WARNING: Nazwa firmy nie moze byc pusta!; %let ok=0; %goto exit; %end;	
+	%if %length(&NIP.) ne 10 %then %do; %put WARNING: Niepoprawny NIP!; %let ok=0; %goto exit; %end;
+	%if %length(&invoice_date.)=0 %then %do; %put WARNING: Data wystawienia faktury nie moze byc pusta!; %let ok=0; %goto exit; %end;	
+	%if %length(&payment_date.)=0 %then %do; %put WARNING: Data platnosci nie moze byc pusta!; %let ok=0; %goto exit; %end;	
+	%if %length(&amount_gross.)=0 %then %do; %put WARNING: Kwota nie moze byc pusta!; %let ok=0; %goto exit; %end;		
+	%if &amount_gross. lt 1 %then %do; %put WARNING: Niepoprawna kwota!; %let ok=0; %goto exit; %end;
+	%if %sysfunc(inputn(&invoice_date, ddmmyy10.), best12.) gt %sysfunc(inputn(&payment_date, ddmmyy10.), best12.) %then %do; %put WARNING: Niepoprawne daty!; %let ok=0; %goto exit; %end;
 	%exit: &ok.
 %mend;
 
@@ -246,7 +261,6 @@ quit;
 	%else %put WARNING: Nie wstawiono nowego rekordu!;	
 %mend;
 
-/*not working */
 %macro insert_employee(name, second_name, surname, birth_date, PESEL, address_city, address_street, address_house_num, address_flat_num, postal_code, telephone, email, bank_account_num, hire_date, contract_type, position_code, fte_percentage, salary);
 	%let ok=%check_employee(&name., &second_name., &surname., &birth_date., &PESEL., &address_city., &address_street., &address_house_num., &address_flat_num., &postal_code., &telephone., &email., &bank_account_num., &hire_date., &contract_type.,  &position_code., &fte_percentage., &salary.);
 	%if &ok.=1 %then %do;
@@ -326,7 +340,24 @@ quit;
 	%else %put WARNING: Nie wstawiono nowego rekordu!;	
 %mend;
 
-%macro insert_expense(); /* TODO*/
+%macro insert_expense(invoice_id,  company_name,  NIP, invoice_date,  payment_date,  amount_gross, description); 
+	%let ok=%check_expense(&invoice_id.,  &company_name.,  &NIP., &invoice_date.,  &payment_date.,  &amount_gross.);
+	%if &ok.=1 %then %do;
+		proc sql noprint;
+			select count(*) into: counter from ZOO.OTHER_EXPENSES where lower(invoice_id)=lower("&invoice_id.") and NIP="&NIP.";
+		quit;
+		%if &counter. ne 0 %then %do;
+			%put WARNING: Taki rekord istnieje w bazie!;
+		%end;
+		%else %do;
+			proc sql noprint;
+				select max(expense_id)+1 into: maxid from ZOO.OTHER_EXPENSES;
+				insert into ZOO.OTHER_EXPENSES values(&maxid., "&invoice_id.",  "&company_name.",  "&NIP.", &invoice_date.,  &payment_date.,  &amount_gross.,"N", "&description.");
+			quit;	
+			%put NOTE: Wstawiono nowy rekord!;	
+		%end;
+	%end;
+	%else %put WARNING: Nie wstawiono nowego rekordu!;
 %mend;
 
 %macro insert_position(name, min_salary, max_salary);
@@ -569,10 +600,11 @@ quit;
 %insert_animal(Kasia, F, '12dec2016'd, ZOO, ., 2, WYB4);
 %insert_contract_type(Umowa o dzielo)
 %insert_division(Dinozaury)
-%insert_employee(Anna, , Nowa, '20dec1980'd, 78012592483, Warsaw, Koszykowa, 67, 34, 03-456, 502858987, , 12345678901234567890123456, '20dec2010'd, 2,  5, 80, 5000);
+%insert_employee(Anna, , Nowa, '20dec1980'd, 78012552483, Warsaw, Koszykowa, 67, 34, 03-456, 502858987, , 12345678901234567890123456, '20dec2010'd, 2,  5, 80, 5000);
 %insert_food(Frytki, 200, g);
 %insert_object(WYB0, wybieg)
 %insert_order(Czlowieki, 2);
+%insert_expense(FV2,  firma,  1234567890, '25apr2017'd,  '13may2017'd,  100); 
 %insert_position(Pracownik IT, 3000, 7000);
 %insert_responsible_staff(6, WYB5)
 %insert_species(Homo sapiens, Czlowiek, 24);
@@ -585,8 +617,55 @@ quit;
 %insert_transaction('12may2017'd, 190)
 %insert_transaction_details(132981, 5, 2)
 
+
 %check_employee(Anna, , Nowa, '20dec1980'd, 78012592483, Warsaw, Koszykowa, 67, 34, 03-456, 502858987, , 12345678901234567890123456, '20dec2010'd, 2,  5, 80, 5000);
 
 
 
 
+
+
+
+
+
+/*sprawdzanie poprawnosci danych */
+dm log 'clear';
+
+%macro check_entity_animals(name, sex, birth_date, birth_place, deceased_date, species_id, object_id);
+	%global check;
+   	%let check = %check_animal(&name., &sex., &birth_date., &birth_place., &deceased_date., &species_id., &object_id.);
+%mend;
+
+%macro check_entity_contract_type(type_name);
+	%global check;
+   	%let check = %check_contract_type(&type_name.);
+%mend;
+
+%macro check_entity_division(division_name);
+	%global check;
+   	%let check = %check_division(&division_name.);
+%mend;
+
+%macro check_entity_employee(name, second_name, surname, birth_date, PESEL, address_city, address_street, address_house_num, address_flat_num, postal_code, telephone, email, bank_account_num, hire_date, layoff_date, contract_type, position_code, fte_percentage, salary);
+	%global check;
+   	%let check = %check_employee(&name., &second_name., &surname., &birth_date., &PESEL., &address_city., &address_street., &address_house_num., &address_flat_num., &postal_code., &telephone., &email., &bank_account_num., &hire_date., &contract_type.,  &position_code., &fte_percentage., &salary.);
+	%if &check. eq 1 and &hire_date. ne . %then %do;
+		%if %sysfunc(inputn(&hire_date., ddmmyy10.), best12.) gt %sysfunc(inputn(&layoff_date., ddmmyy10.), best12.) %then %do; %put WARNING: Data zwolnienia nie moze byc wczesniejsza niz data zatrudnienia!; %let check=0; %end;
+	%end;
+%mend;
+
+%let check=;
+%check_entity_employee(Anna, , Nowa, '20dec1980'd, 78012552483, Warsaw, Koszykowa, 67, 34, 03-456, 502858987, , 12345678901234567890123456, 20/12/2010, 12/12/2010, 2,  5, 80, 5000);
+%put &check;
+
+
+options nomprint nosymbolgen;
+/* ?????????????????????? */
+data _null_;
+	set ZOO.ANIMALS;
+	rc=dosubl('%check_entity_animals('||name||', '||sex||', '||birth_date||', '||birth_place||', '||deceased_date||', '||species_id||', '||object_id||')');
+	c=symget('check');
+	put c=;
+run;
+
+                            
