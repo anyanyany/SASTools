@@ -145,7 +145,8 @@ quit;
 %macro check_species_requirements(species_id, food_id, amount, unit)/ minoperator;
 	%let ok=1;
 	%if %length(&species_id.)=0 or %length(&food_id.)=0 %then %do; %put WARNING: Gatunek ani pozywienie nie moga byc puste!; %let ok=0; %goto exit; %end;		
-	%if %length(&amount.)=0 %then %do; %put WARNING: Ilosc nie moze byc pusta!; %let ok=0; %goto exit; %end;
+	%if &species_id. eq . or &food_id. eq . %then %do; %put WARNING: Gatunek ani pozywienie nie moga byc puste!; %let ok=0; %goto exit; %end;		
+	%if %length(&amount.)=0 or &amount. eq . %then %do; %put WARNING: Ilosc nie moze byc pusta!; %let ok=0; %goto exit; %end;
 	%if %length(&unit.)=0 %then %do; %put WARNING: Jednostka nie moze byc pusta!; %let ok=0; %goto exit; %end;
 	%if not(&species_id. in &species.) %then %do; %put WARNING: Niepoprawny gatunek!; %let ok=0; %goto exit; %end;
 	%if not(&food_id. in &foods.) %then %do; %put WARNING: Niepoprawne pozywienie!; %let ok=0; %goto exit; %end;
@@ -164,19 +165,19 @@ quit;
 
 %macro check_supply(date, supplier_id)/ minoperator;
 	%let ok=1;
-	%if %length(&date.)=0 %then %do; %put WARNING: Data nie moze byc pusta!; %let ok=0; %goto exit; %end;	
-	%if %length(&supplier_id.)=0 %then %do; %put WARNING: Dostawca nie moze byc pusty!; %let ok=0; %goto exit; %end;
+	%if %length(&date.)=0 or &date. eq . %then %do; %put WARNING: Data nie moze byc pusta!; %let ok=0; %goto exit; %end;	
+	%if %length(&supplier_id.)=0 or &supplier_id. eq . %then %do; %put WARNING: Dostawca nie moze byc pusty!; %let ok=0; %goto exit; %end;
 	%if not(&supplier_id. in &suppliers.) %then %do; %put WARNING: Niepoprawny dostawca!; %let ok=0; %goto exit; %end;
 	%exit: &ok.
 %mend;
 
 %macro check_supply_details(supply_id, food_id, quantity, unit, price)/ minoperator;
 	%let ok=1;
-	%if %length(&supply_id.)=0 %then %do; %put WARNING: Dostawa nie moze byc pusta!; %let ok=0; %goto exit; %end;	
-	%if %length(&food_id.)=0 %then %do; %put WARNING: Pozywienie nie moze byc puste!; %let ok=0; %goto exit; %end;
-	%if %length(&quantity.)=0 %then %do; %put WARNING: Ilosc nie moze byc pusta!; %let ok=0; %goto exit; %end;
+	%if %length(&supply_id.)=0 or &supply_id. eq . %then %do; %put WARNING: Dostawa nie moze byc pusta!; %let ok=0; %goto exit; %end;	
+	%if %length(&food_id.)=0  or &food_id. eq . %then %do; %put WARNING: Pozywienie nie moze byc puste!; %let ok=0; %goto exit; %end;
+	%if %length(&quantity.)=0 or &quantity. eq . %then %do; %put WARNING: Ilosc nie moze byc pusta!; %let ok=0; %goto exit; %end;
 	%if %length(&unit.)=0 %then %do; %put WARNING: Jednostka nie moze byc pusta!; %let ok=0; %goto exit; %end;
-	%if %length(&price.)=0 %then %do; %put WARNING: Cena nie moze byc pusta!; %let ok=0; %goto exit; %end;
+	%if %length(&price.)=0 or &price. eq . %then %do; %put WARNING: Cena nie moze byc pusta!; %let ok=0; %goto exit; %end;
 	%if &supply_id.>&supplies. %then %do; %put WARNING: Niepoprawna dostawa!; %let ok=0; %goto exit; %end;
 	%if not(&food_id. in &foods.) %then %do; %put WARNING: Niepoprawne pozywienie!; %let ok=0; %goto exit; %end;
 	%if &quantity. lt 1 %then %do; %put WARNING: Niepoprawna ilosc!; %let ok=0; %goto exit; %end;
@@ -186,24 +187,24 @@ quit;
 %macro check_ticket_type(name, price, valid_from)/ minoperator;
 	%let ok=1;
 	%if %length(&name.)=0 %then %do; %put WARNING: Nazwa nie moze byc pusta!; %let ok=0; %goto exit; %end;
-	%if %length(&price.)=0 %then %do; %put WARNING: Cena nie moze byc pusta!; %let ok=0; %goto exit; %end;
-	%if %length(&valid_from.)=0 %then %do; %put WARNING: Data obowiazywania nie moze byc pusta!; %let ok=0; %goto exit; %end;	
+	%if %length(&price.)=0 or &price. eq . %then %do; %put WARNING: Cena nie moze byc pusta!; %let ok=0; %goto exit; %end;
+	%if %length(&valid_from.)=0 or &valid_from. eq . %then %do; %put WARNING: Data obowiazywania nie moze byc pusta!; %let ok=0; %goto exit; %end;	
 	%exit: &ok.
 %mend;
 
 %macro check_transaction(date, employee_id)/ minoperator;
 	%let ok=1;
 	%if %length(&date.)=0 %then %do; %put WARNING: Data nie moze byc pusta!; %let ok=0; %goto exit; %end;	
-	%if %length(&employee_id.)=0 %then %do; %put WARNING: Dostawca nie moze byc pusty!; %let ok=0; %goto exit; %end;
+	%if %length(&employee_id.)=0 or &employee_id. eq . %then %do; %put WARNING: Dostawca nie moze byc pusty!; %let ok=0; %goto exit; %end;
 	%if not(&employee_id. in &employees_tran.) %then %do; %put WARNING: Niepoprawny pracownik!; %let ok=0; %goto exit; %end;
 	%exit: &ok.
 %mend;
 
 %macro check_transaction_details(transaction_id, ticket_type_id, quantity)/ minoperator;
 	%let ok=1;
-	%if %length(&transaction_id.)=0 %then %do; %put WARNING: Transakcja nie moze byc pusta!; %let ok=0; %goto exit; %end;	
-	%if %length(&ticket_type_id.)=0 %then %do; %put WARNING: Typ biletu nie moze byc pusty!; %let ok=0; %goto exit; %end;
-	%if %length(&quantity.)=0 %then %do; %put WARNING: Ilosc nie moze byc pusta!; %let ok=0; %goto exit; %end;
+	%if %length(&transaction_id.)=0 or &transaction_id. eq . %then %do; %put WARNING: Transakcja nie moze byc pusta!; %let ok=0; %goto exit; %end;	
+	%if %length(&ticket_type_id.)=0 or &ticket_type_id. eq . %then %do; %put WARNING: Typ biletu nie moze byc pusty!; %let ok=0; %goto exit; %end;
+	%if %length(&quantity.)=0 or &quantity. eq . %then %do; %put WARNING: Ilosc nie moze byc pusta!; %let ok=0; %goto exit; %end;
 	%if &transaction_id.>&transactions. %then %do; %put WARNING: Niepoprawna transakcja!; %let ok=0; %goto exit; %end;
 	%if not(&ticket_type_id. in &tickets.) %then %do; %put WARNING: Niepoprawny typ biletu!; %let ok=0; %goto exit; %end;
 	%if &quantity. lt 1 %then %do; %put WARNING: Niepoprawna ilosc!; %let ok=0; %goto exit; %end;
@@ -600,7 +601,7 @@ quit;
 
 
 
-
+%macro checking();
 %insert_animal(Kasia, F, '12dec2016'd, ZOO, ., 2, WYB4);
 %insert_contract_type(Umowa o dzielo)
 %insert_division(Dinozaury)
@@ -624,6 +625,7 @@ quit;
 
 %check_employee(Anna, , Nowa, '20dec1980'd, 78012592483, Warsaw, Koszykowa, 67, 34, 03-456, 502858987, , 12345678901234567890123456, '20dec2010'd, 2,  5, 80, 5000);
 
+%mend;
 
 
 
@@ -631,8 +633,9 @@ quit;
 
 
 
+/*sprawdzanie poprawnosci wszystkich danych */
 
-/*sprawdzanie poprawnosci danych */
+*options nomprint nosymbolgen;
 dm log 'clear';
 
 %macro check_entity_animal(name, sex, birth_date, birth_place, deceased_date, species_id, object_id);
@@ -699,11 +702,54 @@ dm log 'clear';
    	%let check = %check_species(&name., &order_id.);
 %mend;
 
+%macro check_entity_species_requirement(species_id, food_id, amount, unit);
+	%global check;
+   	%let check = %check_species_requirements(&species_id., &food_id., &amount., &unit.);
+%mend;
 
+%macro check_entity_supplier(name, phone, email, NIP);
+	%global check;
+   	%let check = %check_supplier(&name., &phone., &email., &NIP.);
+%mend;
 
+%macro check_entity_supply(date, supplier_id, amount);
+	%global check;
+   	%let check = %check_supply(&date., &supplier_id.);
+	%if &check. eq 1 %then %do;
+		%if &amount. eq . %then %do; %put WARNING: Kwota nie moze byc pusta!; %let check=0; %end;
+	%end;
+%mend;
 
-options nomprint nosymbolgen;
+%macro check_entity_supply_details(supply_id, food_id, quantity, unit, price);
+	%global check;
+   	%let check = %check_supply_details(&supply_id., &food_id., &quantity., &unit., &price.);
+%mend;
 
+%macro check_entity_ticket_type(name, price, valid_from);
+	%global check;
+   	%let check = %check_ticket_type(&name., &price., &valid_from.);
+%mend;
+
+%macro check_entity_ticket_type_hist(name, price, valid_from, valid_to);
+	%global check;
+   	%let check = %check_ticket_type(&name., &price., &valid_from.);
+	%if &check. eq 1 %then %do;
+		%if %eval(&valid_from. gt &valid_to.) %then %do; %put WARNING: Niepoprawne daty obowiazywania!; %let check=0; %end;
+	%end;
+%mend;
+
+%macro check_entity_transaction(date, employee_id, amount);
+	%global check;
+   	%let check = %check_transaction(&date., &employee_id.);
+	%if &check. eq 1 %then %do;
+		%if &amount. eq . %then %do; %put WARNING: Kwota nie moze byc pusta!; %let check=0; %end;
+	%end;
+%mend;
+
+%macro check_entity_transaction_details(transaction_id, ticket_type_id, quantity);
+	%global check;
+   	%let check = %check_transaction_details(&transaction_id., &ticket_type_id., &quantity.);
+%mend;
 
 
 data ZOO.DELETED_ANIMALS;
@@ -838,6 +884,106 @@ data ZOO.DELETED_SPECIES;
 	drop rc check;
 run;
 
+data ZOO.DELETED_SPECIES_REQUIREMENTS;
+	set ZOO.SPECIES_DIETARY_REQUIREMENTS; 
+	rc=dosubl('%check_entity_species_requirement('||species_id||', '||food_id||', '||daily_amount||', '||unit||')');
+	check=symget('check');
+	if check=0 then do; 
+		output;
+		call execute('proc sql noprint; delete from ZOO.SPECIES_DIETARY_REQUIREMENTS where requirement_id='||requirement_id||'; quit;');
+		put "NOTE: Usuwam rekord"; 
+	end;
+	drop rc check;
+run;
+
+data ZOO.DELETED_SUPPLIERS;
+	set ZOO.SUPPLIERS; 
+	rc=dosubl('%check_entity_supplier('||name||', '||phone||', '||email||', '||NIP||')');
+	check=symget('check');
+	if check=0 then do; 
+		output;
+		call execute('proc sql noprint; delete from ZOO.SUPPLIERS where supplier_id='||supplier_id||'; quit;');
+		put "NOTE: Usuwam rekord"; 
+	end;
+	drop rc check;
+run;
+
+data ZOO.DELETED_SUPPLIES;
+	set ZOO.SUPPLIES; * (where=(supply_id<10)); 
+	rc=dosubl('%check_entity_supply('||date||', '||supplier_id||', '||amount||')');
+	check=symget('check');
+	if check=0 then do; 
+		output;
+		call execute('proc sql noprint; delete from ZOO.SUPPLIES where supply_id='||supply_id||'; quit;');
+		put "NOTE: Usuwam rekord"; 
+	end;
+	drop rc check;
+run;
+
+data ZOO.DELETED_SUPPLIES_DETAILS;
+	set ZOO.SUPPLIES_DETAILS; * (where=(supply_id<10)); 
+	rc=dosubl('%check_entity_supply_details('||supply_id||', '||food_id||', '||quantity||', '||unit||', '||price||')');
+	check=symget('check');
+	if check=0 then do; 
+		output;
+		call execute('proc sql noprint; delete from ZOO.SUPPLIES_DETAILS where supply_id='||supply_id||' and food_id='||food_id||'; quit;');
+		put "NOTE: Usuwam rekord"; 
+	end;
+	drop rc check;
+run;
+
+data ZOO.DELETED_TICKET_TYPES;
+	set ZOO.TICKET_TYPES; 
+	rc=dosubl('%check_entity_ticket_type('||type_name||', '||price||', '||valid_from||')');
+	check=symget('check');
+	if check=0 then do; 
+		output;
+		call execute('proc sql noprint; delete from ZOO.TICKET_TYPES where ticket_type_id='||ticket_type_id||'; quit;');
+		put "NOTE: Usuwam rekord"; 
+	end;
+	drop rc check;
+run;
+
+data ZOO.DELETED_TICKET_TYPES_HIST;
+	set ZOO.TICKET_TYPES_HIST; 
+	rc=dosubl('%check_entity_ticket_type_hist('||type_name||', '||price||', '||valid_from||', '||valid_to||')');
+	check=symget('check');
+	if check=0 then do; 
+		output;
+		call execute('proc sql noprint; delete from ZOO.TICKET_TYPES_HIST where ticket_type_id='||ticket_type_id||' and valid_from='||valid_from||'; quit;');
+		put "NOTE: Usuwam rekord"; 
+	end;
+	drop rc check;
+run;
+
+data ZOO.DELETED_TRANSACTIONS;
+	set ZOO.TRANSACTIONS; * (where=(transaction_id<10)); 
+	rc=dosubl('%check_entity_transaction('||date||', '||employee_id||', '||amount||')');
+	check=symget('check');
+	if check=0 then do; 
+		output;
+		call execute('proc sql noprint; delete from ZOO.TRANSACTIONS where transaction_id='||transaction_id||'; quit;');
+		put "NOTE: Usuwam rekord"; 
+	end;
+	drop rc check;
+run;
+
+data ZOO.DELETED_TRANSACTION_DETAILS;
+	set ZOO.TRANSACTION_DETAILS; * (where=(transaction_id<10)); 
+	rc=dosubl('%check_entity_transaction_details('||transaction_id||', '||ticket_type_id||', '||quantity||')');
+	check=symget('check');
+	if check=0 then do; 
+		output;
+		call execute('proc sql noprint; delete from ZOO.TRANSACTION_DETAILS where transaction_id='||transaction_id||' and ticket_type_id='||ticket_type_id||'; quit;');
+		put "NOTE: Usuwam rekord"; 
+	end;
+	drop rc check;
+run;
 
 
-                            
+
+
+
+
+
+         
