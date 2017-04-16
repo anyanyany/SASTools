@@ -25,5 +25,39 @@ dm log 'clear';
 	%exit:
 %mend;
 
+%macro update_employee_adress(employee_id, address_city, address_street, address_house_num, address_flat_num, postal_code);
+%mend;
+
+%macro update_employee_telephone(employee_id, telephone);
+%mend;
+
+%macro update_employee_email(employee_id, email);
+%mend;
+
+%macro update_employee_bank_account_num(employee_id, bank_account_num);
+%mend;
+
+%macro update_employee_layoff_date(employee_id, layoff_date);
+%mend;
+
+%macro update_employee_contract_type(employee_id, contract_type);
+%mend;
+
+%macro update_employee_fte_percentage(employee_id, fte_percentage);
+%mend;
+
+%macro update_employee_salary(employee_id, salary);
+%mend;
+
+%macro update_food_quantity(food_id, quantity);
+%mend;
+
+%macro update_expense_paid_status(expense_id, status); *paid=T;
+%mend;
+
+/* itd... */
+
+
+
 %update_animal_deceased_date(2, '13apr2016'd);
 %update_employee_surname(1, 'Pawlak');
