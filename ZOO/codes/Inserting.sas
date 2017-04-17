@@ -1,12 +1,12 @@
 *options mprint symbolgen;
 
 /* makra wstawiajace nowe dane */
-%macro insert_animal(name, sex, birth_date, birth_place, deceased_date, species_id, object_id);
-	%let ok=%check_animal(&name., &sex., &birth_date., &birth_place., &deceased_date., &species_id., &object_id.);
+%macro insert_animal(name, sex, birth_date, birth_place, species_id, object_id);
+	%let ok=%check_animal(&name., &sex., &birth_date., &birth_place., &species_id., &object_id.);
 	%if &ok.=1 %then %do;
 		proc sql noprint;
 			select max(animal_id)+1 into: maxid from ZOO.ANIMALS;
-			insert into ZOO.ANIMALS values(&maxid., "&name.", "&sex.", &birth_date., "&birth_place.", &deceased_date., &species_id., "&object_id.");
+			insert into ZOO.ANIMALS values(&maxid., "&name.", "&sex.", &birth_date., "&birth_place.", . , &species_id., "&object_id.");
 		quit;	
 		%put NOTE: Wstawiono nowy rekord!;	
 	%end;
@@ -369,24 +369,73 @@
 
 
 %macro checking_inserts();
-%insert_animal(Kasia, F, '12dec2016'd, ZOO, ., 2, WYB4);
+%insert_animal(Kasia, d, '12dec2016'd, ZOO, 2, WYB4)
+%insert_animal(Kasia, F, '12dec2016'd, ZOO, 2, WYB04)
+%insert_animal(Kasia, F, '12dec2016'd, ZOO, 2, WYB4)
+
+%insert_contract_type(B2B)
 %insert_contract_type(Umowa o dzielo)
+
+%insert_division(SsAki)
 %insert_division(Dinozaury)
-%insert_employee(Anna, , Nowa, '20dec1980'd, 78012552483, Warsaw, Koszykowa, 67, 34, 03-456, 502858987, , 12345678901234567890123456, '20dec2010'd, 2,  5, 80, 5000);
-%insert_food(Frytki, 200, g);
+
+%insert_employee(Anna, , Nowa, '20dec1980'd, 8012205, Warsaw, Koszykowa, 67, 34, 03-456, 502858987, annanowa@op.pl , 12345678901234567890123456, '20dec2010'd, 2,  5, 80, 5000)
+%insert_employee(Anna, , Nowa, '20dec1980'd, 80122052483, Warsaw, Koszykowa, 67, 34, 03-456, 502858987, annanowa@op.pl , 1234567890123456789, '20dec2010'd, 2,  5, 80, 5000)
+%insert_employee(Anna, , Nowa, '20dec1980'd, 80122052483, Warsaw, Koszykowa, 67, 34, 03-456, 502858987, annanowa@op.pl , 12345678901234567890123456, '20dec2010'd, 2,  5, 120, 5000)
+%insert_employee(Anna, , Nowa, '20dec1980'd, 80122052483, Warsaw, Koszykowa, 67, 34, 03-456, 502858987, annanowa@op.pl , 12345678901234567890123456, '20dec2010'd, 5,  5, 80, 5000)
+%insert_employee(Anna, , Nowa, '20dec1980'd, 80122052483, Warsaw, Koszykowa, 67, 34, 03-456, 502858987, annanowa@op.pl , 12345678901234567890123456, '20dec2010'd, 2,  5, 80, 5000)
+
+%insert_food(MAK, 200, g)
+%insert_food(Frytki, 2000, g)
+
+%insert_object(WYB1, wybieg)
+%insert_object(WYB01, polana)
 %insert_object(WYB0, wybieg)
+
+%insert_order(Czlowieki, 60);
 %insert_order(Czlowieki, 2);
+
+%insert_expense(FV2,  firma,  1234567, '25apr2017'd,  '13may2017'd,  100); 
+%insert_expense(FV2,  firma,  1234567890, '25apr2017'd, . ,  100); 
 %insert_expense(FV2,  firma,  1234567890, '25apr2017'd,  '13may2017'd,  100); 
+
+%insert_position(Dyrektor, 3000, 7000);
+%insert_position(Pracownik IT, 3000, 700);
 %insert_position(Pracownik IT, 3000, 7000);
+
+%insert_responsible_staff(0, WYB5)
+%insert_responsible_staff(6, WYB05)
 %insert_responsible_staff(6, WYB5)
+
+%insert_species(, Czlowiek, 24);
+%insert_species(Homo sapiens, Czlowiek, 98);
 %insert_species(Homo sapiens, Czlowiek, 24);
+
+%insert_species_requirements(1, 9, 1, kg)
+%insert_species_requirements(1, 90, 6, kg)
 %insert_species_requirements(1, 1, 6, kg)
+
+%insert_supplier(SuperSklep, 502656987, ss@super.com, 02611696)
+%insert_supplier(SuperSklep, 502656987, , 0261169626)
 %insert_supplier(SuperSklep, 502656987, ss@super.com, 0261169626)
+
+%insert_supply(. , 7);
+%insert_supply('12apr2017'd, 34);
 %insert_supply('12apr2017'd, 7);
-%insert_supply_details(18834, 6, 57, g, 78)
+
+%insert_supply_details(. , 6, 500, g, 78)
+%insert_supply_details(500, 98, 500, g, 78)
+%insert_supply_details(500, 6, 500, g, 78)
+
+%insert_ticket_type(Roczny ulgowy, 80, '20mar2017'd)
 %insert_ticket_type(Roczny seniorski, 80, '20mar2017'd)
+
+%insert_transaction('12may2017'd, 1)
 %insert_transaction('12may2017'd, 190)
-%insert_transaction_details(132981, 5, 2)
+
+%insert_transaction_details(12000, 0, 2)
+%insert_transaction_details(12000, 5, 0)
+%insert_transaction_details(12000, 5, 2)
 %mend;
 
-%checking_inserts();
+/*%checking_inserts();*/

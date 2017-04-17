@@ -217,21 +217,64 @@ dm log 'clear';
 
 
 %macro checking_updates();
+%update_animal_deceased_date(0, '13apr2016'd);
 %update_animal_deceased_date(2, '13apr2016'd);
+
+%update_employee_surname(12001, Pawlak);
+%update_employee_surname(1, );
 %update_employee_surname(1, Pawlak);
+
+%update_employee_adress(0, Warszawa, Pulawska, 325, 12, 03-678);
 %update_employee_adress(1, Warszawa, Pulawska, 325, 12, 03-678);
+
+%update_employee_telephone(0, 502858789);
+%update_employee_telephone(1, );
 %update_employee_telephone(1, 502858789);
+
+%update_employee_email(0, anna.anna@gmail.com);
+%update_employee_email(1, );
 %update_employee_email(1, anna.anna@gmail.com);
+
+%update_employee_bank_account_num(0, 00000000001111111111222222);
+%update_employee_bank_account_num(1, 000000000011111111112);
 %update_employee_bank_account_num(1, 00000000001111111111222222);
+
+%update_employee_layoff_date(0, '1apr2017'd);
+%update_employee_layoff_date(1, .);
 %update_employee_layoff_date(1, '1apr2017'd);
+
+%update_employee_contract_type(0, 2);
+%update_employee_contract_type(1, 23);
 %update_employee_contract_type(1, 2);
+
+%update_employee_fte_percentage(0, 80);
+%update_employee_fte_percentage(1, 180);
 %update_employee_fte_percentage(1, 80);
+
+%update_employee_salary(0, 7500);
+%update_employee_salary(1, 500);
 %update_employee_salary(1, 7500);
-%update_food_quantity(3, 4);
+
+%update_food_quantity(0, 400);
+%update_food_quantity(3, .);
+%update_food_quantity(3, 400);
+
+%update_expense_paid_status(.);
 %update_expense_paid_status(714);
+
+%update_position_salary_range(0, 1000, 3000);
+%update_position_salary_range(4, 10000, 3000);
 %update_position_salary_range(4, 1000, 3000);
+
+%update_supplier_phone(12, );
+%update_supplier_phone(0, 568569854);
 %update_supplier_phone(12, 568569854);
-%update_supplier_email(1, nowy@skep.pl);
+
+%update_supplier_email(0, nowy@sklep.pl);
+%update_supplier_email(1, );
+%update_supplier_email(1, nowy@sklep.pl);
+
+%update_ticket_type(9, 245, '30dec2017'd);
 %update_ticket_type(2, 245, '30dec2017'd);
 %mend;
 

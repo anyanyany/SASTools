@@ -23,7 +23,7 @@ quit;
 
 
 /* makra sprawdzajace poprawnosc danych */
-%macro check_animal(name, sex, birth_date, birth_place, deceased_date, species_id, object_id)/ minoperator;
+%macro check_animal(name, sex, birth_date, birth_place, species_id, object_id)/ minoperator;
 	%let ok=1;
 	%if %length(&name.)=0 %then %do; %put WARNING: Zwierze powinno miec imie!; %end;
 	%if %length(&sex.)=0 %then %do; %put WARNING: Plec nie moze byc pusta!; %let ok=0; %goto exit; %end;	
@@ -89,6 +89,7 @@ quit;
 
 %macro check_object(object_id, object_type)/minoperator;
 	%let ok=1;
+	%if %length(&object_type.)=0 %then %do; %put WARNING: Pusty typ!; %let ok=0; %goto exit; %end;
 	%if %length(&object_id.) gt 5 %then %do; %put WARNING: Niepoprawny identyfikator!; %let ok=0; %goto exit; %end;
 	%if not(%lowcase(&object_type.) in wybieg ptaszarnia akwarium terrarium) %then %do; %put WARNING: Niepoprawny typ obiektu!; %let ok=0; %goto exit; %end;
 	%exit: &ok.
@@ -107,11 +108,10 @@ quit;
 	%if %length(&invoice_id.)=0 %then %do; %put WARNING: Numer faktury nie moze byc pusty!; %let ok=0; %goto exit; %end;	
 	%if %length(&company_name.)=0 %then %do; %put WARNING: Nazwa firmy nie moze byc pusta!; %let ok=0; %goto exit; %end;	
 	%if %length(&NIP.) ne 10 %then %do; %put WARNING: Niepoprawny NIP!; %let ok=0; %goto exit; %end;
-	%if %length(&invoice_date.)=0 %then %do; %put WARNING: Data wystawienia faktury nie moze byc pusta!; %let ok=0; %goto exit; %end;	
-	%if %length(&payment_date.)=0 %then %do; %put WARNING: Data platnosci nie moze byc pusta!; %let ok=0; %goto exit; %end;	
+	%if %length(&invoice_date.)=0 or &invoice_date. eq . %then %do; %put WARNING: Data wystawienia faktury nie moze byc pusta!; %let ok=0; %goto exit; %end;	
+	%if %length(&payment_date.)=0 or &payment_date. eq . %then %do; %put WARNING: Data platnosci nie moze byc pusta!; %let ok=0; %goto exit; %end;	
 	%if %length(&amount_gross.)=0 or &amount_gross. eq . %then %do; %put WARNING: Kwota nie moze byc pusta!; %let ok=0; %goto exit; %end;		
 	%if &amount_gross. lt 1 %then %do; %put WARNING: Niepoprawna kwota!; %let ok=0; %goto exit; %end;
-	%if %eval(&invoice_date. gt &payment_date.) %then %do; %put WARNING: Niepoprawne daty!; %let ok=0; %goto exit; %end;
 	%exit: &ok.
 %mend;
 
