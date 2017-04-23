@@ -48,7 +48,7 @@ quit;
 	&ok.
 %mend;
 
-%macro check_employee(name, second_name, surname, birth_date, PESEL, address_city, address_street, address_house_num, address_flat_num, postal_code, telephone, email, bank_account_num, hire_date, contract_type, position_code, fte_percentage, salary) / minoperator;
+%macro check_employee(name, second_name, surname, birth_date, PESEL, address_city, address_street, address_house_num, address_flat_num, postal_code, telephone, email, bank_account_num, hire_date, contract_type, __position_code, fte_percentage, salary) / minoperator;
 	%let ok=1;
 	%if %length(&name.)=0 %then %do; %put WARNING: Imie nie moze byc puste!; %let ok=0; %goto exit; %end;
 	%if %length(&surname.)=0 %then %do; %put WARNING: Nazwisko nie moze byc puste!; %let ok=0; %goto exit; %end;
@@ -61,20 +61,38 @@ quit;
 	%if %length(&bank_account_num.) ne 26 %then %do; %put WARNING: Niepoprawny NRB!; %let ok=0; %goto exit; %end;
 	%if %length(&hire_date.)=0 or &hire_date. eq . %then %do; %put WARNING: Data zatrudnienia nie moze byc pusta!; %let ok=0; %goto exit; %end;	
 	%if %length(&contract_type.)=0 or &contract_type. eq . %then %do; %put WARNING: Nie podano typu kontraktu!; %let ok=0; %goto exit; %end;
-	%if %length(&position_code.)=0 or &position_code. eq . %then %do; %put WARNING: Nie podano stanowiska!; %let ok=0; %goto exit; %end;
+	%if %length(&__position_code.)=0 or &__position_code. eq . %then %do; %put WARNING: Nie podano stanowiska!; %let ok=0; %goto exit; %end;
 	%if %length(&fte_percentage.)=0 or &fte_percentage. eq . %then %do; %put WARNING: Nie podano etatu!; %let ok=0; %goto exit; %end;
 	%if %length(&salary.)=0 or &salary. eq . %then %do; %put WARNING: Nie podano zarobków!; %let ok=0; %goto exit; %end;
 
 	%if not(&contract_type. in &contract_types.) %then %do; %put WARNING: Niepoprawny typ kontraktu!; %let ok=0; %goto exit; %end;
-	%if not(&position_code. in &position_codes.) %then %do; %put WARNING: Niepoprawne stanowisko!; %let ok=0;  %goto exit; %end;
+	%if not(&__position_code. in &position_codes.) %then %do; %put WARNING: Niepoprawne stanowisko!; %let ok=0;  %goto exit; %end;
 	%if &fte_percentage gt 100 %then %do; %put WARNING: Nie moze byc wiecej niz 100 procent etatu!; %let ok=0; %goto exit; %end;
-	
-/*	proc sql noprint;*/
-/*		select max_salary into: maxsalary from ZOO.POSITIONS where position_code=&position_code.;*/
-/*		select min_salary into: minsalary from ZOO.POSITIONS where position_code=&position_code.;*/
-/*	quit;*/
-/*	%put &=maxsalary &=minsalary;*/
-/*	%if &salary<&minsalary. or &salary>&maxsalary. %then %do; %put WARNING: Nieodpowiednie wynagrodzenie dla tego stanowiska!; %let ok=0; %goto exit; %end;*/
+
+
+	%let dsid=%sysfunc(open(ZOO.POSITIONS, i));  /* otwieramy zbior */
+	%if (&dsid=0) %then /* jesli sie nie otworzyl to error i exit */
+	%do;
+		%put %sysfunc(sysmsg());
+		%let ok=0; %goto exit;
+	%end;
+	%else /* jesli zadzialalo, to przez syscal set tworzymy makrozmienne o nazwach jak zmienne w zbiorze */
+	%do;
+		%syscall set(dsid);
+		%let __I__=1;
+		%let position_code = -1;
+		%do %while(&position_code. ne &__position_code.); /* iterujemy po zbiorze az znajdziemy rekord ktory nas interesuje */
+		 	%let rc=%sysfunc(fetchobs(&dsid, &__I__.));
+		    %let __I__=%eval(&__I__. + 1);
+		%end;
+
+	 	%let rc=%sysfunc(close(&dsid));
+	 	%put &=max_salary &=min_salary;
+	 	%if &salary.<&min_salary. or &salary.>&max_salary. %then
+	    %do;
+	        %put WARNING: Nieodpowiednie wynagrodzenie dla tego stanowiska!; %let ok=0; %goto exit;
+	    %end;
+	%end;
 
 %exit: &ok.
 %mend;
