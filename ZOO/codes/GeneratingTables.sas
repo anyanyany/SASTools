@@ -78,7 +78,7 @@ data ZOO.TICKET_TYPES_HIST;
 	7, Jednorazowy grupowy 10+, 13, '01oct14'd, '31mar15'd
 	1, Jednorazowy normalny, 27, '01apr15'd, '30sep15'd
 	2, Jednorazowy ulgowy, 17, '01apr15'd, '30sep15'd
-	3, Jednorazowy rodzinny 2+1, 55, '01apr15'd, '30sep15'
+	3, Jednorazowy rodzinny 2+1, 55, '01apr15'd, '30sep15'd
 	7, Jednorazowy grupowy 10+, 17, '01apr15'd, '30sep15'd
 	1, Jednorazowy normalny, 25, '01oct15'd, '31mar16'd
 	2, Jednorazowy ulgowy, 15, '01oct15'd, '31mar16'd
