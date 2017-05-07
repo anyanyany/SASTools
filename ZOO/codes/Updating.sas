@@ -278,3 +278,4 @@ dm log 'clear';
 %update_ticket_type(2, 245, '30dec2017'd);
 %mend;
 
+/*%checking_updates();*/

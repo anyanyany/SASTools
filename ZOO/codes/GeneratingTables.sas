@@ -23,60 +23,75 @@ data ZOO.TICKET_TYPES_HIST;
 	4, Roczny normalny, 90, '01jan10'd, '31dec10'd
 	5, Roczny ulgowy, 70, '01jan10'd, '31dec10'd
 	6, Roczny rodzinny 2+1, 200, '01jan10'd, '31dec10'd
+	7, Jednorazowy grupowy 10+, 15, '01jan10'd, '31mar10'd
 	1, Jednorazowy normalny, 30, '01apr10'd, '30sep10'd
 	2, Jednorazowy ulgowy, 20, '01apr10'd, '30sep10'd
 	3, Jednorazowy rodzinny 2+1, 65, '01apr10'd, '30sep10'd
+	7, Jednorazowy grupowy 10+, 20, '01apr10'd, '30sep10'd
 	1, Jednorazowy normalny, 27, '01oct10'd, '31mar11'd
 	2, Jednorazowy ulgowy, 17, '01oct10'd, '31mar11'd
 	3, Jednorazowy rodzinny 2+1, 55, '01oct10'd, '31mar11'd
+	7, Jednorazowy grupowy 10+, 17, '01oct10'd, '31mar11'd
 	4, Roczny normalny, 100, '01jan11'd, '31dec11'd
 	5, Roczny ulgowy, 80, '01jan11'd, '31dec11'd
 	6, Roczny rodzinny 2+1, 220, '01jan11'd, '31dec11'd
 	1, Jednorazowy normalny, 30, '01apr11'd, '30sep11'd
 	2, Jednorazowy ulgowy, 20, '01apr11'd, '30sep11'd
 	3, Jednorazowy rodzinny 2+1, 65, '01apr11'd, '30sep11'd
+	7, Jednorazowy grupowy 10+, 20, '01apr11'd, '30sep11'd
 	1, Jednorazowy normalny, 25, '01oct11'd, '31mar12'd
 	2, Jednorazowy ulgowy, 15, '01oct11'd, '31mar12'd
 	3, Jednorazowy rodzinny 2+1, 50, '01oct11'd, '31mar12'd
+	7, Jednorazowy grupowy 10+, 15, '01oct11'd, '31mar12'd
 	4, Roczny normalny, 90, '01jan12'd, '31dec12'd
 	5, Roczny ulgowy, 60, '01jan12'd, '31dec12'd
 	6, Roczny rodzinny 2+1, 200, '01jan12'd, '31dec12'd
 	1, Jednorazowy normalny, 30, '01apr12'd, '30sep12'd
 	2, Jednorazowy ulgowy, 20, '01apr12'd, '30sep12'd
 	3, Jednorazowy rodzinny 2+1, 65, '01apr12'd, '30sep12'd
+	7, Jednorazowy grupowy 10+, 20, '01apr12'd, '30sep12'd
 	1, Jednorazowy normalny, 23, '01oct12'd, '31mar13'd
 	2, Jednorazowy ulgowy, 13, '01oct12'd, '31mar13'd
 	3, Jednorazowy rodzinny 2+1, 50, '01oct12'd, '31mar13'd
+	7, Jednorazowy grupowy 10+, 13, '01oct12'd, '31mar13'd
 	4, Roczny normalny, 100, '01jan13'd, '31dec13'd
 	5, Roczny ulgowy, 70, '01jan13'd, '31dec13'd
 	6, Roczny rodzinny 2+1, 220, '01jan13'd, '31dec13'd
 	1, Jednorazowy normalny, 27, '01apr13'd, '30sep13'd
 	2, Jednorazowy ulgowy, 17, '01apr13'd, '30sep13'd
 	3, Jednorazowy rodzinny 2+1, 55, '01apr13'd, '30sep13'd
+	7, Jednorazowy grupowy 10+, 17, '01apr13'd, '30sep13'd
 	1, Jednorazowy normalny, 25, '01oct13'd, '31mar14'd
 	2, Jednorazowy ulgowy, 15, '01oct13'd, '31mar14'd
 	3, Jednorazowy rodzinny 2+1, 50, '01oct13'd, '31mar14'd
+	7, Jednorazowy grupowy 10+, 15, '01oct13'd, '31mar14'd
 	4, Roczny normalny, 90, '01jan14'd, '31dec15'd
 	5, Roczny ulgowy, 70, '01jan14'd, '31dec15'd
 	6, Roczny rodzinny 2+1, 200, '01jan14'd, '31dec15'd
 	1, Jednorazowy normalny, 27, '01apr14'd, '30sep14'd
 	2, Jednorazowy ulgowy, 17, '01apr14'd, '30sep14'd
 	3, Jednorazowy rodzinny 2+1, 55, '01apr14'd, '30sep14'd
+	7, Jednorazowy grupowy 10+, 17, '01apr14'd, '30sep14'd
 	1, Jednorazowy normalny, 23, '01oct14'd, '31mar15'd
 	2, Jednorazowy ulgowy, 13, '01oct14'd, '31mar15'd
 	3, Jednorazowy rodzinny 2+1, 50, '01oct14'd, '31mar15'd
+	7, Jednorazowy grupowy 10+, 13, '01oct14'd, '31mar15'd
 	1, Jednorazowy normalny, 27, '01apr15'd, '30sep15'd
 	2, Jednorazowy ulgowy, 17, '01apr15'd, '30sep15'd
-	3, Jednorazowy rodzinny 2+1, 55, '01apr15'd, '30sep15'd
+	3, Jednorazowy rodzinny 2+1, 55, '01apr15'd, '30sep15'
+	7, Jednorazowy grupowy 10+, 17, '01apr15'd, '30sep15'd
 	1, Jednorazowy normalny, 25, '01oct15'd, '31mar16'd
 	2, Jednorazowy ulgowy, 15, '01oct15'd, '31mar16'd
 	3, Jednorazowy rodzinny 2+1, 50, '01oct15'd, '31mar16'd
+	7, Jednorazowy grupowy 10+, 15, '01oct15'd, '31mar16'd
 	1, Jednorazowy normalny, 30, '01apr16'd, '30sep16'd
 	2, Jednorazowy ulgowy, 20, '01apr16'd, '30sep16'd
 	3, Jednorazowy rodzinny 2+1, 65, '01apr16'd, '30sep16'd
+	7, Jednorazowy grupowy 10+, 20, '01apr16'd, '30sep16'd
 	1, Jednorazowy normalny, 27, '01oct16'd, '31mar17'd
 	2, Jednorazowy ulgowy, 17, '01oct16'd, '31mar17'd
 	3, Jednorazowy rodzinny 2+1, 55, '01oct16'd, '31mar17'd
+	7, Jednorazowy grupowy 10+, 17, '01oct16'd, '31mar17'd
 	;
 RUN; 
 /*********************/
@@ -98,6 +113,7 @@ data ZOO.TICKET_TYPES;
 	1, Jednorazowy normalny, 30, '01apr17'd
 	2, Jednorazowy ulgowy, 20, '01apr17'd
 	3, Jednorazowy rodzinny 2+1, 65, '01apr17'd
+	7, Jednorazowy grupowy 10+, 20, '01apr17'd
 	;
 RUN; 
 /*********************/
@@ -417,7 +433,7 @@ data ZOO.TRANSACTIONS;
 		if m eq 10 then n=50;
 		if m eq 11 then n=40;
 		if m eq 12 then n=35;
-		x=n+ceil(ranuni(0)*5);
+		x=n+ceil(ranuni(0)*10);
 
 		do j=1 to x;
 			transaction_id=transaction_id+1;
@@ -446,6 +462,7 @@ data ZOO.TRANSACTION_DETAILS;
 	do transaction_id=1 to &tran_count;
 		t1=0; t2=0; t3=0; 
 		t4=0; t5=0; t6=0; 
+		t7=0;
 
 		if ranuni(0)<0.1 then do;
 			if ranuni(0)<0.3 then t6=ceil(ranuni(0)*2);
@@ -461,21 +478,26 @@ data ZOO.TRANSACTION_DETAILS;
 			end;
 		end;
 		else do;
-			if ranuni(0)<0.3 then t3=ceil(ranuni(0)*2);
-			if t3>0 then do;
-				if ranuni(0)<0.5 then do;
-					if ranuni(0)<0.4 then t1=ceil(ranuni(0)*3);
-					else t2=ceil(ranuni(0)*4);
-				end;
+			if ranuni(0)<0.15 then do;
+				t7=10+round(ranuni(0)*10);
 			end;
 			else do;
-				if ranuni(0)<0.5 then do;
-					t1=round(ranuni(0));
-					t2=ceil(ranuni(0)*5);
+				if ranuni(0)<0.3 then t3=ceil(ranuni(0)*2);
+				if t3>0 then do;
+					if ranuni(0)<0.5 then do;
+						if ranuni(0)<0.4 then t1=ceil(ranuni(0)*3);
+						else t2=ceil(ranuni(0)*4);
+					end;
 				end;
 				else do;
-					t2=round(ranuni(0));
-					t1=ceil(ranuni(0)*5);
+					if ranuni(0)<0.5 then do;
+						t1=round(ranuni(0));
+						t2=ceil(ranuni(0)*5);
+					end;
+					else do;
+						t2=round(ranuni(0));
+						t1=ceil(ranuni(0)*5);
+					end;
 				end;
 			end;
 		end;
@@ -486,6 +508,7 @@ data ZOO.TRANSACTION_DETAILS;
 		if t4>0 then do; ticket_type_id=4; quantity=t4; output; end;
 		if t5>0 then do; ticket_type_id=5; quantity=t5; output; end;
 		if t6>0 then do; ticket_type_id=6; quantity=t6; output; end;
+		if t7>0 then do; ticket_type_id=7; quantity=t7; output; end;
 	end;
 	keep transaction_id ticket_type_id quantity;
 run; 
