@@ -518,15 +518,37 @@ run;
 
 /*uzupelnienie tabeli z transakcjami*/
 proc sql;
-	create table ZOO.transactions_amount as
-	select t.transaction_id, sum(td.quantity*tt.price) as amount
+	create table ZOO.transactions_amount1 as
+	select t.transaction_id, sum(td.quantity*tth.price) as amount1
+	from ZOO.transactions t
+	join ZOO.transaction_details td on t.transaction_id=td.transaction_id
+	join ZOO.TICKET_TYPES_HIST tth on tth.ticket_type_id=td.ticket_type_id
+	where t.date>=tth.valid_from and t.date<=tth.valid_to
+	group by t.transaction_id;
+
+	create table ZOO.transactions_amount2 as
+	select t.transaction_id, sum(td.quantity*tt.price) as amount2
 	from ZOO.transactions t
 	join ZOO.transaction_details td on t.transaction_id=td.transaction_id
 	join ZOO.TICKET_TYPES tt on tt.ticket_type_id=td.ticket_type_id
-	join ZOO.TICKET_TYPES_HIST tth on tth.ticket_type_id=td.ticket_type_id
-	where (t.date>=tth.valid_from and t.date<=tth.valid_to) or (t.date>=tt.valid_from and t.amount=0)
+	where t.date>=tt.valid_from 
 	group by t.transaction_id;
 quit;
+
+data zoo.transactions_amount;
+set ZOO.transactions_amount1 ZOO.transactions_amount2;
+run;
+
+proc sort data=zoo.transactions_amount;
+by transaction_id;
+quit;
+
+data zoo.transactions_amount;
+	set zoo.transactions_amount;
+	if amount1=. then amount=amount2;
+	else amount=amount1;
+	drop amount1 amount2;
+run;
 
 data ZOO.TRANSACTIONS; 
   merge ZOO.transactions ZOO.transactions_amount; 
@@ -535,6 +557,8 @@ run;
 
 proc sql;
 	drop table ZOO.transactions_amount;
+	drop table ZOO.transactions_amount1;
+	drop table ZOO.transactions_amount2;
 quit;
 /*********************/
 
