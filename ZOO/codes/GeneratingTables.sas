@@ -1719,13 +1719,13 @@ quit;
 
 /*tabela przedstawiajaca inne wydatki*/
 data ZOO.OTHER_EXPENSES;
-	length expense_id 8 invoice_id $15 company_name $20 NIP $10 invoice_date 6 payment_date 6 amount_gross 5 paid $1 description $40;
+	length expense_id 8 invoice_id $15 company_name $30 NIP $10 invoice_date 6 payment_date 6 amount_gross 5 paid $1 description $40;
 	format invoice_date payment_date ddmmyy10. amount_gross 7.2;
 	
 	companies=10;
 	array NIPS[10]  (2953643889, 7676147342, 4581456487, 5975906760, 4515484995, 6861299937, 4620109414, 1841576325, 3839642736, 9332786857);
-	array comp_names[10] $20 ("Wodociagi", "Urzad miasta", "LUXMED", "Serwis techniczny", "Biuro reklamowe", "Elektrownia", "PGNiG", "8", "9", "10");
-	array amounts[10]  (1500, 10000, 5000, 1000, 3000, 2000, 2000, 0, 0, 0);
+	array comp_names[10] $30 ("Wodociagi", "Urzad miasta", "LUXMED", "Serwis techniczny", "Biuro reklamowe", "Elektrownia", "PGNiG", "Perfect Cleaning", "Telcom", "Czyste miasto - wywóz smieci");
+	array amounts[10]  (1500, 10000, 5000, 1000, 3000, 2000, 2000, 1500, 500, 1000);
 	array days[10];
 
 	do company=1 to companies;
