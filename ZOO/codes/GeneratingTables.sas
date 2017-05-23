@@ -136,30 +136,6 @@ RUN;
 
 
 
-/*tabela zawierajaca stanowiska pracownikow*/
-data ZOO.POSITIONS;
-	length position_code 3 
-	name $50
-	min_salary 5
-	max_salary 5;
-	INFILE DATALINES DLM=',';
- 	INPUT position_code name $ min_salary max_salary;
-	DATALINES;
-	1, Dyrektor, 7000, 20000
-	2, Zastepca Dyrektora, 5000, 15000
-	3, Glówny Ksiegowy, 4000, 10000
-	4, Pracownik dzialu Finansowo - Ksiegowego, 3500, 8000
-	5, Pracownik dzialu Hodowlanego, 3000, 10000
-	6, Pracownik dzialu Zieleni, 3000, 10000
-	7, Pracownik dzialu Dydaktycznego, 2500, 7000
-	8, Pracownik Techniczny, 3000, 7000
-	9, Pracownik ds. administracyjnych i kadrowych, 2500, 6000
-	;
-RUN; 
-/*********************/
-
-
-
 /*tabela zawierajaca informacje o pracownikach*/
 data ZOO.EMPLOYEES;
 	length employee_id 6 
@@ -403,6 +379,47 @@ run;
 
 
 
+/*tabela zawierajaca stanowiska pracownikow*/
+data ZOO.POSITIONS;
+	length position_code 3 
+	name $50
+	min_salary 5
+	max_salary 5;
+	INFILE DATALINES DLM=',';
+ 	INPUT position_code name $ min_salary max_salary;
+	DATALINES;
+	1, Dyrektor, 5000, 15000
+	2, Zastepca Dyrektora, 4000, 10000
+	3, Glówny Ksiegowy, 3000, 8000
+	4, Pracownik dzialu Finansowo - Ksiegowego, 2500, 7000
+	5, Pracownik dzialu Hodowlanego, 3000, 8000
+	6, Pracownik dzialu Zieleni, 3000, 6000
+	7, Pracownik dzialu Dydaktycznego, 2000, 5000
+	8, Pracownik Techniczny, 2000, 5500
+	9, Pracownik ds. administracyjnych i kadrowych, 2000, 5000
+	;
+RUN; 
+
+/*zaktualizowanie pensji pracowników */
+proc sql noprint;
+	create table ZOO.employees_salaries as 
+	select e.*, p.min_salary, p.max_salary from ZOO.EMPLOYEES e
+	join ZOO.POSITIONS p on p.position_code=e.position_code;
+quit;
+
+data ZOO.EMPLOYEES;
+	set ZOO.employees_salaries;
+	salary = min_salary + 100*round(ranuni(0)*(max_salary-min_salary)/100);
+	drop min_salary max_salary;
+run;
+
+proc sql noprint;
+	drop table ZOO.employees_salaries;
+quit;
+/*********************/
+
+
+
 /*tabela zawierajaca wszystkie transakcje*/
 /*tymczasowo bez obliczonej lacznej kwoty transakcji*/
 proc sql noprint;
@@ -420,20 +437,20 @@ data ZOO.TRANSACTIONS;
 	do i=1 to days;
 		m=month(date);
 		n=0;
-		if m eq 1 then n=30;
-		if m eq 2 then n=30;
-		if m eq 3 then n=35;
-		if m eq 4 then n=35;
-		if m eq 4 then n=40;
-		if m eq 5 then n=50;
-		if m eq 6 then n=60;
-		if m eq 7 then n=70;
-		if m eq 8 then n=70;
-		if m eq 9 then n=60;
-		if m eq 10 then n=50;
-		if m eq 11 then n=40;
-		if m eq 12 then n=35;
-		x=n+ceil(ranuni(0)*10);
+		if m eq 1 then n=230;
+		if m eq 2 then n=230;
+		if m eq 3 then n=235;
+		if m eq 4 then n=235;
+		if m eq 4 then n=240;
+		if m eq 5 then n=250;
+		if m eq 6 then n=260;
+		if m eq 7 then n=270;
+		if m eq 8 then n=270;
+		if m eq 9 then n=260;
+		if m eq 10 then n=250;
+		if m eq 11 then n=240;
+		if m eq 12 then n=235;
+		x=n+ceil(ranuni(0)*30);
 
 		do j=1 to x;
 			transaction_id=transaction_id+1;
