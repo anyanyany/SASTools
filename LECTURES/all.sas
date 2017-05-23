@@ -6672,3 +6672,995 @@ quit;
 
 
 /* end of lecture 10 */ /* line 5902 */
+/* end of lecture 10 */ /* line 5902 */
+
+
+proc sql feedback _method;
+select count(1) as i
+from
+zbiory.indeks_i1
+join
+(select today()-365 as d from _dummy_) as d
+on d.d = indeks_i1.date
+;
+quit;
+
+
+
+libname x "X:\";
+
+%let _data_ = "%sysfunc(today(),yymmddn8.)";
+%put *&_data_.*;
+
+data IDXWHERE_yes;
+set x.pi(IDXWHERE=yes);
+where cyfra = &_data_.;
+run;
+
+
+data IDXWHERE_no;
+set x.pi(IDXWHERE=no);
+where cyfra = &_data_.;
+run;
+
+
+data IDXNAME;
+set x.pi(IDXNAME=cyfra);
+where cyfra = &_data_.;
+run;
+
+
+
+/*
+WSKAZOWKI:
+- uzywac na duzych zbiorach do ekstraktowania malych podzbiorow
+- na zmiennych, ktore maja duzo roznych poziomow
+- posortowac zbior przed indeksowaniem (o ile ma to sens)
+*/
+
+
+
+/*
+INDEX + BY statement - zbior nie musi byc posortowany
+*/
+
+data t1(index=(klucz));
+do i = 1 to 10000;
+ klucz = ceil(100 * ranuni(123));
+ output;
+end;
+run;
+
+data t2(index=(klucz));
+length klucz 8 wybrany $ 3;
+wybrany = 'TAK';
+
+klucz = 97; output;
+klucz = 17; output;
+klucz = 74; output;
+klucz =  3; output;
+klucz = 19; output;
+klucz = 24; output;
+klucz = 64; output;
+run;
+
+
+
+proc contents data = t1;
+run;
+proc contents data = t2;
+run;
+
+/* zbiory t1 i t2 nie sa posortowane */
+
+data t2s;
+ set t2;
+ by klucz;
+run;
+
+
+data t12s(where = (wybrany = 'TAK'));
+ merge t1 t2;
+ by klucz;
+run;
+
+
+/* SAS uzyl indeksu, a jako efekt uboczny zwrocil zbior posortowany 
+   rosnaco wzgledem zmiennej klucz                                  */
+/* mozna w ten sposob sortowac bez koniecznosci uzywania proc sort  */
+/* zmienne .first i .last odnosza sie do rosnacego posortowania     */
+
+/* SAS nie uzyje indeksu z opcja descending */
+data t2sd;
+ set t2;
+ by descending klucz;
+run;
+
+
+
+/* WHERE, BY i INDEKSY */
+options fullstimer msglevel = I;
+
+data WBI(index=(I J));
+do i = 100 to 1 by -1;
+ do j = 100 to 1 by -2, 1 to 99 by 2;
+  output;
+ end;
+end;
+run;
+
+
+data WBI2;
+set WBI;
+by j;
+where i between 11 and 13;
+run;
+
+
+/* BY ma wyzszy priorytet dla indeksu niz WHERE */
+
+
+
+
+
+/* rozne takie tam oczywistosci */
+/* 1) */
+data zbiory.ijk(index=(klucz I_J=(I J)));
+do i = 1 to 100;
+ do j = 1 to 100;
+  klucz = ceil(100 * ranuni(123));
+  output;
+ end;
+end;
+run;
+
+proc delete data = zbiory.ijk; /* skasowanie zbioru */
+run;
+
+ 
+/* 2) */
+data zbiory.ijk(index=(klucz I_J=(I J)));
+do i = 1 to 100;
+ do j = 1 to 100;
+  klucz = ceil(100 * ranuni(123));
+  output;
+ end;
+end;
+run;
+
+proc datasets lib = zbiory nolist;
+ change ijk = abc; /* zmiana nazwy zbioru */
+ run;
+quit;
+
+
+/* 3) */
+proc datasets lib = zbiory nolist;
+ modify abc; 
+  rename klucz = k; /* zmiana nazwy zmiennej indeksu prostego */
+ run;
+quit;
+
+
+/* 4) */
+proc datasets lib = zbiory nolist;
+ modify abc; 
+  rename j = dzej; /* zmiana nazwy zmiennej indeksu zlozonego */
+ run;
+quit;
+ 
+
+
+
+
+
+
+
+
+/* NAPRAWIANIE ZEPSUTEGO INDEKSU */
+options FULLSTIMER MSGLEVEL = I;
+data zbiory.ijk_interactive(index=(klucz I_J=(I J))) zbiory.ijk_interactive2;
+do i = 1 to 100;
+ do j = 1 to 100;
+  klucz = ceil(100 * ranuni(123));
+  output;
+ end;
+end;
+run;
+
+
+
+/* kasujemy[fizycznie] plik z indeksem */
+/* options NOXWAIT; */
+x ERASE C:\SAS_WORK\ZBIORY\ijk_interactive.sas7bndx; /*Win*/
+/* x rm ~/SAS_WORK/ZBIORY/ijk_interactive.sas7bndx; */ /*UNIX/Linux*/
+
+
+data test;
+set zbiory.ijk_interactive; 
+where j > 93;
+run;
+
+proc sql noprint;
+select count(1) as i
+into :_III_ trimmed
+from
+zbiory.ijk_interactive2
+where j > 93;
+quit;
+
+%put **&_III_.**;
+
+
+
+
+
+
+
+
+
+
+/* DeLete DaMaGe ACTION */
+%put **%sysfunc(getoption(DLDMGACTION))**;
+
+options DLDMGACTION = REPAIR ;/* FAIL | ABORT | REPAIR | NOINDEX | PROMPT */
+/* lub dataset option */
+
+
+data 
+zbiory.ijk_FAIL(index=(klucz I_J=(I J)))
+zbiory.ijk_ABORT(index=(klucz I_J=(I J)))
+zbiory.ijk_REPAIR(index=(klucz I_J=(I J)))
+zbiory.ijk_NOINDEX(index=(klucz I_J=(I J)))
+zbiory.ijk_PROMPT(index=(klucz I_J=(I J)))
+;
+do i = 1 to 100;
+ do j = 1 to 100;
+  klucz = ceil(100 * ranuni(123));
+  output;
+ end;
+end;
+run;
+
+
+options NOXWAIT;
+x ERASE C:\SAS_WORK\ZBIORY\ijk_FAIL.sas7bndx;
+x ERASE C:\SAS_WORK\ZBIORY\ijk_ABORT.sas7bndx;
+x ERASE C:\SAS_WORK\ZBIORY\ijk_REPAIR.sas7bndx;
+x ERASE C:\SAS_WORK\ZBIORY\ijk_NOINDEX.sas7bndx;
+x ERASE C:\SAS_WORK\ZBIORY\ijk_PROMPT.sas7bndx; /*Win*/
+
+/* 
+x rm ~/SAS_WORK/ZBIORY/ijk_FAIL.sas7bndx; 
+x rm ~/SAS_WORK/ZBIORY/ijk_ABORT.sas7bndx;
+x rm ~/SAS_WORK/ZBIORY/ijk_REPAIR.sas7bndx;
+x rm ~/SAS_WORK/ZBIORY/ijk_NOINDEX.sas7bndx;
+x rm ~/SAS_WORK/ZBIORY/ijk_PROMPT.sas7bndx; */ /*UNIX/Linux*/
+
+
+data test1;
+set zbiory.ijk_FAIL(DLDMGACTION = FAIL);
+run;
+
+data test2;
+set zbiory.ijk_ABORT(DLDMGACTION = ABORT);
+run;
+
+data test3;
+set zbiory.ijk_REPAIR(DLDMGACTION = REPAIR);
+run;
+
+data test4;
+set zbiory.ijk_NOINDEX(DLDMGACTION = NOINDEX);
+run;
+
+data test5;
+set zbiory.ijk_PROMPT(DLDMGACTION = PROMPT);
+run;
+
+
+
+
+
+
+proc datasets lib = zbiory nolist;
+ REBUILD ijk_NOINDEX;
+ run;
+quit;
+/* moze wymagac zamkniecia okienka explorera */
+
+
+proc datasets lib = zbiory nolist;
+ REBUILD ijk_NOINDEX / NOINDEX; 
+ run;
+quit;
+
+
+
+/*
+REBUILD SAS-file  </ <ENCRYPTKEY=key-value>
+<ALTER=password> <GENNUM=n> <MEMTYPE=member-type> <NOINDEX>>; 
+*/
+
+
+
+
+
+
+
+
+/* nie mylic z REPAIR, bo REPAIR tutaj nie pomoze */
+proc datasets lib = zbiory nolist;
+ REPAIR ijk_NOINDEX;
+ run;
+quit;
+
+
+
+
+
+
+/* INTEGRITY CONSTRAINTS */
+
+/* pomocnicze zbiory SASowe */
+data zbiory.dict_poziom;
+infile cards dlm = '|';
+input poziom poziom_nazwa $ :100.;
+cards;
+1|Szeregowy Œwie¿ynka
+2|Pierfsza kref
+3|Szacun na kompañji
+4|Ot'dzia³owy celebryta
+5|Czempjon
+6|Krzysztof Jarzyna ze Szczecina - Szef wszystkich szefów
+;
+run;
+
+data zbiory.dict_swiat;
+infile cards dlm = '|';
+input swiat swiat_nazwa $ :50.;
+cards;
+1|Pó³nocne Morze
+2|Po³udniowe Góry
+3|Wschodnie Lasy
+4|Zachodnie Równiny
+5|Centralne Bagna
+;
+run;
+
+
+data x;
+length label $ 100;
+
+set zbiory.dict_poziom(rename=(poziom=start poziom_nazwa=label)) end=last;
+retain fmtname 'poziom_nazwa' type 'n';
+output;
+ 
+    if last then do;
+     hlo='O';
+     label='!!!ERROR!!!';
+     output;
+    end;
+run;
+proc format library=zbiory cntlin=x;
+run;
+
+data x;
+length label $ 100;
+
+set zbiory.dict_swiat(rename=(swiat=start swiat_nazwa=label)) end=last;
+retain fmtname 'swiat_nazwa' type 'n';
+output;
+ 
+    if last then do;
+     hlo='O';
+     label='!!!ERROR!!!';
+     output;
+    end;
+run;
+proc format library=zbiory cntlin=x;
+run;
+
+options fmtsearch=(zbiory work);
+
+data
+zbiory.gracz_poziom(keep = id poziom_aktualny_od poziom_aktualny_do poziom)
+zbiory.gracz_swiat(keep = id swiat_aktualny_od swiat_aktualny_do swiat)
+;
+format 
+id Z8. 
+poziom_aktualny_od poziom_aktualny_do swiat_aktualny_od swiat_aktualny_do yymmdd10.
+swiat swiat_nazwa.
+poziom poziom_nazwa.
+;
+
+do id = 1 to 1E1; /* <- do zmiany rozmiaru */
+ poziom_aktualny_od = '14mar2015'd + ceil(100 * ranuni(10));
+ swiat_aktualny_od = poziom_aktualny_od;
+ /* poziomy gracza w czasie */
+ lp = ceil(6 * ranuni(10)); drop lp;
+ do poziom = 1 to lp;
+  poziom_aktualny_do = ifn(poziom = lp, '31dec9999'd, poziom_aktualny_od + 250 + ceil(50 * ranuni(10)));
+  output zbiory.gracz_poziom;
+  poziom_aktualny_od =  poziom_aktualny_do + 1;
+ end;
+/* swiat gry gracza w czasie */
+ lp = ceil(5 * ranuni(10)); drop lp;
+ do swiat_lp = 1 to lp;
+  swiat_aktualny_do = ifn(swiat_lp = lp, '31dec9999'd, swiat_aktualny_od + 220 + ceil(20 * ranuni(10)));
+  swiat = ceil(5 * ranuni(10));
+  output zbiory.gracz_swiat;
+  swiat_aktualny_od =  swiat_aktualny_do + 1;
+ end;
+end;
+
+run;
+
+
+
+
+proc datasets lib = zbiory nolist;
+ modify dict_poziom;
+  ic create poprawne_poziomy_notnull = not null(poziom); 
+ run;
+quit;
+
+
+
+
+
+proc datasets lib = zbiory nolist;
+ modify dict_poziom;
+  ic create poprawne_poziomy_unique = unique(poziom); 
+ run;
+quit;
+
+
+
+
+proc datasets lib = zbiory nolist;
+ modify dict_poziom;
+  ic create poprawne_poziomy_check1 = check(poziom > 0); 
+ run;
+quit;
+
+
+
+
+proc datasets lib = zbiory nolist;
+ modify dict_poziom;
+  ic create poprawne_poziomy_check1 = check(where poziom > 0); 
+ run;
+quit;
+
+
+
+
+
+proc datasets lib = zbiory nolist;
+ modify dict_poziom;
+  ic create poprawne_poziomy_check1 = check(where = (poziom > 0)); 
+ run;
+quit;
+
+
+
+
+
+data nowy_poziom1;
+length poziom 8 poziom_nazwa $ 100;
+poziom = .;
+poziom_nazwa = "Nieistniejacy poziom";
+run;
+
+proc append BASE = zbiory.dict_poziom DATA = nowy_poziom1;
+run;
+
+
+
+data nowy_poziom2;
+length poziom 8 poziom_nazwa $ 100;
+poziom = 1;
+poziom_nazwa = "Szeregowy 'Œwie¿e Miêsko'";
+run;
+
+proc append BASE = zbiory.dict_poziom DATA = nowy_poziom2;
+run;
+
+
+
+
+data nowy_poziom3;
+length poziom 8 poziom_nazwa $ 100;
+poziom = 0;
+poziom_nazwa = "Kadet";
+run;
+
+proc append BASE = zbiory.dict_poziom DATA = nowy_poziom3;
+run;
+
+
+
+
+
+
+
+proc datasets lib = zbiory nolist;
+ modify dict_poziom;
+  ic create poprawne_poziomy_pk = primary key(poziom)
+    message = "Wartosci pola musza byc NIEPUSTE! i UNIKALNE!" /* wiadomosc dla uzytkownika od autora */
+  ; 
+ run;
+quit;
+
+
+
+data nowy_poziom12;
+length poziom 8 poziom_nazwa $ 100;
+poziom = .;
+poziom_nazwa = "Nieistniejacy poziom";
+output;
+poziom = 1;
+poziom_nazwa = "Szeregowy 'Œwie¿e Miêsko'";
+output;
+run;
+
+proc append BASE = zbiory.dict_poziom DATA = nowy_poziom12;
+run;
+
+
+
+
+
+
+
+
+proc datasets lib = zbiory nolist;
+ modify dict_poziom;
+  ic create poprawne_poziomy_pk = primary key(poziom)
+    message = "Wartosci pola musza byc NIEPUSTE! i UNIKALNE baranie!" /* wiadomosc dla uzytkownika od autora */
+    msgtype = USER                                            /* i tylko ona, bez SASowego gadania   */
+  ; 
+ run;
+quit;
+
+
+
+
+
+proc datasets lib = zbiory nolist;
+ modify dict_poziom;
+  ic delete poprawne_poziomy_pk; /* kasowanie konkretnego integrity constreintsa */
+ run;
+
+
+
+
+
+
+
+
+
+
+ modify dict_poziom;
+  ic delete _ALL_; /* kasowanie wszystkich integrity constreintsow */
+ run;
+quit;
+
+
+
+
+
+proc datasets lib = zbiory nolist;
+ modify dict_poziom;
+  ic create poprawne_poziomy_pk = primary key(poziom)
+    message = "Wartosci pola musza byc NIEPUSTE! i UNIKALNE!" /* wiadomosc dla uzytkownika od autora */
+    msgtype = USER                                            /* i tylko ona, bez SASowego gadania   */
+  ; 
+ run;
+quit;
+
+proc append BASE = zbiory.dict_poziom DATA = nowy_poziom12;
+run;
+
+
+
+
+
+
+proc datasets lib = zbiory nolist;
+ modify gracz_poziom;
+  ic create gracz_poziom_pk = primary key(id poziom)
+    message = "Wartosci pola musza byc NIEPUSTE! i UNIKALNE!"
+    msgtype = USER                                             
+  ; 
+ run;
+
+
+
+
+ modify gracz_poziom;
+  ic create poziom_nn = not null(poziom)
+    message = "Wartosci pola musza byc NIEPUSTE!"
+    msgtype = USER                                             
+  ; 
+ run;
+ /* 
+    na zmiennych uzywanych w PK nie trzeba nakladac warunku Not Null
+ */
+
+
+
+
+ modify gracz_poziom;
+  ic create poziom_aktualny_od_nn = not null(poziom_aktualny_od); 
+  ic create poziom_aktualny_do_nn = not null(poziom_aktualny_do);
+  ic create poziom_aktualny_od_ch1 = check(where=(poziom_aktualny_od < poziom_aktualny_do));
+ run;
+
+
+
+
+ modify gracz_poziom;
+  ic create poziom_ch1 = check(where=(1 le poziom le 6));
+ run;
+
+quit;
+
+
+
+
+
+data nowy_gracz1;
+format 
+id Z8. 
+poziom_aktualny_od poziom_aktualny_do yymmdd10.
+poziom poziom_nazwa.
+;
+id = 113; 
+poziom_aktualny_od = today();
+poziom_aktualny_do = '31dec9999'd;
+poziom = 7;
+run;
+
+proc append BASE = zbiory.gracz_poziom data = nowy_gracz1;
+run;
+
+
+
+
+
+
+
+data nowy_poziom99;
+length poziom 8 poziom_nazwa $ 100;
+poziom = 99;
+poziom_nazwa = "Król Julian";
+run;
+
+proc append BASE = zbiory.dict_poziom DATA = nowy_poziom99;
+run;
+
+
+
+proc datasets lib = zbiory nolist;
+ modify gracz_poziom;
+  ic delete poziom_ch1;
+  ic create poziom_ch99 = check(where=(1 le poziom le 99));
+ run;
+quit;
+
+proc contents data = zbiory.gracz_poziom;
+run;
+
+
+
+
+
+proc append BASE = zbiory.gracz_poziom data = nowy_gracz1;
+run;
+
+
+
+data zbiory.gracz_poziom;
+set zbiory.gracz_poziom;
+if poziom = 7 then delete;
+run;
+
+proc contents data = zbiory.gracz_poziom;
+run;
+/* skasowalismy sobie wszystkie IC :-( 
+   ale spokojnie nauczymy sie jak modyfikowac zbior bez robienia "balaganu" 
+*/
+
+
+
+
+
+
+
+proc datasets lib = zbiory nolist;
+ modify gracz_poziom;
+  ic create gracz_poziom_pk = primary key(id poziom);
+  ic create poziom_aktualny_od_nn = not null(poziom_aktualny_od); 
+  ic create poziom_aktualny_do_nn = not null(poziom_aktualny_do);
+  ic create poziom_aktualny_od_ch1 = check(where=(poziom_aktualny_od < poziom_aktualny_do));
+ run;
+
+
+
+ modify gracz_poziom;
+  ic create poziom_fk = foreign key (poziom) REFERENCES zbiory.dict_poziom;
+ run;
+
+quit;
+
+
+
+proc append BASE = zbiory.gracz_poziom data = nowy_gracz1;
+run;
+
+
+proc contents data = zbiory.gracz_poziom;
+run;
+
+
+/* FOREIGN KEY (variables) REFERENCES table-name 
+   <ON DELETE referential-action: RESTRICT[default]|SET NULL> 
+   <ON UPDATE referential-action: RESTRICT[default]|SET NULL|CASCADE> 
+*/
+
+
+proc datasets lib = zbiory nolist;
+ modify gracz_poziom;
+  ic delete _all_;
+ run;
+ modify dict_poziom;
+  ic delete _all_;
+ run;
+quit;
+
+
+proc datasets lib = zbiory nolist;
+ modify gracz_poziom;
+  ic create poziom_fk = foreign key (poziom) REFERENCES zbiory.dict_poziom;
+ run;
+quit;
+
+
+
+/* zbior, do ktorego referujemy, musi(!) miec klucz glowny */
+
+
+
+proc datasets lib = zbiory nolist;
+ modify dict_poziom;
+  ic create primary key (poziom); /* <- defaultowa nazwa _PK0001_ */
+ run;
+
+ modify gracz_poziom;
+  ic create poziom_fk = foreign key (poziom) REFERENCES zbiory.dict_poziom;
+ run;
+quit;
+
+
+
+
+
+/* ON DELETE RESTRICT */
+data zbiory.dict_poziom;
+modify zbiory.dict_poziom; /* <- MODIFY statement, omowimy za chwile */
+if poziom = 6 then REMOVE;
+run;
+
+
+
+data zbiory.dict_poziom;
+modify zbiory.dict_poziom;
+if poziom ^= 6 then output;
+run;
+
+
+/* ON UPDATE RESTRICT */
+data zbiory.dict_poziom;
+modify zbiory.dict_poziom; 
+if poziom = 6 then poziom = 66;
+run;
+
+
+
+
+proc datasets lib = zbiory nolist;
+
+ modify dict_poziom;
+  ic delete _ALL_; /* uwaga na loga! */
+ run;
+ modify gracz_poziom;
+  ic delete _ALL_;
+ run;
+
+
+
+/* wlasciwa kolejnosc */
+ modify gracz_poziom;
+  ic delete _ALL_; /* najpierw kasujemy referencje */
+ run;
+ modify dict_poziom;
+  ic delete _ALL_; /* potem PK na referowanym zbiorze */
+ run;
+/**********************/
+
+
+ modify dict_poziom;
+  ic create primary key (poziom);
+ run;
+
+ modify gracz_poziom;
+  ic create poziom_fk = foreign key (poziom) REFERENCES zbiory.dict_poziom
+   ON DELETE SET NULL 
+   ON UPDATE SET NULL
+  ;
+ run;
+quit;
+
+
+
+/* ON DELETE SET NULL */
+data zbiory.dict_poziom;
+modify zbiory.dict_poziom;
+if poziom = 6 then REMOVE;
+run;
+
+
+
+/* ON UPDATE SET NULL */
+data zbiory.dict_poziom;
+modify zbiory.dict_poziom; 
+if poziom = 1 then poziom = 11;
+run;
+
+
+
+
+
+
+
+
+proc datasets lib = zbiory nolist;
+ modify gracz_poziom;
+  ic delete _ALL_; /* najpierw kasujemy referencje */
+ run;
+ modify dict_poziom;
+  ic delete _ALL_; /* potem PK na referowanym zbiorze */
+ run;
+
+ modify dict_poziom;
+  ic create primary key (poziom);
+ run;
+
+ modify gracz_poziom;
+  ic create poziom_fk = foreign key (poziom) REFERENCES zbiory.dict_poziom
+   ON UPDATE CASCADE
+  ;
+ run;
+quit;
+
+
+
+/* ON UPDATE CASCADE */
+data zbiory.dict_poziom;
+modify zbiory.dict_poziom; 
+if poziom < 99 then poziom = poziom * 11;
+run;
+
+
+
+
+data zbiory.dict_poziom;
+modify zbiory.dict_poziom; 
+poziom = poziom / 11;
+run;
+
+
+/* end of lecture 11 */ /* 6792 */
+
+/* zbior wejsciowy */
+data work.dict_swiat;
+infile cards dlm = '|';
+input swiat swiat_nazwa $ :50.;
+cards;
+1|Pólnocne Morze
+2|Poludniowe Góry
+3|Wschodnie Lasy
+4|Zachodnie Równiny
+5|Centralne Bagna
+;
+run;
+
+/* dodawanie warunkow */
+proc datasets lib = work;
+modify dict_swiat;
+ ic create unique(swiat);
+ ic create not null(swiat);
+ ic create check(where = (swiat > 0));
+run;
+quit;
+
+/* nowe obserwacje do dodania */
+data _fail_;
+length swiat 8 swiat_nazwa $ 50;
+swiat = 1;  swiat_nazwa = "Taki juz istnieje"; output;       /* <- zla   */
+swiat = .;  swiat_nazwa = "Pusty swiat"; output;             /* <- zla   */
+swiat = 6;  swiat_nazwa = "Nowy Wspanialy Swiat"; output;    /* <- dobra */
+swiat = -1; swiat_nazwa = """Podziemia - piwnica"""; output; /* <- zla   */
+swiat = 7;  swiat_nazwa = "Discworld"; output;               /* <- dobra */
+run;
+
+
+/* dodajemy obserwacje */
+proc append base = work.dict_swiat data =_fail_;
+run;
+
+/* podglad obserwacji logicznych i fizycznych */
+data _null_;
+dsid = open("work.dict_swiat");
+
+obserwacje_fizyczne = ATTRN(dsid,"NOBS"); /* <- ATTRN i jej siostra ATTRC - bardzo przydatne funkcje */
+
+obserwacje_logiczne = attrn(dsid,"NLOBS");
+
+IC = attrn(dsid,"ICONST");
+
+put "Przed przepisaniem zbioru:";
+put obserwacje_fizyczne= obserwacje_logiczne= IC=;
+rc = close(dsid);
+stop;
+run;
+
+
+data test1;
+point = 7;
+set work.dict_swiat point = point;
+stop;
+run;
+
+
+/* czytanie sekwencyjne */
+data test1;
+set work.dict_swiat;
+run;
+
+/* czytanie losowe */ /*(uwaga na wynik!!)*/
+data test2;
+
+do point = 1 to NOBS by 1;
+ set work.dict_swiat point = point nobs = nobs;
+ output;
+end;
+
+stop;
+run;
+
+
+
+/* przepisujemy zbior */
+data work.dict_swiat;
+set work.dict_swiat;
+run;
+
+/* podglad obserwacji logicznych i fizycznych */
+data _null_;
+dsid = open("work.dict_swiat");
+
+obserwacje_fizyczne = attrn(dsid,"NOBS");
+
+obserwacje_logiczne = attrn(dsid,"NLOBS");
+
+IC = attrn(dsid,"ICONST");
+
+put "Po przepisanu zbioru:";
+put obserwacje_fizyczne= obserwacje_logiczne= IC=;
+rc = close(dsid);
+stop;
+run;
+
