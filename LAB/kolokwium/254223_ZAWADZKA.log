@@ -1,0 +1,989 @@
+1    dm log 'clear' log;
+2    /******************************************************************************************
+2  ! ******
+3
+4    1) Rozwiazanie kolokwium sklada sie z kodu i loga!
+5    2) Nalezy zalaczyc obydwa pliki zapisane w postaci: NRALBUMU_NAZWISKO.SAS i
+5  ! NRALBUMU_NAZWISKO.LOG
+6    3) Prosze pamietac (we wlasnym interesie) o czestym zapisywaniu pliku z kodem.
+7
+8    *******************************************************************************************
+8  ! ******/
+9    options mprint fullstimer msglevel = I; /* nie edytuj tej linii */
+10
+11
+12   /* uzupelnij ponizsze dane */
+13   %let Imie_i_Nazwisko = Anna Zawadzka;
+14   %let Numer_Albumu = 254223;
+15   %put *Imie_i_Nazwisko*&Imie_i_Nazwisko.*Numer_Albumu*&Numer_Albumu.*;
+*Imie_i_Nazwisko*Anna Zawadzka*Numer_Albumu*254223*
+16
+17
+18   /****************************************************************************************/
+19   /* Zadanie 1 (8 pkt)*/
+20   /*
+21   Dany jest zbior X_WIDE o strukturze:
+22
+23   id | x1       | x2       | ... | xn
+24   ---+----------+----------+-...-+----------
+25   1  | 0.124... | -0.47... | ... | 0.995...
+26   2  | -0.31...
+27   ...
+28
+29
+30   Utworzyc widok X_LONG, ktory wyswietli dane zbioru X_WIDE
+31   w postaci:
+32
+33   id | var | val
+34   ---+-----+---------
+35    1 | x1  | 0.124...
+36    1 | x2  | -0.47...
+37   ...
+38    1 | xn  | 0.995...
+39    2 | x1  | -0.31...
+40   ...
+41   */
+42
+43   %macro make_x_wide(_top_);
+44   data x_wide;
+45   do id = 1 to 100;
+46   %let _loop_ = %sysfunc(ceil(%sysevalf(%sysfunc(ranuni(123)) * &_top_.)));
+47    %do _ii_ = 1 %to &_loop_.;
+48     x&_ii_. = rannor(123);
+49    %end;
+50   output;
+51   end;
+52   run;
+53   %mend make_x_wide;
+54
+55   %let userid = %sysfunc(compress(%sysfunc(md5(&sysuserid.),$hex5.),,TPSA));
+56   %put **&userid**;
+**539**
+57
+58   %make_x_wide(&userid.);
+MPRINT(MAKE_X_WIDE):   data x_wide;
+MPRINT(MAKE_X_WIDE):   do id = 1 to 100;
+MPRINT(MAKE_X_WIDE):   x1 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x2 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x3 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x4 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x5 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x6 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x7 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x8 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x9 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x10 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x11 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x12 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x13 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x14 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x15 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x16 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x17 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x18 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x19 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x20 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x21 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x22 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x23 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x24 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x25 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x26 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x27 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x28 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x29 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x30 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x31 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x32 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x33 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x34 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x35 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x36 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x37 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x38 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x39 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x40 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x41 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x42 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x43 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x44 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x45 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x46 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x47 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x48 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x49 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x50 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x51 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x52 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x53 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x54 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x55 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x56 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x57 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x58 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x59 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x60 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x61 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x62 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x63 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x64 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x65 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x66 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x67 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x68 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x69 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x70 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x71 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x72 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x73 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x74 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x75 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x76 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x77 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x78 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x79 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x80 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x81 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x82 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x83 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x84 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x85 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x86 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x87 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x88 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x89 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x90 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x91 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x92 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x93 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x94 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x95 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x96 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x97 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x98 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x99 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x100 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x101 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x102 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x103 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x104 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x105 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x106 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x107 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x108 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x109 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x110 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x111 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x112 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x113 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x114 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x115 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x116 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x117 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x118 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x119 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x120 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x121 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x122 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x123 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x124 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x125 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x126 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x127 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x128 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x129 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x130 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x131 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x132 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x133 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x134 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x135 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x136 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x137 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x138 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x139 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x140 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x141 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x142 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x143 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x144 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x145 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x146 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x147 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x148 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x149 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x150 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x151 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x152 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x153 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x154 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x155 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x156 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x157 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x158 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x159 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x160 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x161 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x162 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x163 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x164 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x165 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x166 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x167 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x168 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x169 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x170 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x171 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x172 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x173 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x174 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x175 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x176 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x177 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x178 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x179 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x180 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x181 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x182 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x183 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x184 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x185 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x186 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x187 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x188 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x189 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x190 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x191 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x192 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x193 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x194 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x195 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x196 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x197 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x198 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x199 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x200 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x201 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x202 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x203 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x204 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x205 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x206 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x207 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x208 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x209 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x210 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x211 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x212 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x213 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x214 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x215 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x216 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x217 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x218 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x219 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x220 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x221 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x222 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x223 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x224 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x225 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x226 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x227 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x228 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x229 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x230 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x231 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x232 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x233 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x234 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x235 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x236 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x237 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x238 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x239 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x240 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x241 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x242 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x243 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x244 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x245 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x246 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x247 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x248 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x249 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x250 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x251 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x252 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x253 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x254 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x255 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x256 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x257 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x258 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x259 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x260 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x261 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x262 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x263 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x264 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x265 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x266 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x267 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x268 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x269 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x270 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x271 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x272 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x273 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x274 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x275 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x276 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x277 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x278 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x279 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x280 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x281 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x282 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x283 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x284 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x285 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x286 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x287 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x288 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x289 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x290 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x291 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x292 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x293 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x294 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x295 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x296 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x297 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x298 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x299 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x300 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x301 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x302 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x303 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x304 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x305 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x306 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x307 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x308 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x309 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x310 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x311 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x312 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x313 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x314 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x315 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x316 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x317 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x318 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x319 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x320 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x321 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x322 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x323 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x324 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x325 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x326 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x327 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x328 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x329 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x330 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x331 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x332 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x333 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x334 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x335 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x336 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x337 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x338 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x339 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x340 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x341 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x342 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x343 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x344 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x345 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x346 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x347 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x348 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x349 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x350 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x351 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x352 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x353 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x354 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x355 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x356 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x357 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x358 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x359 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x360 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x361 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x362 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x363 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x364 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x365 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x366 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x367 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x368 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x369 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x370 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x371 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x372 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x373 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x374 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x375 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x376 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x377 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x378 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x379 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x380 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x381 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x382 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x383 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x384 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x385 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x386 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x387 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x388 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x389 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x390 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x391 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x392 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x393 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x394 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x395 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x396 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x397 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x398 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x399 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x400 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x401 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x402 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x403 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x404 = rannor(123);
+MPRINT(MAKE_X_WIDE):   x405 = rannor(123);
+MPRINT(MAKE_X_WIDE):   output;
+MPRINT(MAKE_X_WIDE):   end;
+MPRINT(MAKE_X_WIDE):   run;
+
+NOTE: The data set WORK.X_WIDE has 100 observations and 406 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.15 seconds
+      user cpu time       0.06 seconds
+      system cpu time     0.09 seconds
+      memory              2854.87k
+      OS Memory           10384.00k
+      Timestamp           05/24/2017 10:00:03 AM
+      Step Count                        1  Switch Count  0
+
+
+59
+60   /************* A OTO WIDOK *****************/
+61   data X_LONG / VIEW = X_LONG;
+62     set x_wide;
+63       array tab x:;
+64       do j=1 to dim(tab);
+65         var=cats("x",j);
+66         val=tab(j);
+67         output;
+68        end;
+69       keep id var val;
+70   run;
+
+INFO: Character variables have defaulted to a length of 200 at the places given by:
+      (Line):(Column). Truncation can result.
+      65:7     var
+NOTE: DATA STEP view saved on file WORK.X_LONG.
+NOTE: A stored DATA STEP view cannot run under a different operating system.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      user cpu time       0.00 seconds
+      system cpu time     0.01 seconds
+      memory              1161.46k
+      OS Memory           10220.00k
+      Timestamp           05/24/2017 10:00:03 AM
+      Step Count                        2  Switch Count  0
+
+
+71
+72
+73   /****************************************************************************************/
+74   /* Zadanie 2 (7 pkt)*/
+75   /*
+76   Napisac kod, ktory umieszczony w menu prawego przycisku myszy zbioru sasowego, wstawi do
+77   schowka systemowego liste wszystkich zmiennych wystepujacych w zbiorze.
+78   */
+79   /* tu wpisz kod rozwiazania:
+80
+81   prosze bardzo:
+82   gsubmit "filename s clipbrd; data _null_; file s; d = '%8b'||.||'%32b'; length n $ 32; do
+82 ! di=open(d,'I') while(di ne 0); do i=1 to attrn(di,'NVARS'); n=varname(di,i); put n @; end;
+82 ! end; run; filename s clear;";
+83
+84   */
+85
+86   /******************************
+87
+88
+89
+90
+91
+92   ******************************/
+93
+94
+95   /* Zadanie 3 (15 pkt)*/
+96   /****************************************************************************************/
+97   /*
+98   Dana jest baza danych z tabelami: A, B, C, DictB, DictC.
+99   Tabele laczy sie zmiennymi o tych samych nazwach.
+100  */
+101  /*
+102  1) Uzywajac co najmniej 2 sposobow poindeksuj zbiory bazy w celu przyspieszenia
+102! wyszukiwania.
+103  2) Skompresuj zbiory, dla ktorych jest to oplacalne.
+104  3) Dodaj integrity constreints tak, aby:
+105      a) w tabeli A mogly wystepowac tylko wartosci wystepujace w tabelach B i C,
+106      b) w slowniki DictB i DictC mialy unikalne opisy.
+107  */
+108
+109  data A;
+110  length klient 8 paragon $ 32;
+111  keep klient paragon;
+112  do i = 1 to 1000 ;
+113   paragon = put(md5(put(i,best.)),$hex32.);
+114   klient = ceil(ranuni(123) * 100);
+115   output;
+116  end;
+117  run;
+
+NOTE: The data set WORK.A has 1000 observations and 2 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      user cpu time       0.00 seconds
+      system cpu time     0.00 seconds
+      memory              404.93k
+      OS Memory           9700.00k
+      Timestamp           05/24/2017 10:00:03 AM
+      Step Count                        3  Switch Count  0
+
+
+118
+119  data B;
+120  length paragon $ 32 produkt_id 8 data 8;
+121  format data yymmdd10.;
+122  keep paragon produkt_id data;
+123
+124  do i = 1 to 1000 ;
+125   paragon = put(md5(put(i,best.)),$hex32.);
+126   data = today() - floor(1000 * ranuni(123));
+127   do j = 1 to ceil(ranuni(123) * 40);
+128    produkt_id = ceil(17 * ranuni(123));
+129    output;
+130   end;
+131  end;
+132
+133  run;
+
+NOTE: The data set WORK.B has 20196 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      user cpu time       0.00 seconds
+      system cpu time     0.00 seconds
+      memory              420.43k
+      OS Memory           9700.00k
+      Timestamp           05/24/2017 10:00:03 AM
+      Step Count                        4  Switch Count  0
+
+
+134
+135  data DictB;
+136  length produkt_id 8 produkt $ 100 cena 8;
+137  produkt_id = 1; produkt = "Chleb"; cena = 2.59; output;
+138  produkt_id = 2; produkt = "Kajzerka"; cena = 0.39; output;
+139  produkt_id = 3; produkt = "Muffinka"; cena = 1.21; output;
+140  produkt_id = 4; produkt = "Tortilla"; cena = 4.50; output;
+141  produkt_id = 5; produkt = "Banany"; cena = 4.99; output;
+142  produkt_id = 6; produkt = "Marchewka"; cena = 1.19; output;
+143  produkt_id = 7; produkt = "Jablka"; cena = 2.29; output;
+144  produkt_id = 8; produkt = "Ziemniaki"; cena = 1.09; output;
+145  produkt_id = 9; produkt = "Pomidory"; cena = 5.99; output;
+146  produkt_id = 10; produkt = "Papryka"; cena = 8.09; output;
+147  produkt_id = 11; produkt = "Maslo"; cena = 4.99; output;
+148  produkt_id = 12; produkt = "Mleko"; cena = 2.79; output;
+149  produkt_id = 13; produkt = "Ser"; cena = 3.99; output;
+150  produkt_id = 14; produkt = "Kefir"; cena = 1.49; output;
+151  produkt_id = 15; produkt = "Parowki"; cena = 3.49; output;
+152  produkt_id = 16; produkt = "Szynka"; cena = 22.19; output;
+153  produkt_id = 17; produkt = "Kielbasa"; cena = 18.79; output;
+154  run;
+
+NOTE: The data set WORK.DICTB has 17 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      user cpu time       0.00 seconds
+      system cpu time     0.01 seconds
+      memory              386.62k
+      OS Memory           9700.00k
+      Timestamp           05/24/2017 10:00:03 AM
+      Step Count                        5  Switch Count  0
+
+
+155
+156
+157  data C;
+158  length klient sklep_id 8;
+159  do klient = 1 to 100;
+160  sklep_id = ceil(ranuni(123) * 13);
+161  output;
+162  end;
+163  run;
+
+NOTE: The data set WORK.C has 100 observations and 2 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      user cpu time       0.00 seconds
+      system cpu time     0.00 seconds
+      memory              348.12k
+      OS Memory           9700.00k
+      Timestamp           05/24/2017 10:00:03 AM
+      Step Count                        6  Switch Count  0
+
+
+164
+165  data DictC;
+166  length sklep_id 8 sklep $ 100;
+167  sklep_id = 1; sklep = "Warszawa1"; output;
+168  sklep_id = 2; sklep = "Warszawa2"; output;
+169  sklep_id = 3; sklep = "Warszawa3"; output;
+170  sklep_id = 4; sklep = "Wroclaw1"; output;
+171  sklep_id = 5; sklep = "Wroclaw2"; output;
+172  sklep_id = 6; sklep = "Krakow"; output;
+173  sklep_id = 7; sklep = "Olsztyn"; output;
+174  sklep_id = 8; sklep = "Gdansk"; output;
+175  sklep_id = 9; sklep = "Gdynia"; output;
+176  sklep_id = 10; sklep = "Zielona Gora"; output;
+177  sklep_id = 11; sklep = "Bialystok"; output;
+178  sklep_id = 12; sklep = "Lodz1"; output;
+179  sklep_id = 13; sklep = "Lodz2"; output;
+180  run;
+
+NOTE: The data set WORK.DICTC has 13 observations and 2 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      user cpu time       0.00 seconds
+      system cpu time     0.00 seconds
+      memory              374.78k
+      OS Memory           9700.00k
+      Timestamp           05/24/2017 10:00:03 AM
+      Step Count                        7  Switch Count  0
+
+
+181
+182
+183
+184  /************* INDEKSY *****************/
+185  data A
+186      (index = (klient));
+187      set A;
+188  run;
+
+NOTE: There were 1000 observations read from the data set WORK.A.
+NOTE: The data set WORK.A has 1000 observations and 2 variables.
+NOTE: Simple index klient has been defined.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      user cpu time       0.00 seconds
+      system cpu time     0.00 seconds
+      memory              653.75k
+      OS Memory           10216.00k
+      Timestamp           05/24/2017 10:00:03 AM
+      Step Count                        8  Switch Count  0
+
+
+189
+190  /* niesamowicie wazny index, przyda sie np tu: */
+191  data A_select;
+192      set A;
+193      where klient = 4;
+INFO: Index klient selected for WHERE clause optimization.
+194  run;
+
+NOTE: There were 5 observations read from the data set WORK.A.
+      WHERE klient=4;
+NOTE: The data set WORK.A_SELECT has 5 observations and 2 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.00 seconds
+      user cpu time       0.00 seconds
+      system cpu time     0.00 seconds
+      memory              585.46k
+      OS Memory           9956.00k
+      Timestamp           05/24/2017 10:00:03 AM
+      Step Count                        9  Switch Count  0
+
+
+195
+196
+197  /* najpierw sortuje */
+198  proc sort data=B;
+199      by data;
+200  run;
+
+NOTE: There were 20196 observations read from the data set WORK.B.
+NOTE: SAS sort was used.
+NOTE: The data set WORK.B has 20196 observations and 3 variables.
+NOTE: PROCEDURE SORT used (Total process time):
+      real time           0.01 seconds
+      user cpu time       0.01 seconds
+      system cpu time     0.00 seconds
+      memory              2907.50k
+      OS Memory           12532.00k
+      Timestamp           05/24/2017 10:00:03 AM
+      Step Count                        10  Switch Count  0
+
+
+201  proc datasets library = work nolist;
+NOTE: Writing HTML Body file: sashtml.htm
+202   modify B;
+203   index create data;
+NOTE: Simple index data has been defined.
+204   run;
+
+NOTE: MODIFY was successful for WORK.B.DATA.
+205  quit;
+
+NOTE: PROCEDURE DATASETS used (Total process time):
+      real time           0.23 seconds
+      user cpu time       0.09 seconds
+      system cpu time     0.06 seconds
+      memory              4976.93k
+      OS Memory           14308.00k
+      Timestamp           05/24/2017 10:00:04 AM
+      Step Count                        11  Switch Count  0
+
+
+206
+207  /* rowniez bardzo przydatny indeks, o tu: */
+208  data B_select;
+209      set B;
+210      where data>'1jul2015'd;
+INFO: Index data selected for WHERE clause optimization.
+211  run;
+
+NOTE: There were 13654 observations read from the data set WORK.B.
+      WHERE data>'01JUL2015'D;
+NOTE: The data set WORK.B_SELECT has 13654 observations and 3 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      user cpu time       0.01 seconds
+      system cpu time     0.00 seconds
+      memory              585.87k
+      OS Memory           14564.00k
+      Timestamp           05/24/2017 10:00:04 AM
+      Step Count                        12  Switch Count  0
+
+
+212
+213
+214
+215  proc sql;
+216      create index sklep_id on C(sklep_id);
+NOTE: Simple index sklep_id has been defined.
+217  quit;
+NOTE: PROCEDURE SQL used (Total process time):
+      real time           0.01 seconds
+      user cpu time       0.00 seconds
+      system cpu time     0.01 seconds
+      memory              546.18k
+      OS Memory           14824.00k
+      Timestamp           05/24/2017 10:00:04 AM
+      Step Count                        13  Switch Count  0
+
+
+218
+219  /* a ten jak chcemy sobie sprawdzic kto chodzi do podanych sklepow: */
+220  data C_select;
+221      set C;
+222      where sklep_id in (2,4,5);
+INFO: Index sklep_id selected for WHERE clause optimization.
+223  run;
+
+NOTE: There were 28 observations read from the data set WORK.C.
+      WHERE sklep_id in (2, 4, 5);
+NOTE: The data set WORK.C_SELECT has 28 observations and 2 variables.
+NOTE: DATA statement used (Total process time):
+      real time           0.01 seconds
+      user cpu time       0.00 seconds
+      system cpu time     0.01 seconds
+      memory              577.50k
+      OS Memory           14564.00k
+      Timestamp           05/24/2017 10:00:04 AM
+      Step Count                        14  Switch Count  0
+
+
+224
+225
+226
+227  /************* KOMPRESJA *****************/
+228  /* niestety kompresja zadnego zbiorku nie jest oplacalna, w kazdym przypadku zwiekszamy
+228! rozmiar pliku... */
+229  /*przeprowadzone testy:
+230  data set_without(COMPRESS=NO) set_char(COMPRESS=CHAR) set_binary(COMPRESS=BINARY);
+231   set A;
+232  run;
+233  data set_without(COMPRESS=NO) set_char(COMPRESS=CHAR) set_binary(COMPRESS=BINARY);
+234   set B;
+235  run;
+236  data set_without(COMPRESS=NO) set_char(COMPRESS=CHAR) set_binary(COMPRESS=BINARY);
+237   set C;
+238  run;
+239  data set_without(COMPRESS=NO) set_char(COMPRESS=CHAR) set_binary(COMPRESS=BINARY);
+240   set Dictb;
+241  run;
+242  data set_without(COMPRESS=NO) set_char(COMPRESS=CHAR) set_binary(COMPRESS=BINARY);
+243   set Dictc;
+244  run;
+245
+246  */
+247
+248
+249
+250  /************* CONSTRAINTSY *****************/
+251
+252  proc sql;
+253      create table paragony as select distinct paragon from B;
+NOTE: SAS threaded sort was used.
+NOTE: Table WORK.PARAGONY created, with 1000 rows and 1 columns.
+
+254      create table klienci as select distinct klient from C;
+NOTE: Table WORK.KLIENCI created, with 100 rows and 1 columns.
+
+255  quit;
+NOTE: PROCEDURE SQL used (Total process time):
+      real time           0.03 seconds
+      user cpu time       0.03 seconds
+      system cpu time     0.00 seconds
+      memory              7233.53k
+      OS Memory           21752.00k
+      Timestamp           05/24/2017 10:00:04 AM
+      Step Count                        15  Switch Count  0
+
+
+256
+257  proc datasets lib = work nolist;
+258      modify paragony;
+259          ic create PK_paragony = primary key(paragon);
+NOTE: Integrity constraint PK_paragony defined.
+260      run;
+
+NOTE: MODIFY was successful for WORK.PARAGONY.DATA.
+261
+262      modify klienci;
+263          ic create PK_klienci = primary key(klient);
+NOTE: Integrity constraint PK_klienci defined.
+264      run;
+
+NOTE: MODIFY was successful for WORK.KLIENCI.DATA.
+265
+266      modify A;
+267          ic create klienci_fk = foreign key (klient) REFERENCES klienci message = "Nie ma w
+267! bazie takiego klienta!" msgtype = USER;
+NOTE: Index klient has already been created by the user.
+NOTE: Integrity constraint klienci_fk defined.
+268          ic create paragony_fk = foreign key (paragon) REFERENCES paragony message = "Nie ma
+268!  w bazie takiego paragonu!" msgtype = USER;
+NOTE: Integrity constraint paragony_fk defined.
+269      run;
+
+NOTE: MODIFY was successful for WORK.A.DATA.
+270
+271      modify Dictb;
+272          ic create IC_DICTB_unique = unique(produkt) message = "Wartosci pola produkt musza
+272! byc UNIKALNE!" msgtype = USER;
+NOTE: Integrity constraint IC_DICTB_unique defined.
+273      run;
+
+NOTE: MODIFY was successful for WORK.DICTB.DATA.
+274
+275      modify Dictc;
+276          ic create IC_DICTC_unique = unique(sklep) message = "Wartosci pola sklep musza byc
+276! UNIKALNE!" msgtype = USER;
+NOTE: Integrity constraint IC_DICTC_unique defined.
+277      run;
+
+NOTE: MODIFY was successful for WORK.DICTC.DATA.
+278  quit;
+
+NOTE: PROCEDURE DATASETS used (Total process time):
+      real time           0.21 seconds
+      user cpu time       0.04 seconds
+      system cpu time     0.04 seconds
+      memory              837.15k
+      OS Memory           17132.00k
+      Timestamp           05/24/2017 10:00:04 AM
+      Step Count                        16  Switch Count  0
+
+
+279
+280  proc sql noprint;
+281      insert into A values(33,'niematakiegoparagonu');
+ERROR: Nie ma w bazie takiego paragonu!
+NOTE: This insert failed while attempting to add data from VALUES clause 1 to the data set.
+NOTE: Deleting the successful inserts before error noted above to restore table to a consistent
+      state.
+282      insert into A values(123456,'3A0BE0671460761DDC988DE0DFBB949D');
+ERROR: Nie ma w bazie takiego klienta!
+NOTE: This insert failed while attempting to add data from VALUES clause 1 to the data set.
+NOTE: Deleting the successful inserts before error noted above to restore table to a consistent
+      state.
+283      insert into dictb values (2334,'Ser',0);
+ERROR: Wartosci pola produkt musza byc UNIKALNE!
+NOTE: This insert failed while attempting to add data from VALUES clause 1 to the data set.
+NOTE: Deleting the successful inserts before error noted above to restore table to a consistent
+      state.
+284      insert into dictc values (15,'Gdynia');
+ERROR: Wartosci pola sklep musza byc UNIKALNE!
+NOTE: This insert failed while attempting to add data from VALUES clause 1 to the data set.
+NOTE: Deleting the successful inserts before error noted above to restore table to a consistent
+      state.
+285  quit;
+NOTE: The SAS System stopped processing this step because of errors.
+NOTE: PROCEDURE SQL used (Total process time):
+      real time           0.03 seconds
+      user cpu time       0.00 seconds
+      system cpu time     0.00 seconds
+      memory              3795.90k
+      OS Memory           19948.00k
+      Timestamp           05/24/2017 10:00:04 AM
+      Step Count                        17  Switch Count  0
+
+286
+
+
+287  proc sql noprint;
+288      drop table a_select, b_select, c_select, set_witout, set_char, set_binary;
+NOTE: Table WORK.A_SELECT has been dropped.
+NOTE: Table WORK.B_SELECT has been dropped.
+NOTE: Table WORK.C_SELECT has been dropped.
+WARNING: File WORK.SET_WITOUT.DATA does not exist.
+WARNING: Table WORK.SET_WITOUT has not been dropped.
+WARNING: File WORK.SET_CHAR.DATA does not exist.
+WARNING: Table WORK.SET_CHAR has not been dropped.
+WARNING: File WORK.SET_BINARY.DATA does not exist.
+WARNING: Table WORK.SET_BINARY has not been dropped.
+289  quit;
+NOTE: PROCEDURE SQL used (Total process time):
+      real time           0.00 seconds
+      user cpu time       0.00 seconds
+      system cpu time     0.00 seconds
+      memory              35.28k
+      OS Memory           16872.00k
+      Timestamp           05/24/2017 10:00:04 AM
+      Step Count                        18  Switch Count  0
+
+

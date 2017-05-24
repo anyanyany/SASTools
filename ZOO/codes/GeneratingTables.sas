@@ -39,28 +39,28 @@ data ZOO.TICKET_TYPES_HIST;
 	2, Jednorazowy ulgowy, 20, '01apr11'd, '30sep11'd
 	3, Jednorazowy rodzinny 2+1, 65, '01apr11'd, '30sep11'd
 	7, Jednorazowy grupowy 10+, 20, '01apr11'd, '30sep11'd
-	1, Jednorazowy normalny, 25, '01oct11'd, '31mar12'd
-	2, Jednorazowy ulgowy, 15, '01oct11'd, '31mar12'd
-	3, Jednorazowy rodzinny 2+1, 50, '01oct11'd, '31mar12'd
-	7, Jednorazowy grupowy 10+, 15, '01oct11'd, '31mar12'd
+	1, Jednorazowy normalny, 26, '01oct11'd, '31mar12'd
+	2, Jednorazowy ulgowy, 16, '01oct11'd, '31mar12'd
+	3, Jednorazowy rodzinny 2+1, 53, '01oct11'd, '31mar12'd
+	7, Jednorazowy grupowy 10+, 16, '01oct11'd, '31mar12'd
 	4, Roczny normalny, 90, '01jan12'd, '31dec12'd
-	5, Roczny ulgowy, 60, '01jan12'd, '31dec12'd
+	5, Roczny ulgowy, 70, '01jan12'd, '31dec12'd
 	6, Roczny rodzinny 2+1, 200, '01jan12'd, '31dec12'd
 	1, Jednorazowy normalny, 30, '01apr12'd, '30sep12'd
 	2, Jednorazowy ulgowy, 20, '01apr12'd, '30sep12'd
 	3, Jednorazowy rodzinny 2+1, 65, '01apr12'd, '30sep12'd
 	7, Jednorazowy grupowy 10+, 20, '01apr12'd, '30sep12'd
-	1, Jednorazowy normalny, 23, '01oct12'd, '31mar13'd
-	2, Jednorazowy ulgowy, 13, '01oct12'd, '31mar13'd
-	3, Jednorazowy rodzinny 2+1, 50, '01oct12'd, '31mar13'd
-	7, Jednorazowy grupowy 10+, 13, '01oct12'd, '31mar13'd
+	1, Jednorazowy normalny, 25, '01oct12'd, '31mar13'd
+	2, Jednorazowy ulgowy, 16, '01oct12'd, '31mar13'd
+	3, Jednorazowy rodzinny 2+1, 53, '01oct12'd, '31mar13'd
+	7, Jednorazowy grupowy 10+, 14, '01oct12'd, '31mar13'd
 	4, Roczny normalny, 100, '01jan13'd, '31dec13'd
 	5, Roczny ulgowy, 70, '01jan13'd, '31dec13'd
 	6, Roczny rodzinny 2+1, 220, '01jan13'd, '31dec13'd
-	1, Jednorazowy normalny, 27, '01apr13'd, '30sep13'd
-	2, Jednorazowy ulgowy, 17, '01apr13'd, '30sep13'd
-	3, Jednorazowy rodzinny 2+1, 55, '01apr13'd, '30sep13'd
-	7, Jednorazowy grupowy 10+, 17, '01apr13'd, '30sep13'd
+	1, Jednorazowy normalny, 32, '01apr13'd, '30sep13'd
+	2, Jednorazowy ulgowy, 20, '01apr13'd, '30sep13'd
+	3, Jednorazowy rodzinny 2+1, 65, '01apr13'd, '30sep13'd
+	7, Jednorazowy grupowy 10+, 18, '01apr13'd, '30sep13'd
 	1, Jednorazowy normalny, 25, '01oct13'd, '31mar14'd
 	2, Jednorazowy ulgowy, 15, '01oct13'd, '31mar14'd
 	3, Jednorazowy rodzinny 2+1, 50, '01oct13'd, '31mar14'd
@@ -68,25 +68,25 @@ data ZOO.TICKET_TYPES_HIST;
 	4, Roczny normalny, 90, '01jan14'd, '31dec15'd
 	5, Roczny ulgowy, 70, '01jan14'd, '31dec15'd
 	6, Roczny rodzinny 2+1, 200, '01jan14'd, '31dec15'd
-	1, Jednorazowy normalny, 27, '01apr14'd, '30sep14'd
-	2, Jednorazowy ulgowy, 17, '01apr14'd, '30sep14'd
-	3, Jednorazowy rodzinny 2+1, 55, '01apr14'd, '30sep14'd
-	7, Jednorazowy grupowy 10+, 17, '01apr14'd, '30sep14'd
-	1, Jednorazowy normalny, 23, '01oct14'd, '31mar15'd
-	2, Jednorazowy ulgowy, 13, '01oct14'd, '31mar15'd
-	3, Jednorazowy rodzinny 2+1, 50, '01oct14'd, '31mar15'd
-	7, Jednorazowy grupowy 10+, 13, '01oct14'd, '31mar15'd
-	1, Jednorazowy normalny, 27, '01apr15'd, '30sep15'd
-	2, Jednorazowy ulgowy, 17, '01apr15'd, '30sep15'd
-	3, Jednorazowy rodzinny 2+1, 55, '01apr15'd, '30sep15'd
-	7, Jednorazowy grupowy 10+, 17, '01apr15'd, '30sep15'd
+	1, Jednorazowy normalny, 30, '01apr14'd, '30sep14'd
+	2, Jednorazowy ulgowy, 19, '01apr14'd, '30sep14'd
+	3, Jednorazowy rodzinny 2+1, 65, '01apr14'd, '30sep14'd
+	7, Jednorazowy grupowy 10+, 19, '01apr14'd, '30sep14'd
+	1, Jednorazowy normalny, 26, '01oct14'd, '31mar15'd
+	2, Jednorazowy ulgowy, 17, '01oct14'd, '31mar15'd
+	3, Jednorazowy rodzinny 2+1, 57, '01oct14'd, '31mar15'd
+	7, Jednorazowy grupowy 10+, 15, '01oct14'd, '31mar15'd
+	1, Jednorazowy normalny, 33, '01apr15'd, '30sep15'd
+	2, Jednorazowy ulgowy, 22, '01apr15'd, '30sep15'd
+	3, Jednorazowy rodzinny 2+1, 70, '01apr15'd, '30sep15'd
+	7, Jednorazowy grupowy 10+, 19, '01apr15'd, '30sep15'd
 	1, Jednorazowy normalny, 25, '01oct15'd, '31mar16'd
 	2, Jednorazowy ulgowy, 15, '01oct15'd, '31mar16'd
-	3, Jednorazowy rodzinny 2+1, 50, '01oct15'd, '31mar16'd
+	3, Jednorazowy rodzinny 2+1, 53, '01oct15'd, '31mar16'd
 	7, Jednorazowy grupowy 10+, 15, '01oct15'd, '31mar16'd
-	1, Jednorazowy normalny, 30, '01apr16'd, '30sep16'd
+	1, Jednorazowy normalny, 32, '01apr16'd, '30sep16'd
 	2, Jednorazowy ulgowy, 20, '01apr16'd, '30sep16'd
-	3, Jednorazowy rodzinny 2+1, 65, '01apr16'd, '30sep16'd
+	3, Jednorazowy rodzinny 2+1, 70, '01apr16'd, '30sep16'd
 	7, Jednorazowy grupowy 10+, 20, '01apr16'd, '30sep16'd
 	1, Jednorazowy normalny, 27, '01oct16'd, '31mar17'd
 	2, Jednorazowy ulgowy, 17, '01oct16'd, '31mar17'd
