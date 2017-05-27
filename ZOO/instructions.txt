@@ -1,0 +1,7 @@
+INSTRUKCJA:
+
+1. GeneratingTables - generowanie wszystkich tabel
+2. Checking - skompilowanie makr sprawdzaj¹cych
+3. Validaion - czyszczenie bazy z niepoprawnych danych
+4. Inserting - wstawianie nowych rekordów
+5. Updating - modyfikacje istniej¹cych danych
