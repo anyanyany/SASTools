@@ -35,8 +35,8 @@ insert into ZOO.TICKET_TYPES values(10, "Sezonowy", ., '20apr2017'd);
 insert into ZOO.TICKET_TYPES values(11, "", 30, '20apr2017'd);
 insert into ZOO.TICKET_TYPES values(12, "Sezonowy", 30, .);
 insert into ZOO.TICKET_TYPES_HIST values(1, "Sezonowy", 20, '18apr2017'd,'2apr2017'd );
-insert into ZOO.TRANSACTIONS values(200000, '18apr2017'd, 20, .);
-insert into ZOO.TRANSACTIONS values(200001, ., 20, 200);
+insert into ZOO.TRANSACTIONS values(900000, '18apr2017'd, 20, .);
+insert into ZOO.TRANSACTIONS values(900001, ., 20, 200);
 insert into ZOO.TRANSACTION_DETAILS values(1, 1, 0);
 quit;
 
